@@ -11,13 +11,13 @@ Generic development workflow skills for Claude Code. Shape, plan, implement, ver
 
 ## Skills
 
-| Skill | Invoke | What it does |
-|-------|--------|-------------|
-| shaping-work | `/dev-skills:shaping-work` | Rough idea → structured work definition |
-| product-thinker | `/dev-skills:product-thinker` | Product analysis, UX review, prioritization |
-| implementation-planning | `/dev-skills:implementation-planning` | Ticket → technical implementation plan |
-| implement-change | `/dev-skills:implement-change` | Plan/ticket → working code |
-| qa-test | `/dev-skills:qa-test` | Browser-based QA verification |
+| Skill                   | Invoke                                | What it does                                |
+| ----------------------- | ------------------------------------- | ------------------------------------------- |
+| shaping-work            | `/dev-skills:shaping-work`            | Rough idea → structured work definition     |
+| product-thinker         | `/dev-skills:product-thinker`         | Product analysis, UX review, prioritization |
+| implementation-planning | `/dev-skills:implementation-planning` | Ticket → technical implementation plan      |
+| implement-change        | `/dev-skills:implement-change`        | Plan/ticket → working code                  |
+| qa-test                 | `/dev-skills:qa-test`                 | Browser-based QA verification               |
 
 ## Typical flow
 
