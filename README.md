@@ -1,6 +1,6 @@
 # dev-skills
 
-Generic development workflow skills for Claude Code. Shape, plan, implement, verify.
+Generic development workflow skills for Claude Code. Decompose, shape, plan, implement, verify.
 
 ## Install
 
@@ -13,6 +13,7 @@ Generic development workflow skills for Claude Code. Shape, plan, implement, ver
 
 | Skill                   | Invoke                                | What it does                                |
 | ----------------------- | ------------------------------------- | ------------------------------------------- |
+| systems-decomposition   | `/dev-skills:systems-decomposition`   | System → fundamental primitives & building blocks |
 | shaping-work            | `/dev-skills:shaping-work`            | Rough idea → structured work definition     |
 | product-thinker         | `/dev-skills:product-thinker`         | Product analysis, UX review, prioritization |
 | implementation-planning | `/dev-skills:implementation-planning` | Ticket → technical implementation plan      |
@@ -22,10 +23,11 @@ Generic development workflow skills for Claude Code. Shape, plan, implement, ver
 ## Typical flow
 
 ```
-shape → plan → implement → QA
-  1        2       3        4
+decompose → shape → plan → implement → QA
+    0          1       2       3        4
 ```
 
+0. `/dev-skills:systems-decomposition` — break system into primitives
 1. `/dev-skills:shaping-work` — define what to build
 2. `/dev-skills:implementation-planning` — plan how to build it
 3. `/dev-skills:implement-change` — build it
