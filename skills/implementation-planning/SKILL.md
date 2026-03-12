@@ -14,7 +14,7 @@ Take a groomed ticket and create a detailed technical implementation plan that a
 1. Research using sub-agents (see below)
 2. Write plan to BOTH locations:
    - The internal plan file (path in system message)
-   - `thoughts/shared/plans/YYYY-MM-DD-descriptive-name.md` (persistent)
+   - `thoughts/plans/YYYY-MM-DD-descriptive-name.md` (persistent)
 3. Call `ExitPlanMode` when done
 
 **If plan mode is NOT active**:
@@ -25,11 +25,11 @@ Take a groomed ticket and create a detailed technical implementation plan that a
 
 ## Plan File Storage (CRITICAL)
 
-**You MUST save plans to `thoughts/shared/plans/`** - this is the persistent, shareable location.
+**You MUST save plans to `thoughts/plans/`** - this is the persistent, shareable location.
 
 The internal Claude Code plan file is temporary. Always copy/write to:
 ```
-thoughts/shared/plans/YYYY-MM-DD-descriptive-name.md
+thoughts/plans/YYYY-MM-DD-descriptive-name.md
 ```
 
 Use TODAY'S DATE from the system as prefix:
@@ -50,7 +50,7 @@ Task(subagent_type="codebase-locator", prompt="Find files related to Z")
 **Minimum research before planning:**
 1. Use `Explore` agent to understand codebase structure
 2. Use `codebase-pattern-finder` to find similar implementations to follow
-3. Read any related docs in `thoughts/shared/research/`
+3. Read any related docs in `thoughts/research/`
 
 Do NOT skip sub-agent research. Quick grep/glob is not sufficient for planning.
 
@@ -76,7 +76,7 @@ Task(subagent_type="codebase-pattern-finder", prompt="Find similar implementatio
 ```
 
 **Required research:**
-- Read related research docs in `thoughts/shared/research/`
+- Read related research docs in `thoughts/research/`
 - Use sub-agents to find existing implementation patterns
 - Identify the tech stack (frameworks, libraries, patterns in use)
 - Understand constraints and dependencies
@@ -226,8 +226,8 @@ Plans should reference research docs when available:
 
 ```markdown
 ## Related Research
-- `thoughts/shared/research/2026-01-18_data-model.md` - Data model design decisions
-- `thoughts/shared/research/2026-01-16_use-cases.md` - Use cases being addressed
+- `thoughts/research/2026-01-18-data-model.md` - Data model design decisions
+- `thoughts/research/2026-01-16-use-cases.md` - Use cases being addressed
 ```
 
 ## Example
@@ -339,23 +339,23 @@ export default defineConfig({
 ## After Plan Approval
 
 When the user approves the plan:
-1. **Verify plan is saved to `thoughts/shared/plans/`** - if not, save it now
+1. **Verify plan is saved to `thoughts/plans/`** - if not, save it now
 2. Begin implementation phase by phase
 3. Use TodoWrite to track progress through phases
 4. Mark verification checkboxes as you complete them
 
-The plan in `thoughts/shared/plans/` serves as the source of truth during implementation.
+The plan in `thoughts/plans/` serves as the source of truth during implementation.
 
 ## Workflow Summary
 
 ```
 1. User requests plan → Enter plan mode
 2. Launch Explore/codebase-analyzer sub-agents (parallel)
-3. Read research docs in thoughts/shared/research/
+3. Read research docs in thoughts/research/
 4. Draft plan based on findings
 5. Write plan to:
    - Internal plan file (for Claude Code)
-   - thoughts/shared/plans/YYYY-MM-DD-name.md (persistent)
+   - thoughts/plans/YYYY-MM-DD-name.md (persistent)
 6. Exit plan mode → User approves
 7. Implement using plan as guide
 ```
