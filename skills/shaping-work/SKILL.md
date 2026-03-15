@@ -197,6 +197,10 @@ Display a reminder modal when a Partner logs into the Back Office without comple
 - Are there any steps that should block Back Office access entirely?
 ```
 
+## Design Thinking
+
+When shaping, consult [references/software-design-philosophy.md](references/software-design-philosophy.md) for principles that help define work in ways that avoid unnecessary complexity. Key lenses: define errors out of existence, design the common case to be simple, flag information leakage risks.
+
 ## What NOT to include
 
 - Technical implementation details (database schemas, API designs, code patterns)

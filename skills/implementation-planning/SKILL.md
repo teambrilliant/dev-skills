@@ -54,6 +54,10 @@ Task(subagent_type="codebase-locator", prompt="Find files related to Z")
 
 Do NOT skip sub-agent research. Quick grep/glob is not sufficient for planning.
 
+## Design Philosophy
+
+Before writing plans, read [references/software-design-philosophy.md](references/software-design-philosophy.md). Apply these principles when designing module boundaries, interfaces, and decomposition. Key checks: modules should be deep, information hiding, define errors out of existence, design it twice.
+
 ## Principles
 
 - **Research first** - Understand the codebase before proposing solutions

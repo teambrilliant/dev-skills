@@ -7,6 +7,10 @@ description: Implement code changes from a ticket or technical plan. Use when so
 
 Execute implementation from a ticket or technical plan, producing working code changes.
 
+## Design Philosophy
+
+While implementing, consult [references/software-design-philosophy.md](references/software-design-philosophy.md) for code-level design principles. Watch for red flags: shallow modules, information leakage, pass-through methods, temporal decomposition.
+
 ## Principles
 
 - **Understand before coding** - Read all relevant files fully first
