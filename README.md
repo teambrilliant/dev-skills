@@ -1,6 +1,6 @@
 # dev-skills
 
-Generic development workflow skills for Claude Code. Decompose, shape, plan, implement, verify.
+Generic development workflow skills for Claude Code. Break down, shape, plan, implement, verify.
 
 ## Install
 
@@ -13,22 +13,22 @@ Generic development workflow skills for Claude Code. Decompose, shape, plan, imp
 
 | Skill                   | Invoke                                | What it does                                |
 | ----------------------- | ------------------------------------- | ------------------------------------------- |
-| systems-decomposition   | `/dev-skills:systems-decomposition`   | System → fundamental primitives & building blocks |
+| product-primitives      | `/dev-skills:product-primitives`      | System → fundamental primitives & building blocks |
 | shaping-work            | `/dev-skills:shaping-work`            | Rough idea → structured work definition     |
-| product-thinker         | `/dev-skills:product-thinker`         | Product analysis, UX review, prioritization |
+| product-thinker         | `/dev-skills:product-thinker`         | Product decisions, UX analysis, build-vs-buy |
 | implementation-planning | `/dev-skills:implementation-planning` | Ticket → technical implementation plan      |
-| implement-change        | `/dev-skills:implement-change`        | Plan/ticket → working code                  |
-| qa-test                 | `/dev-skills:qa-test`                 | Browser-based QA verification               |
+| implement-change        | `/dev-skills:implement-change`        | Plan → working code, phase by phase         |
+| qa-test                 | `/dev-skills:qa-test`                 | Browser-based QA verification via sub-agent  |
 
 ## Typical flow
 
 ```
-decompose → shape → plan → implement → QA
-    0          1       2       3        4
+primitives → shape → plan → implement → QA
+     0          1       2       3        4
 ```
 
-0. `/dev-skills:systems-decomposition` — break system into primitives
-1. `/dev-skills:shaping-work` — define what to build
-2. `/dev-skills:implementation-planning` — plan how to build it
-3. `/dev-skills:implement-change` — build it
+0. `/dev-skills:product-primitives` — break system into deep, composable primitives
+1. `/dev-skills:shaping-work` — define what to build (features, bugs, improvements)
+2. `/dev-skills:implementation-planning` — design how to build it
+3. `/dev-skills:implement-change` — build it phase by phase
 4. `/dev-skills:qa-test` — verify in browser
