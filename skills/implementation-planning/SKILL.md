@@ -1,58 +1,38 @@
 ---
 name: implementation-planning
-description: Create technical implementation plans from groomed tickets. Use when someone says "create a plan", "plan this ticket", "how should we implement this", "technical design", or has a ticket that needs a detailed technical approach before implementation begins.
-allowed-tools: Read, Grep, Glob, Task, Write, Edit, AskUserQuestion
+description: >-
+  Create technical implementation plans and architecture designs. Use when someone needs a detailed
+  technical approach before coding begins — "create a plan", "plan this ticket", "how should we
+  implement this", "technical design", "architect this", "design the approach", "plan the migration",
+  "refactor plan", "how should we structure this", or when shaped work or a groomed ticket needs
+  a concrete implementation strategy with phases, file changes, and verification steps.
 ---
 
 # Implementation Planning
 
-Take a groomed ticket and create a detailed technical implementation plan that any developer or agent can follow.
+Take a ticket, shaped work, or technical challenge and create a detailed implementation plan that any developer or agent can follow.
 
-## Plan Mode Integration
+## Plan Mode
 
-**If plan mode is active**:
-1. Research using sub-agents (see below)
-2. Write plan to BOTH locations:
+**Multi-phase plans** → use plan mode:
+1. If not already in plan mode, call `EnterPlanMode`
+2. Research using sub-agents (see below)
+3. Write plan to BOTH locations:
    - The internal plan file (path in system message)
    - `thoughts/plans/YYYY-MM-DD-descriptive-name.md` (persistent)
-3. Call `ExitPlanMode` when done
+4. Call `ExitPlanMode` when done
 
-**If plan mode is NOT active**:
-1. First, call `EnterPlanMode` to request plan mode from the user
-2. Once in plan mode, follow the process below
-3. Write your final plan to BOTH locations
-4. Call `ExitPlanMode` to request approval
+**Simple designs** (single-phase, quick approach discussion) → skip plan mode, just discuss.
 
-## Plan File Storage (CRITICAL)
+### Plan File Storage
 
-**You MUST save plans to `thoughts/plans/`** - this is the persistent, shareable location.
+Save plans to `thoughts/plans/` — this is the persistent, shareable location. The internal Claude Code plan file is temporary.
 
-The internal Claude Code plan file is temporary. Always copy/write to:
 ```
 thoughts/plans/YYYY-MM-DD-descriptive-name.md
 ```
 
-Use TODAY'S DATE from the system as prefix:
-- **IMPORTANT**: Get current date from system context (e.g., "Today's date" in env info)
-- Example: If today is 2026-01-18 → `2026-01-18-shopify-client.md`
-
-## Research with Sub-Agents (REQUIRED)
-
-**Before writing any plan, you MUST use Task sub-agents to research:**
-
-```
-# Launch parallel research agents
-Task(subagent_type="Explore", prompt="Find existing patterns for X in this codebase")
-Task(subagent_type="codebase-analyzer", prompt="How is Y implemented?")
-Task(subagent_type="codebase-locator", prompt="Find files related to Z")
-```
-
-**Minimum research before planning:**
-1. Use `Explore` agent to understand codebase structure
-2. Use `codebase-pattern-finder` to find similar implementations to follow
-3. Read any related docs in `thoughts/research/`
-
-Do NOT skip sub-agent research. Quick grep/glob is not sufficient for planning.
+Use TODAY'S DATE from system context as prefix (e.g., "Today's date" in env info).
 
 ## Design Philosophy
 
@@ -60,44 +40,65 @@ Before writing plans, read [references/software-design-philosophy.md](references
 
 ## Principles
 
-- **Research first** - Understand the codebase before proposing solutions
-- **Be specific** - Include file paths, function names, code snippets
-- **Be skeptical** - Question assumptions, identify risks early
-- **Be practical** - Focus on incremental, testable changes
-- **Agent-agnostic** - Plan should work for any implementer
-- **Follow patterns** - Match existing codebase conventions
+- **Research first** — understand the codebase before proposing solutions
+- **Be specific** — include file paths, function names, code snippets
+- **Be skeptical** — question assumptions, identify risks early
+- **Be practical** — focus on incremental, testable changes
+- **Agent-agnostic** — plan should work for any implementer
+- **Follow patterns** — match existing codebase conventions
 
 ## Process
 
-### 1. Gather Context (Use Sub-Agents)
+### 1. Gather Context
 
-Before planning, launch parallel research agents:
+Launch parallel `Explore` sub-agents before planning. Each serves a different purpose:
 
-```typescript
-// Launch these in parallel (single message with multiple Task calls)
-Task(subagent_type="Explore", prompt="Explore codebase structure, find patterns for [feature type]")
-Task(subagent_type="codebase-pattern-finder", prompt="Find similar implementations to [what we're building]")
+```
+# 1. LOCATE — find where relevant files live (don't read contents, just map locations)
+Agent(subagent_type="Explore", prompt="Find all files related to [feature/domain].
+  Group by: routes, use-cases/business logic, components, DB schema, tests.
+  Report file paths and directory structure only, don't read contents.")
+
+# 2. PATTERNS — find similar implementations to model after (read code, extract complete examples)
+Agent(subagent_type="Explore", prompt="Find similar implementations to [what we're building].
+  Read the code thoroughly. Extract complete working examples with imports.
+  Note file organization, naming conventions, error handling approach.")
+
+# 3. ANALYZE — trace how an existing related feature works end-to-end
+Agent(subagent_type="Explore", prompt="Analyze how [related feature] is implemented.
+  Trace the data flow from entry point to DB/API.
+  Map key functions, their inputs/outputs, and error handling paths.")
 ```
 
-**Required research:**
-- Read related research docs in `thoughts/research/`
-- Use sub-agents to find existing implementation patterns
-- Identify the tech stack (frameworks, libraries, patterns in use)
-- Understand constraints and dependencies
+Use all three when the feature is complex. For simpler tasks, locate + patterns may suffice.
 
-**For monorepo projects (use Explore agent):**
+**Also gather:**
+- Related research docs in `thoughts/research/`
+- The tech stack:
+
+```markdown
+**Package manager:** pnpm/npm/yarn
+**Build tool:** turbo/nx/none
+**Language:** TypeScript (strict mode?)
+**Runtime:** Node.js/Bun/Deno
+**Framework:** Fastify/Express/Hono
+**Database:** Postgres + Drizzle/Prisma
+**Testing:** Vitest/Jest
+**Patterns to follow:** [reference existing implementations]
+```
+
+**For monorepo projects:**
 - Package structure from `pnpm-workspace.yaml`
 - Build configuration from `turbo.json`
 - Existing packages for patterns to follow
-- Catalog versions for dependencies
 
 Ask clarifying questions if requirements are ambiguous.
 
 ### 2. Present Options (If Multiple Approaches Exist)
 
 Present trade-offs clearly:
-- Option A: [approach] - Pros/Cons
-- Option B: [approach] - Pros/Cons
+- Option A: [approach] — Pros/Cons
+- Option B: [approach] — Pros/Cons
 - Recommendation: [which and why]
 
 Get alignment before detailed planning.
@@ -109,7 +110,7 @@ Create a structured plan following the output format below.
 ## Output Format
 
 ```markdown
-# [Ticket Title] - Implementation Plan
+# [Title] - Implementation Plan
 
 ## Overview
 [1-2 sentences: what we're building and why]
@@ -118,10 +119,10 @@ Create a structured plan following the output format below.
 [What exists now, what's missing, relevant code locations]
 
 ## Desired End State
-[What should work when done, how to verify - include example commands/usage]
+[What should work when done, how to verify — include example commands/usage]
 
 ## Out of Scope
-[Explicitly list what we're NOT doing - prevents scope creep]
+[Explicitly list what we're NOT doing — prevents scope creep]
 
 ## Implementation Approach
 [High-level strategy and reasoning]
@@ -139,7 +140,7 @@ Create a structured plan following the output format below.
 
 ```[language]
 // Complete code to add or modify
-// Not snippets - full implementation
+// Not snippets — full implementation
 ```
 
 **File**: `path/to/another.ext`
@@ -183,8 +184,11 @@ directory/
 
 **Total new files:** N files
 
+## Related Research
+- `thoughts/research/YYYY-MM-DD-name.md` — [what it covers]
+
 ## Open Questions
-[List any unresolved questions - or "None" if all resolved]
+[List any unresolved questions — or "None" if all resolved]
 ```
 
 ## Phase Guidelines
@@ -207,32 +211,19 @@ directory/
 - Never use "..." or "// rest of code"
 - Someone should be able to copy-paste and have it work
 
-## Tech Stack Research
+## What Makes a Good Plan
 
-Before planning, identify and document:
+**Good** (specific, actionable):
+- File paths exist or clearly describe where to create
+- Code snippets show COMPLETE implementation
+- Verification steps are concrete commands
+- Expected outputs documented
 
-```markdown
-## Tech Stack Reference
-
-**Package manager:** pnpm/npm/yarn
-**Build tool:** turbo/nx/none
-**Language:** TypeScript (strict mode?)
-**Runtime:** Node.js/Bun/Deno
-**Framework:** Fastify/Express/Hono
-**Database:** Postgres + Drizzle/Prisma
-**Testing:** Vitest/Jest
-**Patterns to follow:** [reference existing implementations]
-```
-
-## Integration with Research Docs
-
-Plans should reference research docs when available:
-
-```markdown
-## Related Research
-- `thoughts/research/2026-01-18-data-model.md` - Data model design decisions
-- `thoughts/research/2026-01-16-use-cases.md` - Use cases being addressed
-```
+**Bad** (vague, hand-wavy):
+- "Update the relevant components"
+- "Add appropriate error handling"
+- "Test thoroughly"
+- Code snippets with "..." placeholders
 
 ## Example
 
@@ -326,40 +317,7 @@ export default defineConfig({
 [...]
 ```
 
-## What Makes a Good Plan
+## Handoffs
 
-**Good** (specific, actionable):
-- File paths exist or clearly describe where to create
-- Code snippets show COMPLETE implementation
-- Verification steps are concrete commands
-- Expected outputs documented
-
-**Bad** (vague, hand-wavy):
-- "Update the relevant components"
-- "Add appropriate error handling"
-- "Test thoroughly"
-- Code snippets with "..." placeholders
-
-## After Plan Approval
-
-When the user approves the plan:
-1. **Verify plan is saved to `thoughts/plans/`** - if not, save it now
-2. Begin implementation phase by phase
-3. Use TodoWrite to track progress through phases
-4. Mark verification checkboxes as you complete them
-
-The plan in `thoughts/plans/` serves as the source of truth during implementation.
-
-## Workflow Summary
-
-```
-1. User requests plan → Enter plan mode
-2. Launch Explore/codebase-analyzer sub-agents (parallel)
-3. Read research docs in thoughts/research/
-4. Draft plan based on findings
-5. Write plan to:
-   - Internal plan file (for Claude Code)
-   - thoughts/plans/YYYY-MM-DD-name.md (persistent)
-6. Exit plan mode → User approves
-7. Implement using plan as guide
-```
+- After plan approval, use `/dev-skills:implement-change` to execute phase by phase
+- The plan in `thoughts/plans/` serves as the source of truth during implementation
