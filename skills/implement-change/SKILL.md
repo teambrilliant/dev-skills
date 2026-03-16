@@ -1,11 +1,15 @@
 ---
 name: implement-change
-description: Implement code changes from a ticket or technical plan. Use when someone says "implement this", "build this", "code this ticket", "implement the plan", or has a defined piece of work ready for coding. Takes groomed tickets or implementation plans and produces working code.
+description: >-
+  Execute code changes from an implementation plan. Use when someone says "implement this",
+  "build this", "code this", "start building", "let's implement", "execute the plan",
+  "make the changes", "do the work", or has an approved implementation plan ready for coding.
+  Takes implementation plans and produces working code, phase by phase with verification.
 ---
 
 # Implement Change
 
-Execute implementation from a ticket or technical plan, producing working code changes.
+Execute an implementation plan phase by phase, producing working code with verification at each step.
 
 ## Design Philosophy
 
@@ -13,58 +17,42 @@ While implementing, consult [references/software-design-philosophy.md](reference
 
 ## Principles
 
-- **Understand before coding** - Read all relevant files fully first
-- **Phase by phase** - Complete one phase before starting the next
-- **Verify as you go** - Run checks after each phase, fix issues before proceeding
-- **Adapt to reality** - Plans are guides, not rigid scripts; handle mismatches thoughtfully
-- **Track progress** - Keep todos updated, check off items as completed
+- **Understand before coding** — read all relevant files thoroughly first
+- **Phase by phase** — complete one phase before starting the next
+- **Verify as you go** — run checks after each phase, fix issues before proceeding
+- **Adapt to reality** — plans are guides, not rigid scripts; handle mismatches thoughtfully
+- **Track progress** — keep todos updated, check off items as completed
 
-## Input Types
+## Input
 
-**With a plan** (from implementation-planning):
-- Follow the phases and changes specified
-- Use the plan's verification steps
-
-**With just a ticket** (from backlog-grooming):
-- Read the acceptance criteria
-- Explore the codebase to understand where changes go
-- Implement to satisfy each criterion
+This skill expects an implementation plan (from `/dev-skills:implementation-planning`). If no plan exists, create one first — don't start coding without a plan.
 
 ## Process
 
 ### 1. Understand the Work
 
-```
-Read the ticket/plan completely
-Read all files mentioned or related
-Create a todo list tracking each piece of work
-```
+Read the plan completely. Read all files mentioned or related. Create a todo list tracking each phase.
 
-If a plan exists with checkboxes, check for existing `[x]` marks - resume from first unchecked item.
+If the plan has checkboxes, check for existing `[x]` marks — resume from first unchecked item.
 
 ### 2. Implement Phase by Phase
 
-For each phase or acceptance criterion:
+For each phase:
 
-1. **Implement** - Make the code changes
-2. **Verify** - Run the specified checks (tests, typecheck, lint)
-3. **Fix** - Address any failures before moving on
-4. **Update** - Mark todos complete, check boxes in plan file
+1. **Implement** — make the code changes
+2. **Verify** — run the specified checks (tests, typecheck, lint)
+3. **Fix** — address any failures before moving on
+4. **Update** — mark todos complete, check boxes in plan file
 
 ### 3. Handle Mismatches
 
-When reality differs from the plan:
+When reality differs from the plan, surface it:
 
-```
-Issue in Phase [N]:
-Expected: [what the plan says]
-Found: [actual situation]
-Why this matters: [explanation]
+- What the plan says vs what you found
+- Why it matters
+- How you suggest proceeding
 
-How should I proceed?
-```
-
-Don't silently deviate - surface the issue and get guidance.
+Don't silently deviate — get guidance.
 
 ### 4. Final Verification
 
@@ -72,28 +60,24 @@ After all phases complete:
 - Run full test suite
 - Run typecheck and lint
 - Verify the original acceptance criteria are met
-- Commit changes (if requested)
 
 ## Working Guidelines
 
 **Do:**
-- Read files fully (no limit/offset)
+- Read files thoroughly — full files for small ones, targeted sections for large ones
 - Follow existing code patterns in the codebase
-- Keep changes focused on the ticket scope
+- Keep changes focused on the plan scope
 - Update progress frequently
 
 **Don't:**
 - Make unrelated "improvements"
 - Skip verification steps
 - Proceed past failures without fixing them
-- Assume - ask when unclear
+- Assume — ask when unclear
 
 ## Progress Tracking
 
-Use todos to track:
-- Each phase or major change
-- Verification steps
-- Any blockers or questions
+Use todos to track each phase, verification steps, and blockers.
 
 Update the plan file checkboxes as you complete items:
 ```markdown
@@ -109,10 +93,7 @@ If picking up existing work:
 - Start from first unchecked item
 - Verify previous work only if you hit unexpected issues
 
-## Output
+## Handoffs
 
-Implementation produces:
-- Working code changes
-- All tests passing
-- Checkboxes updated in plan (if applicable)
-- Ready for commit/PR (if requested)
+- After all phases pass verification → suggest `/dev-skills:qa-test` for browser verification
+- If acceptance criteria need revision during implementation → flag it, don't modify them
