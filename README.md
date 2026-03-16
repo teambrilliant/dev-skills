@@ -25,6 +25,8 @@ Generic development workflow skills for Claude Code. Break down, shape, plan, im
 ```
 primitives → shape → plan → implement → QA
      0          1       2       3        4
+         product-thinker
+            (0-1)
 ```
 
 0. `/dev-skills:product-primitives` — break system into deep, composable primitives
@@ -32,3 +34,5 @@ primitives → shape → plan → implement → QA
 2. `/dev-skills:implementation-planning` — design how to build it
 3. `/dev-skills:implement-change` — build it phase by phase
 4. `/dev-skills:qa-test` — verify in browser
+
+`/dev-skills:product-thinker` pairs with stages 0-1 — product decisions, UX analysis, build-vs-buy evaluation.
