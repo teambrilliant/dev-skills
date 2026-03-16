@@ -24,11 +24,11 @@ Body: process steps, patterns, output format, templates.
 ## Workflow stages
 
 ```
-decompose → shape → plan → implement → QA
+primitives → shape → plan → implement → QA
     0          1       2       3        4
 ```
 
-Skills map to stages: `systems-decomposition` (0), `shaping-work` (1), `product-thinker` (0-1), `implementation-planning` (2), `implement-change` (3), `qa-test` (4).
+Skills map to stages: `product-primitives` (0), `shaping-work` (1), `product-thinker` (0-1), `implementation-planning` (2), `implement-change` (3), `qa-test` (4).
 
 ## Conventions
 
