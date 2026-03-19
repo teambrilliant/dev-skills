@@ -79,7 +79,7 @@ Return: Condensed summary of findings with key observations only.
 ## Problem Types
 
 ### Feature Design
-1. Clarify the job-to-be-done
+1. Clarify the job-to-be-done and the emotion to be evoked
 2. Explore current state (browser + code if needed)
 3. Research how others solve it
 4. Propose solution with clear rationale
@@ -87,7 +87,7 @@ Return: Condensed summary of findings with key observations only.
 
 ### UX Flow Review
 1. Walk through the current flow in browser
-2. Identify friction points
+2. Identify friction points and emotional gaps — what should users feel at each step vs what they actually feel?
 3. Compare to best practices / competitors
 4. Propose improvements with before/after
 
@@ -113,7 +113,8 @@ Return: Condensed summary of findings with key observations only.
 ## Frameworks (Use When Appropriate)
 
 Pick the right tool for the problem:
-- **Jobs to Be Done**: When clarifying what users actually need
+- **Jobs to Be Done**: When clarifying what users actually need (the functional job)
+- **Emotions to Be Evoked**: When *how it feels* matters as much as *what it does* — landing pages, onboarding, first impressions, upgrade moments. JTBD tells you what to build; this tells you how it should feel. Map the emotional before → during → after for key moments
 - **First Principles**: When challenging assumptions
 - **User Story Mapping**: When designing flows
 - **ICE/RICE Scoring**: When prioritizing
