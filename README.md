@@ -16,6 +16,7 @@ Generic development workflow skills for Claude Code. Break down, shape, plan, im
 | product-primitives      | `/dev-skills:product-primitives`      | System → fundamental primitives & building blocks |
 | shaping-work            | `/dev-skills:shaping-work`            | Rough idea → structured work definition     |
 | product-thinker         | `/dev-skills:product-thinker`         | Product decisions, UX analysis, build-vs-buy |
+| product-discovery       | `/dev-skills:product-discovery`       | Validate ideas before committing to build    |
 | implementation-planning | `/dev-skills:implementation-planning` | Ticket → technical implementation plan      |
 | implement-change        | `/dev-skills:implement-change`        | Plan → working code, phase by phase         |
 | qa-test                 | `/dev-skills:qa-test`                 | Browser-based QA verification via sub-agent  |
@@ -23,16 +24,17 @@ Generic development workflow skills for Claude Code. Break down, shape, plan, im
 ## Typical flow
 
 ```
-primitives → shape → plan → implement → QA
-     0          1       2       3        4
+primitives → discovery → shape → plan → implement → QA
+     0           1          2       3       4        5
          product-thinker
-            (0-1)
+            (0-2)
 ```
 
 0. `/dev-skills:product-primitives` — break system into deep, composable primitives
-1. `/dev-skills:shaping-work` — define what to build (features, bugs, improvements)
-2. `/dev-skills:implementation-planning` — design how to build it
-3. `/dev-skills:implement-change` — build it phase by phase
-4. `/dev-skills:qa-test` — verify in browser
+1. `/dev-skills:product-discovery` — validate whether an idea is worth building (4 risks, experiments, evidence gates)
+2. `/dev-skills:shaping-work` — define what to build (features, bugs, improvements)
+3. `/dev-skills:implementation-planning` — design how to build it
+4. `/dev-skills:implement-change` — build it phase by phase
+5. `/dev-skills:qa-test` — verify in browser
 
-`/dev-skills:product-thinker` pairs with stages 0-1 — product decisions, UX analysis, build-vs-buy evaluation.
+`/dev-skills:product-thinker` pairs with stages 0-2 — product decisions, UX analysis, build-vs-buy evaluation.
