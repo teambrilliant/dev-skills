@@ -16,6 +16,39 @@ description: >-
 
 Think like a senior product manager. Analyze problems from multiple angles — user, business, technical, competitive, risk. Use all available leverage (browser, codebase, research) to ground recommendations in reality, not theory.
 
+## Step 0: Route the Question
+
+Before doing anything, determine whether this question is **about a specific product** or **general product thinking**.
+
+**Product-specific** — the question references "our app", "our users", a specific feature, a specific flow, or implies knowledge of what the product does. Also: you're in a codebase with a CLAUDE.md that describes a product.
+→ Run **product context exploration** (see below), then proceed to analysis.
+
+**Generic/advisory** — the question is about product strategy, frameworks, pricing models, growth tactics, or general "how does X work?" without referencing a specific product.
+→ Skip exploration, go straight to analysis.
+
+**Ambiguous** — could go either way. If you're in a codebase with a CLAUDE.md, default to product-specific. Otherwise, treat as generic.
+
+### Product Context Exploration
+
+When routed as product-specific, dispatch a sub-agent to build product understanding **before** analyzing the question. This is a product-shaped exploration, not a technical audit.
+
+**Sub-agent prompt:**
+```
+Explore this codebase to understand the PRODUCT (not the technical implementation). Return a concise product context summary:
+
+1. Read CLAUDE.md / README — what does this product do? Who is it for?
+2. Scan routes, pages, or screens — what are the main user-facing features/flows?
+3. Look at data models at a high level — what are the key domain concepts?
+4. Note any product-relevant context: user types, onboarding flows, billing/pricing, integrations.
+
+DO NOT: read implementation details, analyze code quality, or audit architecture.
+DO: think like a product manager walking through the app for the first time.
+
+Return: A structured summary (under 300 words) covering: what the product is, who uses it, key features/flows, and anything relevant to the question: "[insert user's question here]"
+```
+
+Use the sub-agent's product context to ground all subsequent analysis. Reference specific features, flows, and user types from the exploration — don't give generic advice when you have specific knowledge.
+
 ## Core Approach
 
 ### Understand Before Solving
@@ -44,8 +77,7 @@ Every product question deserves multiple lenses:
 - Test UX flows firsthand
 - Research competitor implementations
 
-**Codebase exploration** — understand what exists before recommending what to build:
-- Read CLAUDE.md or similar to understand the product
+**Codebase exploration** — when Step 0 didn't already cover it, or when you need deeper exploration:
 - Find related features/patterns via sub-agents
 - Assess technical feasibility of recommendations
 
@@ -129,6 +161,18 @@ Be direct and actionable:
 - Support with evidence/reasoning
 - Highlight key tradeoffs
 - Surface risks and mitigations
-- Suggest next steps — including when to hand off to `/dev-skills:shaping-work` for formal work definition
 
 Avoid lengthy preamble. Get to the point.
+
+## Handoff to Shaping Work
+
+When your analysis concludes that something should be built (new feature, significant change, new flow), offer to continue directly into shaping:
+
+> "Want me to shape this into a work definition?"
+
+If the user accepts, invoke `/dev-skills:shaping-work` and pass forward:
+- The product context gathered in Step 0 (so shaping-work doesn't re-explore)
+- Your analysis conclusions — the what and why
+- Any constraints, risks, or edge cases identified
+
+This eliminates the manual re-invocation and context loss between product thinking and work definition. The user can always decline — this is an offer, not automatic.

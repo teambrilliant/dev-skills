@@ -16,8 +16,8 @@ Shape ambiguous ideas into clear work definitions. Focus on clarity, not process
 
 ## Process
 
-1. **Understand the request** — Read the input (could be anything: a Slack thread, a rough idea, a customer complaint, a formal PRD). If intent is unclear, ask up to 3 targeted questions, then shape with stated assumptions.
-2. **Understand the context** — If working in a codebase, read CLAUDE.md or similar to understand what the application does (the product, not technical details).
+1. **Understand the request** — Read the input (could be anything: a Slack thread, a rough idea, a customer complaint, a formal PRD, or a handoff from product-thinker). If intent is unclear, ask up to 3 targeted questions, then shape with stated assumptions.
+2. **Understand the context** — If handed off from product-thinker, use the product context and analysis already gathered (don't re-explore). Otherwise, if working in a codebase, read CLAUDE.md or similar to understand what the application does (the product, not technical details).
 3. **Shape the work** — Write the definition using the output format below. Pick the template variant that fits the type of work.
 4. **Surface unknowns** — List anything that needs clarification before implementation.
 5. **Save the document** — Save to `thoughts/research/YYYY-MM-DD-descriptive-name.md`.
