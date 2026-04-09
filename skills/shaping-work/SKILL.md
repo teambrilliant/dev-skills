@@ -231,5 +231,4 @@ Keep it focused on *what* needs to exist and *why*, not *how* to build it.
 
 ## Handoffs
 
-- If the work is clearly too large for a single ticket, note that in Risks & Unknowns and suggest running `/dev-skills:backlog-grooming` to decompose it.
 - Shaped work feeds into `/dev-skills:implementation-planning` for technical design.

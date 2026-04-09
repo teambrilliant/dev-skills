@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A Claude Code plugin (`dev-skills`) packaging 6 development workflow skills. Skills are pure markdown — no build, no tests, no compilation.
+A Claude Code plugin (`dev-skills`) packaging development workflow skills. Skills are pure markdown — no build, no tests, no compilation.
 
 ## Skill structure
 
