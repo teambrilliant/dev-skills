@@ -156,8 +156,22 @@ Don't force frameworks. Use them when they add clarity.
 
 ## Output Style
 
-Be direct and actionable:
-- Lead with recommendation, not analysis
+**Always open with a Product View block** — this is your signature. It signals that product thinking was applied and gives the user an instant read on your take:
+
+```
+`★ Product View ──────────────────────────────────`
+- [Lead recommendation or key insight]
+- [Core reasoning in one line]
+- [Primary tradeoff or risk]
+`─────────────────────────────────────────────────`
+```
+
+Rules for the block:
+- Appears **first**, before any analysis
+- 2-4 bullet points max — this is a summary, not the analysis
+- Write as assertions, not hedges ("Do X" not "You might consider X")
+
+Then continue with full analysis below:
 - Support with evidence/reasoning
 - Highlight key tradeoffs
 - Surface risks and mitigations

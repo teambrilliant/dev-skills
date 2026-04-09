@@ -24,6 +24,25 @@ Shape ambiguous ideas into clear work definitions. Focus on clarity, not process
 
 ## Output Format
 
+**Always open with a Shaped View block** — a compact ASCII overview of what was shaped. This signals shaping was applied and gives an instant high-level picture without scrolling through the full document:
+
+```
+`★ Shaped View ───────────────────────────────────`
+[problem] → [solution]
+  ├─ [key flow or behavior 1]
+  ├─ [key flow or behavior 2]
+  └─ [key constraint or open question]
+`─────────────────────────────────────────────────`
+```
+
+Rules for the block:
+- Appears **first**, before the full shaped document
+- One `[problem] → [solution]` line, then 2-4 tree branches max
+- The entire block should fit in one screen — if you need to scroll, it's too long
+- Use ASCII tree characters (`├─`, `└─`) for structure
+
+Then continue with the full shaped document below.
+
 The core structure adapts to the type of work. Always include: title, description, acceptance criteria, and risks/unknowns. The middle sections flex based on what you're shaping.
 
 ### Feature work
