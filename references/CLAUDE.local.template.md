@@ -15,6 +15,8 @@ When I bring a feature, problem, or idea — before jumping to code:
 3. **STOP before implementing medium/large work** — present the plan and wait for my confirmation before writing code.
 4. **Verify after implementing** — run `/dev-skills:qa-test` for UI changes, or run the relevant test suite for backend changes.
 
+Open questions must include a recommended resolution with reasoning. Never ask "what do you want?" — propose what you'd do and why, with discarded alternatives. I'll steer if I disagree.
+
 Skip this workflow only when I explicitly say "just do it" or give a precise, scoped instruction (e.g., "rename X to Y").
 
 ## Git

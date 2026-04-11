@@ -43,6 +43,7 @@ Before writing plans, read [references/software-design-philosophy.md](references
 - **Research first** — understand the codebase before proposing solutions
 - **Be specific** — include file paths, function names, code snippets
 - **Be skeptical** — question assumptions, identify risks early
+- **Decide, don't ask** — every open question gets a recommended resolution with reasoning. Never present a question without proposing what you'd do
 - **Be practical** — focus on incremental, testable changes
 - **Agent-agnostic** — plan should work for any implementer
 - **Follow patterns** — match existing codebase conventions
@@ -188,7 +189,12 @@ directory/
 - `thoughts/research/YYYY-MM-DD-name.md` — [what it covers]
 
 ## Open Questions
-[List any unresolved questions — or "None" if all resolved]
+
+Every question includes a recommended resolution. Proceeding with these unless you steer otherwise.
+
+- **[Question]**
+  Recommend: [option] — [why]
+  Discarded: [option] ([why not])
 ```
 
 ## Phase Guidelines

@@ -12,14 +12,14 @@ Shape ambiguous ideas into clear work definitions. Focus on clarity, not process
 - **No jargon** — write so anyone can understand
 - **Product-focused** — define *what*, not *how* to build it
 - **Right level of detail** — enough to act on, not a specification
-- **Flag unknowns** — surface risks and questions early
+- **Flag unknowns with recommendations** — surface risks early, but always propose a resolution
 
 ## Process
 
 1. **Understand the request** — Read the input (could be anything: a Slack thread, a rough idea, a customer complaint, a formal PRD, or a handoff from product-thinker). If intent is unclear, ask up to 3 targeted questions, then shape with stated assumptions.
 2. **Understand the context** — If handed off from product-thinker, use the product context and analysis already gathered (don't re-explore). Otherwise, if working in a codebase, read CLAUDE.md or similar to understand what the application does (the product, not technical details).
 3. **Shape the work** — Write the definition using the output format below. Pick the template variant that fits the type of work.
-4. **Surface unknowns** — List anything that needs clarification before implementation.
+4. **Surface unknowns with recommendations** — For every unknown, propose a recommended resolution and list discarded alternatives with reasoning. Never ask "what do you want?" — propose what you'd do and why.
 5. **Save the document** — Save to `thoughts/research/YYYY-MM-DD-descriptive-name.md`.
 
 ## Output Format
@@ -67,7 +67,9 @@ The core structure adapts to the type of work. Always include: title, descriptio
 
 ### Risks & Unknowns
 
-- [Questions, dependencies, or unclear areas]
+- **[Question or risk]**
+  Recommend: [option] — [why]
+  Discarded: [option] ([why not])
 ```
 
 ### Bug fix
@@ -88,7 +90,9 @@ The core structure adapts to the type of work. Always include: title, descriptio
 
 ### Risks & Unknowns
 
-- [Unclear scope, possible regressions, missing reproduction info]
+- **[Unclear scope, possible regressions, missing reproduction info]**
+  Recommend: [option] — [why]
+  Discarded: [option] ([why not])
 ```
 
 ### Improvement / tech debt
@@ -107,7 +111,9 @@ The core structure adapts to the type of work. Always include: title, descriptio
 
 ### Risks & Unknowns
 
-- [Migration concerns, backwards compatibility, scope creep]
+- **[Migration concerns, backwards compatibility, scope creep]**
+  Recommend: [option] — [why]
+  Discarded: [option] ([why not])
 ```
 
 Use the variant that fits best. For work that doesn't fit neatly, adapt — the acceptance criteria and risks sections are the essential parts.
@@ -141,8 +147,12 @@ N/A — follow existing badge patterns in the UI
 
 ### Risks & Unknowns
 
-- Should the count persist across sessions for logged-out users?
-- Max display value? (e.g., "99+" for large carts)
+- **Should the count persist across sessions for logged-out users?**
+  Recommend: Yes, use localStorage — users expect cart to survive tab close.
+  Discarded: Server-side session (adds auth dependency for anonymous users)
+- **Max display value for large carts?**
+  Recommend: Show "99+" — standard e-commerce pattern, avoids layout overflow.
+  Discarded: Unlimited display (breaks layout at 4+ digits)
 ```
 
 ### Bug fix
@@ -168,8 +178,12 @@ Users expect to find products by entering a SKU in the search bar, but search cu
 
 ### Risks & Unknowns
 
-- Does the search index include the SKU field, or does the index need rebuilding?
-- Are SKUs unique across all product types?
+- **Does the search index include the SKU field?**
+  Recommend: Check index schema first — if SKU is missing, add it and rebuild. Rebuild is cheap if index is small.
+  Discarded: Separate SKU lookup endpoint (fragments search UX into two paths)
+- **Are SKUs unique across all product types?**
+  Recommend: Treat as unique — if duplicates exist, return all matches ranked by relevance.
+  Discarded: Error on duplicate (punishes the user for a data quality issue)
 ```
 
 ### Larger work (PRD-style)
@@ -211,9 +225,15 @@ Display a reminder modal when a Partner logs into the Back Office without comple
 
 ### Risks & Unknowns
 
-- Should we limit how often the modal appears? (e.g., once per day vs. every login)
-- What happens if a Partner dismisses repeatedly — do we escalate messaging?
-- Are there any steps that should block Back Office access entirely?
+- **Should we limit how often the modal appears?**
+  Recommend: Show every login — onboarding completion is a business requirement, not a preference. Dismissing = "not now", not "never".
+  Discarded: Once per day (risks Partners forgetting entirely), once ever (defeats the purpose)
+- **What happens if a Partner dismisses repeatedly?**
+  Recommend: No escalation — the modal is already the nudge. If they dismiss 10 times, they have a reason. Don't punish.
+  Discarded: Escalating banner (adds annoyance without addressing root cause of non-completion)
+- **Are there any steps that should block Back Office access entirely?**
+  Recommend: No blocking — partial access is better than no access. Partners who can see their dashboard are more motivated to complete onboarding.
+  Discarded: Hard block after SSN/bank (creates support burden, Partners call asking why they're locked out)
 ```
 
 ## Design Thinking
