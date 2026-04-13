@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+
+- Dropped User Story line from shaping-work feature template — the description paragraph already covers who/what/why without the rigid "As a / I want / So that" format
+- Updated examples to fold user context into the description sentence
+
 ## 2.0.0
 
 - **Breaking**: open questions in shaping-work and implementation-planning now require recommended resolution with reasoning + discarded alternatives

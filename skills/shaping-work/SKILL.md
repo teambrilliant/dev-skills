@@ -50,9 +50,7 @@ The core structure adapts to the type of work. Always include: title, descriptio
 ```markdown
 ## [Clear, descriptive title]
 
-[1-2 sentence description of what this feature does and why it matters]
-
-**User Story**: As a [user type], I want [goal], so that [benefit].
+[1-2 sentence description of what this feature does, who it's for, and why it matters]
 
 ### Acceptance Criteria
 
@@ -129,9 +127,7 @@ Use the variant that fits best. For work that doesn't fit neatly, adapt — the 
 ```markdown
 ## Cart item count in header
 
-Display a badge on the cart icon showing the number of items currently in the user's cart.
-
-**User Story**: As a shopper, I want to see how many items are in my cart at a glance, so that I don't have to open the cart to check.
+Display a badge on the cart icon so shoppers can see how many items are in their cart without opening it.
 
 ### Acceptance Criteria
 
@@ -195,9 +191,7 @@ Users expect to find products by entering a SKU in the search bar, but search cu
 ```markdown
 ## Onboarding reminder modal
 
-Display a reminder modal when a Partner logs into the Back Office without completing all onboarding steps. The modal lists what's missing and guides them to finish.
-
-**User Story**: As a Partner, I want to be reminded when I haven't finished onboarding, so that I can complete the required steps and start earning.
+Display a reminder modal when a Partner logs into the Back Office without completing all onboarding steps. Partners who don't complete onboarding can't start earning — the modal lists what's missing and guides them to finish.
 
 ### Acceptance Criteria
 
