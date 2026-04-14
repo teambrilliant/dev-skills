@@ -49,6 +49,11 @@ Combine when: pieces share information, are used together, overlap conceptually,
 
 **Planning check**: For each proposed file/module split, ask — will developers need to read both to understand either?
 
+### 10. Domain rules live once
+A business invariant — when X can happen, what makes Y valid, who owns Z — belongs in one place: the domain module. UI surfaces, route handlers, and background jobs consume it; they don't reimplement it. Adding a type, branch, or variant to handle a different caller is duplication disguised as generalization.
+
+**Planning check**: For each status check, ownership check, or eligibility check in your plan, does it live in exactly one domain module? If the same rule would appear in two feature folders (Calendar and Canvas, API and UI, mobile and web), the plan is wrong — lift the rule. Before proposing a new type/file, search for the existing rule it might duplicate.
+
 ## Red Flags to Watch For
 
 - **Shallow module**: Interface is as complex as implementation — not hiding anything
@@ -58,3 +63,4 @@ Combine when: pieces share information, are used together, overlap conceptually,
 - **Overexposure**: Common-case users forced to learn about rare-case features
 - **Conjoined methods**: Can't understand one without understanding the other
 - **Special-general mixture**: General mechanism contains code specific to one use case
+- **Surface-duplicated rule**: Same business condition (status, ownership, eligibility) appears across two surfaces (Calendar/Canvas, API/UI, mobile/web) — lift it to the domain

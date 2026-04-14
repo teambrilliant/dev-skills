@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.1
+
+- New principle in `software-design-philosophy.md` (planning + implement-change variants): **Domain rules live once** — a business invariant belongs in one domain module, consumed by every surface; adding a type/branch per caller is duplication disguised as generalization
+- New red flag: **Surface-duplicated rule** — same status/ownership/eligibility check across Calendar/Canvas, API/UI, mobile/web → lift to domain
+
 ## 2.2.0
 
 - Wired acceptance criteria as a first-class contract across the pipeline, informed by Anthropic's "Harness Design for Long-Running Apps" (generator-evaluator separation, sprint contracts)

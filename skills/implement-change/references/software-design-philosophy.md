@@ -39,6 +39,13 @@ Combine code that shares information, is used together, or overlaps conceptually
 ### Separate general-purpose from special-purpose
 Put general mechanisms in lower layers. Keep feature-specific logic in higher layers. Don't pollute a utility with business logic. Don't pollute a feature with infrastructure.
 
+### Domain rules live once
+A business invariant — when X can happen, what makes Y valid, who owns Z — belongs in one place: the domain module. Surfaces (UI, route handlers, jobs) consume it; they don't reimplement it. If a new caller needs the same rule, give them the same function — don't add a type, branch, or variant for "the Calendar version" vs "the Canvas version" of the same rule.
+
+Before adding a new type or file for a feature, search for the existing rule it might be duplicating. Generalization means one place, many callers — not one type per caller.
+
+Example: "campaign in ToDo can be deleted" lives as `Campaign.canDelete()`, called from Calendar, Canvas, and any future surface.
+
 ## Red Flags While Coding
 
 - **Shallow module**: You wrote a wrapper that adds no abstraction — the caller still needs to know everything
@@ -47,6 +54,7 @@ Put general mechanisms in lower layers. Keep feature-specific logic in higher la
 - **Temporal decomposition**: You structured code around "first we do X, then Y" instead of around knowledge boundaries
 - **Conjoined methods**: You can't understand method A without reading method B — they should probably be one method
 - **Repetition**: Same pattern appears 3+ times — you haven't found the right abstraction yet
+- **Surface-duplicated rule**: Same status check, ownership check, or eligibility check appears in two UI/API/job surfaces — the rule belongs in the domain, lift it
 - **Special-general mixture**: A general utility contains code handling one specific use case
 - **Vague name**: The variable/function name doesn't convey what it does precisely — `time` vs `timeMs`, `data` vs `userProfile`
 
