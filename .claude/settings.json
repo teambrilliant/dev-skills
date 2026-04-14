@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "WebSearch",
+
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git blame:*)",
+      "Bash(git remote:*)",
+      "Bash(git config:*)",
+      "Bash(git ls-files:*)",
+
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(git push origin:*)",
+      "Bash(git push -u:*)",
+      "Bash(git push --set-upstream:*)",
+
+      "Bash(git checkout:*)",
+      "Bash(git switch:*)",
+      "Bash(git branch)",
+      "Bash(git branch -l:*)",
+      "Bash(git branch --list:*)",
+      "Bash(git branch -v:*)",
+      "Bash(git branch -vv:*)",
+      "Bash(git branch -a:*)",
+      "Bash(git branch -r:*)",
+      "Bash(git branch -m:*)",
+      "Bash(git branch --move:*)",
+
+      "Bash(git worktree:*)",
+
+      "Bash(git fetch:*)",
+      "Bash(git pull:*)",
+      "Bash(git merge:*)",
+      "Bash(git rebase)",
+      "Bash(git rebase main)",
+      "Bash(git rebase origin/main)",
+
+      "Bash(git stash:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(git tag:*)",
+      "Bash(git describe:*)",
+
+      "Bash(gh pr view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr status:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh pr comment:*)",
+      "Bash(gh pr ready:*)",
+
+      "Bash(gh issue view:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh issue comment:*)",
+
+      "Bash(gh run view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run watch:*)",
+      "Bash(gh run rerun:*)",
+
+      "Bash(gh workflow view:*)",
+      "Bash(gh workflow list:*)",
+
+      "Bash(gh release view:*)",
+      "Bash(gh release list:*)",
+
+      "Bash(gh repo view:*)",
+      "Bash(gh repo list:*)",
+
+      "Bash(gh api:*)",
+      "Bash(gh auth status)",
+      "Bash(gh browse:*)",
+
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools"
+    ],
+    "deny": [
+      "Bash(git reset --hard:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push --force-with-lease:*)",
+      "Bash(git clean -f:*)",
+      "Bash(git clean -fd:*)",
+      "Bash(git clean -xd:*)",
+      "Bash(git clean -xf:*)",
+      "Bash(git branch -D:*)",
+      "Bash(git branch --delete --force:*)",
+      "Bash(git rebase -i:*)",
+      "Bash(git filter-branch:*)",
+      "Bash(git reflog expire:*)",
+
+      "Bash(gh pr close:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(gh pr edit:*)",
+      "Bash(gh issue close:*)",
+      "Bash(gh issue delete:*)",
+      "Bash(gh issue edit:*)",
+      "Bash(gh release create:*)",
+      "Bash(gh release delete:*)",
+      "Bash(gh release edit:*)",
+      "Bash(gh repo delete:*)",
+      "Bash(gh repo edit:*)",
+      "Bash(gh workflow disable:*)",
+      "Bash(gh workflow enable:*)",
+      "Bash(gh workflow run:*)"
+    ]
+  }
+}
