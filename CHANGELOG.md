@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0
+
+- Wired acceptance criteria as a first-class contract across the pipeline, informed by Anthropic's "Harness Design for Long-Running Apps" (generator-evaluator separation, sprint contracts)
+- **shaping-work**: ACs must be independently testable, observable, non-vague — enforces contract quality at the source
+- **implementation-planning**: new `## Acceptance Criteria` section links to the shape doc (no restating); per-phase `Verification` renamed to `Phase Checks` to clarify technical gates ≠ ACs
+- **qa-test**: shape doc is now the primary AC source (diff inference demoted to last resort); added evaluator skepticism rules (binary pass/fail, cited evidence, no rationalization, specific bugs); after 2 failed fix-and-retest cycles, escalate to re-plan or human instead of looping
+
 ## 2.1.0
 
 - Dropped User Story line from shaping-work feature template — the description paragraph already covers who/what/why without the rigid "As a / I want / So that" format

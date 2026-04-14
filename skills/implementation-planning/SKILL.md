@@ -116,6 +116,11 @@ Create a structured plan following the output format below.
 ## Overview
 [1-2 sentences: what we're building and why]
 
+## Acceptance Criteria
+[Link to the shape doc: `thoughts/research/YYYY-MM-DD-name.md`]
+[The shape doc is the canonical source. Do NOT restate or reinterpret criteria here — qa-test will consume them from the shape doc verbatim.]
+[If no shape exists (tiny/unshaped work), list criteria here directly using the same rules as shaping-work: independently testable, observable behavior, no vague language.]
+
 ## Current State
 [What exists now, what's missing, relevant code locations]
 
@@ -150,9 +155,11 @@ Create a structured plan following the output format below.
 // Complete code
 ```
 
-### Verification
-- [ ] [Specific command to run]
+### Phase Checks
+- [ ] [Specific command to run — build, typecheck, unit test]
 - [ ] [Expected output or behavior]
+
+*Phase Checks are technical gates (build passes, typecheck clean, unit tests green). They are NOT acceptance criteria. ACs are verified by qa-test at the end against the shape doc.*
 
 ---
 
@@ -200,7 +207,7 @@ Every question includes a recommended resolution. Proceeding with these unless y
 ## Phase Guidelines
 
 **Good phases:**
-- Each phase is independently verifiable
+- Each phase is independently verifiable via Phase Checks
 - Earlier phases don't break existing functionality
 - Later phases build on earlier ones
 - Can pause between phases if needed
@@ -313,7 +320,7 @@ export default defineConfig({
 })
 ```
 
-### Verification
+### Phase Checks
 - [ ] `pnpm install` succeeds
 - [ ] `pnpm --filter=@repo/db build` succeeds
 

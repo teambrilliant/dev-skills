@@ -28,11 +28,19 @@ Gather QA pre-flight context for testing. Return a structured JSON block with:
 
 1. **acceptance_criteria**: List of testable criteria. Check these sources in order,
    stop at the first that has criteria:
+   - **The shape doc referenced by the implementation plan** (canonical source):
+     look for `## Acceptance Criteria` section in `thoughts/plans/*.md` — it should
+     link to a `thoughts/research/*.md` shape doc. Read that shape doc's
+     `### Acceptance Criteria` section and use those criteria verbatim.
    - The user's prompt (if criteria were given explicitly)
+   - Current plan file (if it lists criteria directly — unshaped work path)
    - Current PR description: run `gh pr view --json body` via Bash
    - Current branch diff: run `git diff main...HEAD --stat` then read changed files
-     to infer what user-visible behavior changed
+     to infer what user-visible behavior changed (LAST RESORT — unshaped work only)
    - Linked issue: check PR body for issue references, fetch with `gh issue view`
+
+   Return `criteria_source` alongside the criteria so the main thread knows which
+   tier was used (shape doc / prompt / plan / PR / diff / issue).
 
 2. **test_url**: Where to test. Check in order:
    - `.tap/tap-audit.md` Environments section
@@ -72,10 +80,13 @@ Return results as a structured summary, not raw tool output.
 <summary>Manual fallback: Gather criteria and resolve URL</summary>
 
 **Gather acceptance criteria** from (in priority order):
+- Shape doc referenced by the implementation plan (`thoughts/research/*.md` via
+  `thoughts/plans/*.md`) — canonical source when it exists
 - Explicit criteria provided in the prompt
+- Current plan file if it lists criteria directly (unshaped path)
 - Current ticket/issue (if referenced)
 - PR description
-- `.tap/tap-audit.md` for environment context
+- Diff inference — last resort, unshaped work only
 
 If no criteria found, ask in human mode. In agent mode, infer from the diff.
 
@@ -124,6 +135,23 @@ Additional context:
 - DB tools available: {db_available}
 - Has async flows: {has_async_flows}
 - Test pages: {test_pages}
+
+## Evaluator mindset
+
+You are an independent evaluator. Your job is to be skeptical, not helpful. The
+generator already believes its work is correct — your value is catching what it
+missed. Rules:
+
+- **Binary outcomes**: a criterion fully passes or it fails. If you catch yourself
+  writing "PASS with caveats" or "close enough", mark it **FAIL** and state the gap.
+- **Evidence required**: for each PASS, cite what you observed — element text, URL
+  after action, console/network status, DB row. PASS with no cited evidence → FAIL.
+- **Do not rationalize**: if something looked off but "probably works", mark it FAIL
+  or PARTIAL and describe what looked off. Let the human/agent decide if it's
+  acceptable — that's not your call.
+- **Specific bugs, not vague assessments**: when a criterion fails, file a concrete
+  actionable finding ("Delete button calls `/api/items/:id` which returns 500;
+  expected 204") — not "delete doesn't work."
 
 ## How to test
 
@@ -204,6 +232,15 @@ The sub-agent returns a compact summary. Present it to the user.
 1. Fix the code
 2. Launch new sub-agent to re-test only failed criteria
 3. Max 2 fix-and-retest cycles
+
+**After 2 failed cycles, escalate — do NOT keep iterating.** Branch by failure shape:
+
+- **Same criterion failing the same way both cycles** → the plan is likely wrong,
+  not the code. Re-enter `/dev-skills:implementation-planning` with the failing
+  criterion and the observed behavior; do not attempt a third code fix.
+- **Different criteria failing each cycle / shifting failures** → hand to human
+  with a consolidated diff: for each failing criterion, `expected: …` vs
+  `observed: …` plus the specific bug finding from the evaluator. Stop.
 
 *Human mode:*
 - Present failures

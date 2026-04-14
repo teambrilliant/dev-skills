@@ -45,6 +45,13 @@ Then continue with the full shaped document below.
 
 The core structure adapts to the type of work. Always include: title, description, acceptance criteria, and risks/unknowns. The middle sections flex based on what you're shaping.
 
+**Acceptance criteria rules** — this section is the contract consumed downstream by planning and QA:
+
+- Each criterion must be **independently testable** in a browser or database — someone can verify it pass/fail without reading the code.
+- Describe observable behavior, not implementation ("badge shows `99+` for 100+ items" — not "use `Math.min(count, 99)`").
+- No vague criteria ("works well", "is fast", "handles edge cases"). If a criterion can't be checked, it doesn't belong here.
+- Prefer specifics over generalities: concrete inputs, concrete states, concrete outputs.
+
 ### Feature work
 
 ```markdown
