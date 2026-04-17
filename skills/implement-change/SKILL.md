@@ -22,6 +22,7 @@ While implementing, consult [references/software-design-philosophy.md](reference
 - **Verify as you go** — run checks after each phase, fix issues before proceeding
 - **Adapt to reality** — plans are guides, not rigid scripts; handle mismatches thoughtfully
 - **Track progress** — keep todos updated, check off items as completed
+- **Sub-agents for exploration, not execution** — dispatch sub-agents to research codebase patterns or read multiple files in parallel before coding. Do not delegate code changes to sub-agents — implement directly. Fan out multiple sub-agents in one turn when gathering independent context (e.g., reading tests + reading related modules).
 
 ## Input
 

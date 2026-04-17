@@ -83,16 +83,17 @@ Every product question deserves multiple lenses:
 
 ## Context-Efficient Exploration
 
-Browser exploration consumes significant context. Use sub-agents for heavy exploration.
+Browser and codebase exploration consume significant context. Use sub-agents to keep the main thread lean — but use them deliberately.
 
-**Use sub-agents for:**
-- Extensive site walkthroughs (multiple pages, flows)
+**Use sub-agents when exploration is broad:**
+- Multiple pages, flows, or areas of the codebase to cover
 - Competitor research (exploring external sites)
 - UX audits (systematic review of many screens)
-- Data gathering from multiple sources
+- Gathering context from multiple sources in parallel — fan out multiple sub-agents in one turn when tasks are independent
 
-**Explore directly for:**
+**Handle directly when the work fits in a single response:**
 - Quick single-page checks
+- Reading one file or checking one pattern
 - Verifying a specific element
 - Following up on sub-agent findings
 

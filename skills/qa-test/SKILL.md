@@ -9,6 +9,8 @@ Verify implemented features in a real browser. Exercise each acceptance criterio
 
 **Context-efficient design**: browser testing runs in a sub-agent so snapshot/interaction data stays out of the main thread. Main thread only sees compact pass/fail summaries.
 
+**Sub-agent rule:** Always use sub-agents for browser interaction and pre-flight exploration — these are broad, multi-step tasks that generate significant context. Fan out pre-flight and browser testing as separate sub-agents when they're independent. Handle directly only when verifying a single, specific element or reading one file for criteria.
+
 ## Process
 
 1. Pre-flight (sub-agent) — gather criteria, resolve URL, check environment

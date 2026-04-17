@@ -33,6 +33,8 @@ The user faces something unfamiliar or complex. Needs the problem reframed.
 
 Before reasoning, gather what you need. Don't theorize about what you can verify.
 
+**Sub-agent rule:** Handle directly if the work fits in a single response (reading one file, checking one pattern). Dispatch a sub-agent when exploration spans multiple files or areas. Fan out multiple sub-agents in one turn when tasks are independent (e.g., codebase exploration + web research in parallel).
+
 ### When in a codebase
 
 Dispatch a sub-agent to explore the relevant landscape:
