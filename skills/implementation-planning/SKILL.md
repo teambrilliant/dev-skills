@@ -334,3 +334,4 @@ export default defineConfig({
 
 - After plan approval, use `/dev-skills:implement-change` to execute phase by phase
 - The plan in `thoughts/plans/` serves as the source of truth during implementation
+- For plans that introduce new UI, check `docs/design.md` §Functional patterns first — extend an existing pattern before designing a new one. If unclear what the product's design language is, run `/dev-skills:design-language` in Capture mode against the inspiration source to establish it before planning

@@ -13,7 +13,7 @@ When I bring a feature, problem, or idea — before jumping to code:
    - **Nothing exists + clear and small** → implement directly
    - **Nothing exists + clear but medium/large** → `/dev-skills:implementation-planning`
 3. **STOP before implementing medium/large work** — present the plan and wait for my confirmation before writing code.
-4. **Verify after implementing** — run `/dev-skills:qa-test` for UI changes, or run the relevant test suite for backend changes.
+4. **Verify after implementing** — run `/dev-skills:qa-test` for UI changes, or run the relevant test suite for backend changes. For UI changes, also run `/dev-skills:design-language` Review against the changed components to catch drift from `docs/design.md` (if the repo maintains one).
 
 Open questions must include a recommended resolution with reasoning. Never ask "what do you want?" — propose what you'd do and why, with discarded alternatives. I'll steer if I disagree.
 

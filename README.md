@@ -21,6 +21,7 @@ Generic development workflow skills for Claude Code. Break down, shape, plan, im
 | implementation-planning | `/dev-skills:implementation-planning` | Ticket → technical implementation plan      |
 | implement-change        | `/dev-skills:implement-change`        | Plan → working code, phase by phase         |
 | qa-test                 | `/dev-skills:qa-test`                 | Browser-based QA verification via sub-agent  |
+| design-language         | `/dev-skills:design-language`         | Capture + enforce a product's visual design language |
 
 ## Typical flow
 
@@ -29,6 +30,8 @@ loop-check → primitives → discovery → shape → plan → implement → QA
    -1            0            1          2       3       4        5
                       product-thinker
                          (0-2)
+                      design-language
+                         (2-5, cross-cutting)
 ```
 
 -1. `/dev-skills:loop-check` — assess what's needed for autonomous feedback loops
@@ -40,6 +43,8 @@ loop-check → primitives → discovery → shape → plan → implement → QA
 5. `/dev-skills:qa-test` — verify in browser
 
 `/dev-skills:product-thinker` pairs with stages 0-2 — product decisions, UX analysis, build-vs-buy evaluation.
+
+`/dev-skills:design-language` is cross-cutting across stages 2-5 — captures design inspiration into a living `docs/design.md`, checks implementations for drift, pairs with shape / plan / implement / QA.
 
 ## Workflow automation
 

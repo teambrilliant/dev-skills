@@ -221,6 +221,8 @@ The sub-agent returns a compact summary. Present it to the user.
 
 **Agent mode**: If all pass, proceed (e.g., open PR). If any fail, attempt fix-and-retest.
 
+**For UI-visible changes:** after functional QA passes, offer design-fidelity QA as the second half of the closer — *"Want to run `/dev-skills:design-language` Review against the changed components? Functional pass doesn't mean it matches the product's design language."* This only applies when the diff touches user-visible UI (components, layouts, copy); skip for pure backend or infra changes.
+
 ### 5. Failure Handling
 
 **Automation failures (NEEDS_MANUAL):**

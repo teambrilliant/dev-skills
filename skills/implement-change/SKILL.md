@@ -97,4 +97,5 @@ If picking up existing work:
 ## Handoffs
 
 - After all phases pass verification → suggest `/dev-skills:qa-test` for browser verification
+- For UI-heavy phases, offer a mid-build design check → `/dev-skills:design-language` Review against the in-progress component catches drift from `docs/design.md` before the PR. Worth it when a phase touches layout, hierarchy, or a net-new visual pattern
 - If acceptance criteria need revision during implementation → flag it, don't modify them

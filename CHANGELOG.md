@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.4.0
+
+- New skill: **design-language** — capture a product's visual language into a living `docs/design.md`, and check implementations against it
+- Two modes: **Capture** (Figma URL / screenshot / live URL → proposed diff to `docs/design.md`) and **Review** (component or built-UI screenshot + existing `docs/design.md` → structured critique)
+- Baseline heuristics bake in Rams's 10 principles, Refactoring UI, Kholmatova's functional-vs-perceptual pattern split, and Butterick typography depth — as operationalizable checklists, not prose
+- Starter `docs/design.md` template with `[describes]` / `[prescribes]` tagging, first-class anti-principles, mandatory citations, and separate functional / perceptual pattern sections
+- Anti-inflation discipline: Capture consolidates into existing entries before proposing new ones; Divergences section is mandatory
+- Staleness guard: Review warns if `docs/design.md` is > 8 weeks old before critiquing against potentially stale principles
+- Cross-cutting across stages 2-5 (shape → plan → implement → QA)
+- Wired into neighbor skills: `qa-test` offers Review after functional QA for UI-visible changes; `implement-change` offers mid-build Review for UI-heavy phases; `implementation-planning` nudges pattern reuse via `docs/design.md §Functional patterns`; `CLAUDE.local.template.md` adds Review to the post-implement verify step
+
 ## 2.2.1
 
 - New principle in `software-design-philosophy.md` (planning + implement-change variants): **Domain rules live once** — a business invariant belongs in one domain module, consumed by every surface; adding a type/branch per caller is duplication disguised as generalization
