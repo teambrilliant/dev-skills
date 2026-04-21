@@ -1,24 +1,18 @@
 ---
 name: design-language
 description: >-
-  Capture and enforce a product's visual design language — the principles, functional
-  patterns, and perceptual patterns that make a product feel like itself. Use when the
-  user wants to: distill design inspiration into a durable reference ("capture this
-  design from figma", "distill this screenshot", "ingest this design", "pull principles
-  from this", "extract our design language", "capture design direction"), check an
-  implementation against the product's design language ("review design fidelity", "check
-  my component against our design language", "check against design direction", "does
-  this match our design?"), review a PR for design drift, or turn Figma/Mobbin/live-site
-  inspiration into principles and patterns rather than re-deriving them per PR. The core
-  signal is the user pointing at a design source (Figma URL, screenshot, live URL) OR at
-  built UI and asking how it relates to the product's visual language / direction.
-  Operates on a consumer-repo `docs/design.md` — captures proposed diffs, never writes
-  directly. Pairs with shaping-work (principles check), implementation-planning (pattern
-  selection), implement-change (mid-build guardrail), and qa-test (design-fidelity
-  review alongside functional QA).
-  NOT for: generating new UI from scratch (→ frontend-design), translating a specific
-  Figma design into code (→ figma-implement-design), accessibility audits (→
-  a11y-debugging), or token extraction (tokens live in code + Figma Variables).
+  Capture and enforce a product's visual design language — principles and patterns that
+  make it feel like itself. Use when the user wants to: distill design inspiration into
+  a durable reference ("capture this design from figma", "distill this screenshot",
+  "extract our design language", "capture design direction"), or check an implementation
+  against the product's design language ("review design fidelity", "check against design
+  direction", "does this match our design?", review a PR for design drift). Core signal:
+  user points at a design source (Figma URL, screenshot, live URL) OR built UI and asks
+  how it relates to the product's visual language. Operates on a consumer-repo
+  `docs/design.md` — proposes diffs, never writes directly. Pairs with shaping-work,
+  implementation-planning, implement-change, and qa-test. NOT for: generating new UI (→
+  frontend-design), translating a Figma design into code (→ figma-implement-design),
+  accessibility audits (→ a11y-debugging), or token extraction.
 ---
 
 # Design Language
