@@ -11,6 +11,10 @@
 - Empty-harvest discipline: thin or empty harvests on low-friction sessions are a correct outcome, not a failure — the skill says so honestly rather than padding
 - Optionally appends to `.tap/learnings.md` when present, converging logs with retrospective without coupling dev-skills to tap-skills
 
+## 2.4.1
+
+- design-language: trimmed description under Anthropic's 1024-char skill-description limit; consolidated trigger phrases without losing routing precision
+
 ## 2.4.0
 
 - New skill: **design-language** — capture a product's visual language into a living `docs/design.md`, and check implementations against it
@@ -21,6 +25,15 @@
 - Staleness guard: Review warns if `docs/design.md` is > 8 weeks old before critiquing against potentially stale principles
 - Cross-cutting across stages 2-5 (shape → plan → implement → QA)
 - Wired into neighbor skills: `qa-test` offers Review after functional QA for UI-visible changes; `implement-change` offers mid-build Review for UI-heavy phases; `implementation-planning` nudges pattern reuse via `docs/design.md §Functional patterns`; `CLAUDE.local.template.md` adds Review to the post-implement verify step
+- Cross-cutting: added explicit sub-agent guidance to exploration-heavy skills (`product-thinker`, `qa-test`, `implement-change`, `strategic-thinker`) — main thread stays lean during research
+
+## 2.3.0
+
+- New skill: **strategic-thinker** — cross-domain strategic reasoning for approach selection, tradeoff evaluation, and systems-level analysis
+- Four routed lenses: Enumerate & Evaluate (multi-path comparison), Zoom Stack (30k / 10k / ground-level altitude shifts), Stress Test (attack a plan before committing), First Principles Decomposition (strip inherited assumptions, rebuild from real constraints)
+- Systems-thinking foundation throughout — feedback loops, stocks and flows, leverage points, emergence, delays — applied in *how* we reason, not surfaced as vocabulary
+- `★ Strategic View ` signature block leads every output; mandatory **Key assumption** tripwire closes it
+- Handoffs into `product-thinker` / `shaping-work` / `implementation-planning` / `product-discovery` with context passthrough so the next skill doesn't restart from scratch
 
 ## 2.2.1
 
