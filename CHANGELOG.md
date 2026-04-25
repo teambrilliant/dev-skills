@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.5.0
+
+- New skill: **tighten-loop** — end-of-session debrief that harvests course-corrections from the current conversation and converts them into durable, repo-portable fixes
+- Sibling to existing `loop-check` (repo-scoped, before-work) and `tap-skills:retrospective` (event-scoped, post-PR/incident); discriminator is *transcript as evidence source*
+- Same gap taxonomy as retrospective (Context / Harness / Feedback / Scope) so learnings are interchangeable across the two skills
+- Emits findings as **intent kinds** (`project-instruction`, `agent-config`, `tool-install`, `new-skill`, `skill-update`, `test-coverage`) — harness-agnostic so multi-agent orchestrators can translate to their own durable-state mechanism (file edit, memory tool call, vector store, etc.)
+- New `skill-update` intent: when a steer reveals that an existing skill produced wrong behavior, fix the skill rather than adding rules around it
+- Routes only to **repo-portable fixes** (CLAUDE.md, AGENTS.md, `.claude/settings.json`, hooks, skills) — explicitly does not route to harness-local memory or personal global config, since those don't travel with the project
+- Empty-harvest discipline: thin or empty harvests on low-friction sessions are a correct outcome, not a failure — the skill says so honestly rather than padding
+- Optionally appends to `.tap/learnings.md` when present, converging logs with retrospective without coupling dev-skills to tap-skills
+
 ## 2.4.0
 
 - New skill: **design-language** — capture a product's visual language into a living `docs/design.md`, and check implementations against it
