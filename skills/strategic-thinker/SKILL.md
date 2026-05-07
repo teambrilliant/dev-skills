@@ -124,6 +124,7 @@ Use these naturally in analysis — don't label them, just think with them:
 - **Leverage points** — where does a small change produce a large effect? Usually at the level of rules, information flows, or system goals — not at the level of parameters.
 - **Emergence** — the system behaves in ways that no single component intends. What behavior emerges from the interaction of parts?
 - **Delay** — effects don't appear instantly. What's the delay between action and feedback? Long delays cause oscillation and overreaction.
+- **I/O / Function / State** — for "where should X live?" / "where to put the seam?" questions, name the three layers (boundaries, logic, persistent things) and place the dependency or test boundary at the right edge. Most architectural pain comes from misplaced concerns: function code making HTTP calls, I/O code holding business decisions, function code holding mutable state. See [references/io-function-state.md](references/io-function-state.md) for the lens, heuristics, worked example, and limits.
 
 ## Output Style
 

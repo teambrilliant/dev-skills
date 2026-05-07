@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.6.0
+
+- Added the **I/O / Function / State** architectural lens as a reusable reference at `skills/strategic-thinker/references/io-function-state.md` and `skills/product-primitives/references/io-function-state.md`
+- Wired the lens into `strategic-thinker`'s Systems Thinking Toolkit — answers "where should X live? / where does the seam go?" alongside the existing dynamics-oriented lenses (feedback loops, stocks and flows, leverage points, delay)
+- Wired the lens into `product-primitives`' decomposition principles — every primitive should belong cleanly to one layer (boundary, logic, or persistence); layer-mixing is a split signal
+- Reference doc covers heuristics (push state to edges, swap at I/O, isolate function from I/O and state), a worked example on test-mock placement, explicit limits (libraries / CLIs / batch ML pipelines where the lens is less useful), and red flags
+- Companion to the systems-thinking toolkit: layer placement answers *where*, dynamics answers *how things behave over time*
+
 ## 2.5.0
 
 - New skill: **tighten-loop** — end-of-session debrief that harvests course-corrections from the current conversation and converts them into durable, repo-portable fixes

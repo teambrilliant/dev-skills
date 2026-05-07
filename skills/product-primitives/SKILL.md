@@ -41,6 +41,9 @@ Don't decompose by execution order ("first we ingest, then we transform, then we
 ### Pull complexity downward
 When complexity is unavoidable, push it into lower-level primitives so that higher-level composition stays simple. The primitives should suffer so that the system using them doesn't have to.
 
+### Layer placement: I/O / Function / State
+Before finalizing primitives, run them through the I/O / Function / State lens. Each primitive should clearly belong to one layer: a boundary primitive (I/O — network, files, time, webhooks), a logic primitive (Function — pure computation, decisions, orchestration), or a persistence primitive (State — DB, durable queues, caches that outlive a request). A primitive that mixes layers is a decomposition smell — split it. A primitive that owns one layer cleanly almost always passes the depth and information-hiding tests too. See [references/io-function-state.md](references/io-function-state.md) for the lens, heuristics, worked example, and limits.
+
 ## What Makes a Good Primitive
 
 - **Deep** — simple interface, powerful functionality behind it
