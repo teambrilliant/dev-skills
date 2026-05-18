@@ -55,6 +55,17 @@ When reality differs from the plan, surface it:
 
 Don't silently deviate — get guidance.
 
+### Rollout discipline
+
+Check the plan's Rollout & Rollback block before coding. Then:
+
+- **If the plan says "direct deploy, no flag"** — do not introduce a flag mid-implementation. If implementation reveals the change is riskier than the plan assumed (touches critical path, blast radius grew), surface that to the user — flag decisions belong in planning, not in the diff.
+- **If the plan says "flag"** — use the one named flag for the whole feature, at the user-perceived boundary. Do not introduce new flags per phase, per file, or per layer.
+- **If the plan says "expand-contract"** — ship the phases separately. Do not collapse expand and contract into one PR; the gap between phases is where the safety lives.
+- **If the plan says "both"** — flag the consumer, expand-contract the schema/API. Never "flag the schema" — flags wrap code, not storage.
+
+See [implementation-planning/references/rollout-primitives.md](../implementation-planning/references/rollout-primitives.md) for the full decision tree.
+
 ### 4. Final Verification
 
 After all phases complete:

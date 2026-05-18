@@ -38,6 +38,18 @@ Use TODAY'S DATE from system context as prefix (e.g., "Today's date" in env info
 
 Before writing plans, read [references/software-design-philosophy.md](references/software-design-philosophy.md). Apply these principles when designing module boundaries, interfaces, and decomposition. Key checks: modules should be deep, information hiding, define errors out of existence, design it twice.
 
+## Rollout & Rollback
+
+Every plan must specify how the change ships and to whom. Read [references/rollout-primitives.md](references/rollout-primitives.md) before writing the plan and walk the three decision questions:
+
+1. **Contract test:** is a shared contract changing? (schema, public API, multi-consumer interface) → plan expand-contract on the affected surface.
+2. **Launch-strategy test:** who should see this, and when? Cohort, tier, geo, timing, %-rollout, A/B, dogfooding → flag (launch flag).
+3. **Kill-switch test:** if this went bad in prod, what would I do? Flip a flag → flag (risk flag). Revert + redeploy is fine → no risk flag.
+
+Flags serve two purposes — **launch control** (who/when) and **reversibility** (turn-off). Either test saying "flag" justifies one. Same flag covers both if both apply.
+
+Default is **no flag, no expand-contract**. Pick the lightest mechanism(s) that produce the launch control AND reversibility actually needed. One flag per feature (at the user-visible boundary), never one flag per phase. Bug fixes never get flags. The flag system itself is discovered from `.tap/architecture.md` or by grepping known imports — do not invent one.
+
 ## Principles
 
 - **Research first** — understand the codebase before proposing solutions
@@ -129,6 +141,29 @@ Create a structured plan following the output format below.
 
 ## Out of Scope
 [Explicitly list what we're NOT doing — prevents scope creep]
+
+## Rollout & Rollback
+
+**Reversibility mechanism:** [expand-contract / flag / both / neither — walk the decision tree in [references/rollout-primitives.md](references/rollout-primitives.md)]
+
+**If expand-contract:**
+- Surface: [schema / API / interface]
+- Phases: expand → migrate → contract (each is a separate plan phase, not lumped together)
+- Why no flag (if applicable): migration cadence is the rollout; each step independently reversible
+- Why flag on top (if applicable): [user-visible cutover / uncertain prod behavior / fast atomic rollback need]
+
+**If flag (standalone or on top):**
+- Flag name: [one flag for the whole feature, e.g., `feature_x_enabled`]
+- Flag purpose: [launch control / reversibility / both]
+- Flag system: [from `.tap/architecture.md`, or grep result, or "no flag infra detected — see below"]
+- Gate location: [the user-perceived entrypoint — UI route, CTA, public API method]
+- Lifecycle: [short-lived (remove once trusted / launched — schedule a removal task) / long-lived (permanent entitlement, geo, or segmentation gate)]
+- Rollback lever: flag flip
+
+**If neither:**
+- Direct deploy. Blast radius: [scope]. Rollback: revert + redeploy.
+
+**If no flag infra exists and flag is needed:** flag infra is a prerequisite — note this explicitly; do not invent a system mid-plan.
 
 ## Implementation Approach
 [High-level strategy and reasoning]

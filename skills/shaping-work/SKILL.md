@@ -43,7 +43,15 @@ Rules for the block:
 
 Then continue with the full shaped document below.
 
-The core structure adapts to the type of work. Always include: title, description, acceptance criteria, and risks/unknowns. The middle sections flex based on what you're shaping.
+The core structure adapts to the type of work. Always include: title, description, acceptance criteria, rollout & rollback, and risks/unknowns. The middle sections flex based on what you're shaping.
+
+**Rollout & rollback rules** — every shaped feature/improvement gets a one-line answer to "how does this ship and to whom?" Walk the decision tree in [implementation-planning/references/rollout-primitives.md](../implementation-planning/references/rollout-primitives.md):
+
+1. **Contract test:** is a shared contract changing? (schema, public API, multi-consumer interface) → plan expand-contract.
+2. **Launch-strategy test:** who should see this, and when? Cohort, tier, geo, timing, %-rollout, A/B, dogfooding → flag (launch flag).
+3. **Kill-switch test:** if this went bad in prod, what would I do? Flip a flag in seconds → flag (risk flag). Revert + redeploy is fine → no risk flag.
+
+Flags serve two purposes — *launch control* (who/when) and *reversibility* (turn-off). Either justifies a flag. A safe feature with a coordinated launch still gets a flag, for the launch. Default is **no flag, no expand-contract** — pick the lightest mechanism(s) that produce the launch control AND reversibility actually needed. Bug fixes never get flags. One flag per feature, never one per phase. Don't stack ceremonies.
 
 **Acceptance criteria rules** — this section is the contract consumed downstream by planning and QA:
 
@@ -70,6 +78,11 @@ The core structure adapts to the type of work. Always include: title, descriptio
 
 [Link to Figma/designs if provided, or "N/A"]
 
+### Rollout & Rollback
+
+[One of: "neither — direct deploy" | "expand-contract on [schema/API/interface]" | "flag at [user-visible boundary]" | "both — expand-contract on [surface] + flag at [boundary]"]
+[One-line reasoning. Reference [implementation-planning/references/rollout-primitives.md](../implementation-planning/references/rollout-primitives.md) decision tree.]
+
 ### Risks & Unknowns
 
 - **[Question or risk]**
@@ -93,6 +106,10 @@ The core structure adapts to the type of work. Always include: title, descriptio
 - [The specific broken behavior that should be fixed]
 - [Any related edge cases to verify]
 
+### Rollout & Rollback
+
+Direct deploy — bug fixes ship to everyone. Rollback: revert if it introduces a regression.
+
 ### Risks & Unknowns
 
 - **[Unclear scope, possible regressions, missing reproduction info]**
@@ -113,6 +130,11 @@ The core structure adapts to the type of work. Always include: title, descriptio
 ### Acceptance Criteria
 
 - [Measurable outcomes — what changes for the user or the system]
+
+### Rollout & Rollback
+
+[One of: "neither — direct deploy" | "expand-contract on [schema/API/interface]" | "flag at [boundary]" | "both"]
+[One-line reasoning. Most tech-debt work that changes a shared contract uses expand-contract alone.]
 
 ### Risks & Unknowns
 
@@ -148,6 +170,10 @@ Display a badge on the cart icon so shoppers can see how many items are in their
 
 N/A — follow existing badge patterns in the UI
 
+### Rollout & Rollback
+
+Neither — direct deploy. Additive UI badge, no contract changing, no behavior change to existing flows. Rollback: revert.
+
 ### Risks & Unknowns
 
 - **Should the count persist across sessions for logged-out users?**
@@ -178,6 +204,10 @@ Users expect to find products by entering a SKU in the search bar, but search cu
 - Search matches against the product SKU field in addition to name/description
 - Exact SKU match ranks first in results
 - Partial SKU matches are included but ranked lower
+
+### Rollout & Rollback
+
+Direct deploy — bug fix, ships to everyone. If the index needs a new field, that's an expand-only schema change (additive, no contract phase needed). Rollback: revert.
 
 ### Risks & Unknowns
 
@@ -223,6 +253,10 @@ Display a reminder modal when a Partner logs into the Back Office without comple
 ### Designs
 
 [Link to Figma designs]
+
+### Rollout & Rollback
+
+Flag at the modal entrypoint (`onboarding_reminder_modal_enabled`) — user-visible behavior change some Partners may dislike, and the team wants a fast off-switch if support volume spikes. No contract changing. Discover flag system from `.tap/architecture.md`. Rollback: flag flip.
 
 ### Risks & Unknowns
 

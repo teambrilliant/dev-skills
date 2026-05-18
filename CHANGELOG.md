@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.7.0
+
+- Added **Rollout & Rollback** as a first-class concern across the workflow — closes the long-standing gap where CD principles (feature flags, expand-contract) were implicit in "reversibility" language but never named or operationalized
+- New reference at `skills/implementation-planning/references/rollout-primitives.md` — three-question decision tree (contract / launch / risk), four regimes (neither, expand-contract alone, flag alone, both), worked examples, and explicit anti-patterns
+- **Flags serve two purposes — launch control AND reversibility**, not just kill-switching. Two parallel tests: **launch-strategy test** ("who should see this, and when?" — cohort, tier, geo, timing, %-rollout, A/B, dogfooding) and **kill-switch test** ("if bad in prod, what would I do?"). Either justifies a flag. Same flag covers both purposes when both apply
+- **Flag lifecycle is purpose-dependent**: short-lived flags (risk, beta, dogfood, %-rollout) are debt if they stay past purpose — plan removal in the same plan that introduces them. Long-lived flags (tier, entitlement, geo, segmentation) are access-control primitives designed to stay. Conflating the two produces either flag-debt graveyards or premature removal of permanent gates
+- **One flag per feature, at the user-visible boundary** — not one per phase, not per layer. Internal layers ship dark; the flag gates the entrypoint that lights up the user-perceived feature
+- **Substitution rule called out explicitly**: well-executed expand-contract often makes a *risk* flag redundant because the migration cadence is the rollout. (Launch flags are not substituted by expand-contract — different purpose.) Stops the "stack every safety mechanism" anti-pattern AI agents default to
+- **Flag system is discovered, not assumed** — lookup order is `.tap/architecture.md` → grep for known imports (`posthog`, `launchdarkly`, `unleash`, etc.) → ask. Don't invent flag infra mid-plan
+- **Bug fixes never get flags** — flagging a bug fix is malpractice; the change goes to everyone immediately
+- **No canary** — deliberately excluded as ceremony for the team's working model
+- `shaping-work`: feature/improvement templates gain a `### Rollout & Rollback` section; bug-fix template states "direct deploy"; examples updated to demonstrate each regime (including launch-driven flagging)
+- `implementation-planning`: adds a top-level `## Rollout & Rollback` block to the plan output with explicit `Flag purpose` and `Lifecycle` fields; pointer to rollout-primitives reference at the top of the skill
+- `strategic-thinker`: Reversibility dimension in Enumerate & Evaluate becomes "Reversibility & launch control" — names both lenses and warns against conflating "is it safe?" with "does it need a flag?"
+- `implement-change`: new "Rollout discipline" rule — don't introduce flags mid-implementation if the plan said direct deploy; don't fragment one feature across multiple flags; never "flag a schema"
+
 ## 2.6.0
 
 - Added the **I/O / Function / State** architectural lens as a reusable reference at `skills/strategic-thinker/references/io-function-state.md` and `skills/product-primitives/references/io-function-state.md`

@@ -74,7 +74,7 @@ Apply the lens determined in Step 0. All lenses share the same systems-thinking 
 1. List viable approaches (typically 2-4, not exhaustive)
 2. For each approach, evaluate across dimensions:
    - **Feasibility** — can we actually do this given current system/team/time?
-   - **Reversibility** — if we're wrong, how hard is it to undo?
+   - **Reversibility & launch control** — two related questions, often answered by the same mechanism. Reversibility: *if we're wrong, how hard is it to undo, and what produces the undo?* Two mechanisms exist — **flags** (atomic, sub-second, behavior-level) and **expand-contract** (gradual, per-consumer, contract-level); they're not always additive, because expand-contract done well often makes a flag redundant (migration cadence is the rollout). Launch control: *who should see this, and when?* Cohort, tier, geo, timing, %-rollout, A/B, dogfooding all use flags as launch strategy independent of risk. A well-tested change with a coordinated launch is a flag use, not overkill — don't conflate "is it safe?" with "does it need a flag?" "Easy to undo" or "ships to everyone" without naming the mechanism is a vibe, not a plan. See [implementation-planning/references/rollout-primitives.md](../implementation-planning/references/rollout-primitives.md) for the three-question decision tree.
    - **Second-order effects** — what does this change about the system's behavior over time? What feedback loops does it create or break?
    - **Org fit** — does this match how the team works, or does it require changing that too?
    - **Time horizon** — good for now vs good for 6 months vs good for 2 years?
