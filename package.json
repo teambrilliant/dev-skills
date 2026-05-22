@@ -1,0 +1,32 @@
+{
+  "name": "@teambrilliant/dev-skills",
+  "version": "2.7.0",
+  "description": "Team Brilliant development workflow skills for shaping, planning, implementation, QA, and product thinking.",
+  "keywords": [
+    "pi-package",
+    "agent-skills",
+    "claude-code",
+    "pi"
+  ],
+  "author": {
+    "name": "Team Brilliant",
+    "url": "https://teambrilliant.ai"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teambrilliant/dev-skills.git"
+  },
+  "files": [
+    "skills",
+    "references",
+    "README.md",
+    "CLAUDE.md",
+    ".claude-plugin"
+  ],
+  "pi": {
+    "skills": [
+      "./skills"
+    ]
+  }
+}
