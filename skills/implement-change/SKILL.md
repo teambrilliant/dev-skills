@@ -20,13 +20,32 @@ While implementing, consult [references/software-design-philosophy.md](reference
 - **Understand before coding** — read all relevant files thoroughly first
 - **Phase by phase** — complete one phase before starting the next
 - **Verify as you go** — run checks after each phase, fix issues before proceeding
-- **Adapt to reality** — plans are guides, not rigid scripts; handle mismatches thoughtfully
+- **Plan is the contract** — execute the approved plan; deviate only when a step is impossible or wrong, then note it. Plans guide the *how*, not a license to re-open the *what*
 - **Track progress** — keep todos updated, check off items as completed
 - **Sub-agents for exploration, not execution** — dispatch sub-agents to research codebase patterns or read multiple files in parallel before coding. Do not delegate code changes to sub-agents — implement directly. Fan out multiple sub-agents in one turn when gathering independent context (e.g., reading tests + reading related modules).
 
 ## Input
 
 This skill expects an implementation plan (from `/dev-skills:implementation-planning`). If no plan exists, create one first — don't start coding without a plan.
+
+## Execution Contract
+
+Plan approval is the gate. Once a plan is approved, you have the authority to execute every phase to completion — **do not check in between phases for confirmation**. Verify, fix, proceed. Come back when the work is done, or when you hit something that genuinely needs the user's judgment.
+
+**Before pausing, classify the deviation:**
+
+**Resolve and keep going** (fix in scope, note it in passing, don't stop):
+- Trivial plan-vs-reality mismatches — renamed symbol, moved file, slightly different signature, an extra import
+- Minor implementation choices consistent with the plan's intent
+- A phase that passed its checks — continue to the next
+- "Should I keep going?" — yes
+
+**Pause and ask** (these need the user):
+- A blocker you can't clear — missing access, an ambiguous requirement that changes *what* gets built, verification you can't make pass
+- A deviation that changes **scope, acceptance criteria, risk/blast-radius, or the rollout decision** (flag vs. direct, expand-contract)
+- The plan's premise turns out to be false (it rests on X; X isn't true)
+
+The discriminator: does resolving this need information or judgment only the user has, *and* would guessing risk material rework? If no — resolve it and move on.
 
 ## Process
 
@@ -47,13 +66,13 @@ For each phase:
 
 ### 3. Handle Mismatches
 
-When reality differs from the plan, surface it:
+When a deviation lands in the **pause and ask** lane (see Execution Contract), surface it:
 
 - What the plan says vs what you found
 - Why it matters
 - How you suggest proceeding
 
-Don't silently deviate — get guidance.
+Resolve-and-keep-going deviations don't need this — fix them in scope and note what you did. Reserve the stop for material mismatches.
 
 ### Rollout discipline
 
@@ -79,13 +98,15 @@ After all phases complete:
 - Read files thoroughly — full files for small ones, targeted sections for large ones
 - Follow existing code patterns in the codebase
 - Keep changes focused on the plan scope
+- Execute approved phases to completion; pause only per the Execution Contract
 - Update progress frequently
 
 **Don't:**
 - Make unrelated "improvements"
 - Skip verification steps
 - Proceed past failures without fixing them
-- Assume — ask when unclear
+- Pause for confirmation between phases, or ask about trivia you can resolve in scope
+- Guess on calls that change scope, acceptance criteria, risk, or rollout — pause for those
 
 ## Progress Tracking
 

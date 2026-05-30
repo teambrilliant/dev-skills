@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.8.0
+
+- `implement-change`: fixed over-asking — the skill paused for confirmation between phases and routed *any* plan-vs-reality mismatch to "get guidance," contradicting the pipeline's own contract (plan approval is the gate; upstream skills already resolve every decision)
+- New **Execution Contract** section: plan approval authorizes executing all phases to completion without checking in. Adds a two-lane deviation classifier — **resolve-and-keep-going** (trivial mismatches, in-scope choices, passed phases) vs. **pause-and-ask** (unclearable blockers, changes to scope/AC/risk/rollout, false plan premise). Discriminator: does it need the user's judgment *and* would guessing risk material rework?
+- Reframed the **Adapt to reality** principle → **Plan is the contract** — deviate only when a step is impossible or wrong; plans guide the *how*, not a license to re-open the *what*
+- "Handle Mismatches" now fires only for pause-lane deviations; "Don't" list drops "ask when unclear" in favor of "don't pause between phases or ask about trivia you can resolve in scope"
+
 ## 2.7.0
 
 - Added **Rollout & Rollback** as a first-class concern across the workflow — closes the long-standing gap where CD principles (feature flags, expand-contract) were implicit in "reversibility" language but never named or operationalized
