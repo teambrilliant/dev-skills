@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.9.0
+
+- `implementation-planning`: made the skill **harness-agnostic** and reworked its output for at-a-glance comprehension — driven by using these skills with non-Claude-Code agents that lack hardcoded tools
+- **Research is now mandatory, not optional.** Dropped the "for simpler tasks, locate + patterns may suffice" license. Four research goals (LOCATE / PATTERNS / ANALYZE / **VALIDATE**) must all be covered; *depth* scales to blast radius. New VALIDATE goal forces confirming the plan's premises against live data/behavior when it depends on runtime facts — a wrong premise produces a wrong plan
+- **Portability: capabilities, not tools.** Removed Claude-Code-specific tool names (`EnterPlanMode`/`ExitPlanMode`, `Agent(subagent_type="Explore")`) from the skill body and expressed everything as capabilities: "if your harness has a plan/preview mode, use it — the gate is approval, not the mode"; "if your harness supports sub-agents, fan out in parallel, else work inline." Naming a host's own tools back to it adds no information and reads as hardcoding; naming tools the host lacks is a correctness bug on other harnesses. Persistent `thoughts/plans/` file is always written regardless of harness
+- **New ★ Plan View signature block** — planning now closes every response with a summary + ASCII structural map (phases → files → deps → checks) by default, completing the suite's signature-block set (★ Product View / ★ Shaped View / ★ Strategic View). Kills the recurring "explain this plan with ascii" re-prompt. ASCII is a map, not a re-render; full plan stays in the `thoughts/plans/` file
+- `## Plan Mode` section reframed to `## Workflow` (research → validate → write → present) — leads with value, demotes mechanism
+
 ## 2.8.0
 
 - `implement-change`: fixed over-asking — the skill paused for confirmation between phases and routed *any* plan-vs-reality mismatch to "get guidance," contradicting the pipeline's own contract (plan approval is the gate; upstream skills already resolve every decision)

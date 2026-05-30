@@ -12,27 +12,15 @@ description: >-
 
 Take a ticket, shaped work, or technical challenge and create a detailed implementation plan that any developer or agent can follow.
 
-## Plan Mode
+## Workflow
 
-**Multi-phase plans** → use plan mode:
-1. If not already in plan mode, call `EnterPlanMode`
-2. Research using sub-agents (see below)
-3. Write plan to BOTH locations:
-   - The internal plan file (path in system message)
-   - `thoughts/plans/YYYY-MM-DD-descriptive-name.md` (persistent)
-4. Call `ExitPlanMode` when done
+Every plan follows the same arc, regardless of which agent or harness runs it: **research → validate → write → present**.
 
-**Simple designs** (single-phase, quick approach discussion) → skip plan mode, just discuss.
+1. **Research** the codebase until grounded — mandatory, never plan from assumptions (see Process below).
+2. **Write** the plan to `thoughts/plans/YYYY-MM-DD-descriptive-name.md` — the persistent, shareable location. Use TODAY'S DATE from context as the prefix.
+3. **Present** it for approval before any code is written, then close with the ★ Plan View block (see Plan View below).
 
-### Plan File Storage
-
-Save plans to `thoughts/plans/` — this is the persistent, shareable location. The internal Claude Code plan file is temporary.
-
-```
-thoughts/plans/YYYY-MM-DD-descriptive-name.md
-```
-
-Use TODAY'S DATE from system context as prefix (e.g., "Today's date" in env info).
+If your harness has a plan/preview mode that gates editing until you approve, use it — otherwise present the plan inline. Either way, always write the persistent `thoughts/plans/` file, even if the harness keeps its own temporary plan doc. The gate is the approval, not the mode.
 
 ## Design Philosophy
 
@@ -62,28 +50,16 @@ Default is **no flag, no expand-contract**. Pick the lightest mechanism(s) that 
 
 ## Process
 
-### 1. Gather Context
+### 1. Research (mandatory — depth scales to blast radius)
 
-Launch parallel `Explore` sub-agents before planning. Each serves a different purpose:
+Never plan from assumptions. Ground every plan in the actual codebase before writing it. Cover all four goals below; how deep you go scales with the change's blast radius — a one-file change gets a quick pass, a cross-package feature gets the full sweep.
 
-```
-# 1. LOCATE — find where relevant files live (don't read contents, just map locations)
-Agent(subagent_type="Explore", prompt="Find all files related to [feature/domain].
-  Group by: routes, use-cases/business logic, components, DB schema, tests.
-  Report file paths and directory structure only, don't read contents.")
+- **LOCATE** — where the relevant files live (routes, business logic, components, schema, tests). Map locations, don't read everything.
+- **PATTERNS** — how similar things are already done here. Extract complete examples with imports; note naming, file organization, error handling.
+- **ANALYZE** — trace the relevant path end-to-end (entry point → data/API), mapping key functions and their inputs/outputs.
+- **VALIDATE** — confirm the premises the plan rests on. When the plan depends on runtime or data facts ("X drives Y", "this field is always set"), check the live data/behavior — don't infer it from static code. A wrong premise produces a wrong plan.
 
-# 2. PATTERNS — find similar implementations to model after (read code, extract complete examples)
-Agent(subagent_type="Explore", prompt="Find similar implementations to [what we're building].
-  Read the code thoroughly. Extract complete working examples with imports.
-  Note file organization, naming conventions, error handling approach.")
-
-# 3. ANALYZE — trace how an existing related feature works end-to-end
-Agent(subagent_type="Explore", prompt="Analyze how [related feature] is implemented.
-  Trace the data flow from entry point to DB/API.
-  Map key functions, their inputs/outputs, and error handling paths.")
-```
-
-Use all three when the feature is complex. For simpler tasks, locate + patterns may suffice.
+If your harness supports sub-agents, fan these out in parallel for speed — one per goal. If it doesn't, work through them inline with your codebase-search tools. The requirement is the four outcomes, not the mechanism.
 
 **Also gather:**
 - Related research docs in `thoughts/research/`
@@ -238,6 +214,39 @@ Every question includes a recommended resolution. Proceeding with these unless y
   Recommend: [option] — [why]
   Discarded: [option] ([why not])
 ```
+
+## Plan View — signature block (always close with this)
+
+After writing the plan to file, close your response with a **★ Plan View** block: a short summary, then an ASCII map of the plan's structure. This is the default — the user shouldn't have to ask for an ASCII explanation. It's the at-a-glance view; the file holds the detail.
+
+The ASCII is a structural **map**, not a re-render of the plan body — show phases in sequence, the files each touches, dependencies between phases, and the verification gate per phase. Nothing else.
+
+```
+★ Plan View ─────────────────────────────────────
+- Building: [what, one line]
+- Approach: [the strategy, one line]
+- Blast radius: [N files / surfaces]  ·  Rollout: [flag / expand-contract / direct]
+- Risk: [the thing most likely to bite]
+──────────────────────────────────────────────────
+
+Plan: [title]
+│
+├─ Phase 1: [name]
+│    ├─ path/to/file.ext
+│    └─ ✓ [phase check]
+├─ Phase 2: [name]            (depends on P1)
+│    ├─ path/to/other.ext
+│    └─ ✓ [check]
+└─ Phase 3: [name]
+     └─ ✓ [check]
+
+Full plan → thoughts/plans/YYYY-MM-DD-name.md
+```
+
+Rules:
+- Block leads the closing response — consistent with `product-thinker` (★ Product View), `shaping-work` (★ Shaped View), `strategic-thinker` (★ Strategic View)
+- Summary bullets are assertions, not hedges
+- ASCII shows structure only — never duplicate the markdown body
 
 ## Phase Guidelines
 
