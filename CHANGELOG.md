@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.10.0
+
+- `strategic-thinker`: turned two systems-thinking tools from *vocabulary* into *loadable diagnostics*. The toolkit already spoke Meadows' language (stocks/flows, leverage points) but couldn't run an explicit diagnosis — added the enumerated catalogs as references the skill loads at a systems-analysis moment:
+  - **`references/leverage-points.md`** — Meadows' ranked 12 leverage points (numbers → paradigms) for "where do we intervene?" questions; surfaces the counterintuitive truth that most effort pushes the weakest points, often in the wrong direction
+  - **`references/system-traps.md`** — the 8 system archetypes (policy resistance, tragedy of the commons, drift to low performance, escalation, success-to-the-successful, shifting-the-burden, rule-beating, wrong-goal) with each one's structural escape; for when a system *resists fixes* or *drifts* regardless of who's involved
+  - Wired both into the Systems Thinking Toolkit (augmented the Leverage points bullet, added a System traps bullet) — distilled from Donella Meadows' *Thinking in Systems*
+
 ## 2.9.0
 
 - `implementation-planning`: made the skill **harness-agnostic** and reworked its output for at-a-glance comprehension — driven by using these skills with non-Claude-Code agents that lack hardcoded tools
