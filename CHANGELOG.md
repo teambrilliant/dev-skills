@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.12.0
+
+- **Retired `design-language` skill** — removed the skill and its references (`design-heuristics.md`, `design-md-template.md`). It saw no real use and never stuck as part of the workflow. Removed all cross-references from `qa-test`, `implementation-planning`, `implement-change`, README, and `references/CLAUDE.local.template.md`.
+
 ## 2.11.0
 
 - **New `working-backwards` skill** — Amazon's Working Backwards method as a runnable product skill. Write a **PR-FAQ** (mock press release + FAQ) to force clarity on a fuzzy product idea customer-first, iterate on the document, and kill weak ideas cheaply on paper before committing engineering. Sits between `product-thinker` (should we?) and `shaping-work` (what exactly?), alongside `product-discovery` (will it work?). Closes with a `★ Working Backwards View` signature block (customer+benefit / verdict / biggest hole), completing the product-cluster signature set.
