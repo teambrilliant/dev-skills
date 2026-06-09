@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.11.0
+
+- **New `working-backwards` skill** — Amazon's Working Backwards method as a runnable product skill. Write a **PR-FAQ** (mock press release + FAQ) to force clarity on a fuzzy product idea customer-first, iterate on the document, and kill weak ideas cheaply on paper before committing engineering. Sits between `product-thinker` (should we?) and `shaping-work` (what exactly?), alongside `product-discovery` (will it work?). Closes with a `★ Working Backwards View` signature block (customer+benefit / verdict / biggest hole), completing the product-cluster signature set.
+  - `references/pr-faq-template.md` — the press-release + FAQ structure section by section (incl. the hard internal FAQ: TAM, per-unit economics, dependencies, feasibility)
+  - `references/six-page-narrative.md` — the prose-memo / silent-read discipline for proposals and reviews
+  - `references/input-metrics.md` — input-vs-output metrics, DMAIC, the WBR, and the flywheel (for "how will we measure it once live?")
+  - distilled from Bryar & Carr's *Working Backwards*
+
 ## 2.10.0
 
 - `strategic-thinker`: turned two systems-thinking tools from *vocabulary* into *loadable diagnostics*. The toolkit already spoke Meadows' language (stocks/flows, leverage points) but couldn't run an explicit diagnosis — added the enumerated catalogs as references the skill loads at a systems-analysis moment:
