@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.13.0
+
+- `product-discovery`: enriched with growth-engineering practice distilled from Komissarouk's *What is Growth Engineering?* (The Pragmatic Engineer).
+  - **Core Principle** now frames discovery code as *built to learn, not built to last* — use the lightest materials that produce evidence, skip tests/refactors/migrations until an idea earns the real build, and expect to throw most of it away (a 30–40% ship rate is healthy).
+  - **Test Responsibly** gained the *safe Fake Door* technique: make every fake option **worse** than what the customer actually gets (higher price, fewer features), then silently upgrade them — bait-and-switch only offends when the switch is worse than the bait. Includes the MasterClass multi-tier-pricing worked example (pricing page + "you've been upgraded" popup, no backend, demand validated in two weeks).
+  - Cross-referenced the fake-door value-experiment bullet to the new safe-running guidance.
+
 ## 2.12.0
 
 - **Retired `design-language` skill** — removed the skill and its references (`design-heuristics.md`, `design-md-template.md`). It saw no real use and never stuck as part of the workflow. Removed all cross-references from `qa-test`, `implementation-planning`, `implement-change`, README, and `references/CLAUDE.local.template.md`.

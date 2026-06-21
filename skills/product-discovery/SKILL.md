@@ -22,6 +22,8 @@ Figure out whether an idea is worth building before you commit engineering time.
 
 Every idea tested in discovery should cost at least one order of magnitude less than building the real thing. If engineering a feature takes 4 weeks, discovery should take days. If it takes months, discovery should take weeks.
 
+Discovery code is **built to learn, not built to last** — it's meant to be ripped out. Use the lightest materials that produce the evidence (a hardcoded page, a manual step behind the curtain, a key-value store instead of a schema migration). Skip the unit tests, the refactors, and the durability work until an idea earns the real build. A healthy discovery process *kills most ideas*: a 30–40% rate of experiments worth shipping is good, which means most of what you build here is thrown away on purpose. Pride belongs in the impact and the cheapness of the test, not in the experiment's code.
+
 ## Process
 
 1. Understand the idea
@@ -93,7 +95,7 @@ For each hypothesis, design the cheapest experiment that produces evidence. Matc
 
 **Value experiments** (will they want it?):
 - Customer interviews (5-10 conversations) — understand the problem space
-- Fake door test — measure click-through on a feature that doesn't exist yet
+- Fake door test — measure click-through on a feature that doesn't exist yet (see "Test Responsibly" for running this safely on live revenue flows)
 - Landing page test — describe the solution, measure sign-ups or interest
 - Competitor analysis — do similar solutions succeed in market?
 - Data analysis — what does existing usage data suggest?
@@ -204,3 +206,7 @@ If someone brings a raw idea, suggest starting with product-thinker. If they hav
 ## Test Responsibly
 
 For established companies with existing customers and revenue: experiments must protect the company's revenue, reputation, customers, and colleagues. When testing ideas that could affect real users, use conservative techniques — smaller sample sizes, internal users first, feature flags. The experiments are essential, but run them responsibly.
+
+**Running a Fake Door safely: make the switch better than the bait.** Fake door tests are risky on live revenue flows — sending a customer who's ready to pay into a "join the waitlist" dead end wastes a real conversion and feels like bait-and-switch. The key insight: people only feel cheated when the *switch is worse than the bait*. Starting at $150 and revealing "just kidding, it's $100" is a pleasant surprise; the reverse causes a riot. So design every fake option to be *worse* than what the customer actually gets — higher price, fewer features — then silently "upgrade" them to the real offering after they choose.
+
+> Worked example (MasterClass pricing tiers): Engineering estimated months to support real multi-tier pricing across every platform. Growth instead shipped only a new pricing page plus a "congratulations, you've been upgraded" popup — no backend changes — in a few days. Every test tier was priced *above* or featured *below* the real product, so whatever a customer picked, they got the original offering at the original price as an upgrade. Two weeks of data confirmed the upside and justified building it for real. The fake door measured demand without ever short-changing a paying customer.
