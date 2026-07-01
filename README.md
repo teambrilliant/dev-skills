@@ -13,7 +13,6 @@ Generic development workflow skills for Claude Code. Break down, shape, plan, im
 
 | Skill                   | Invoke                                | What it does                                |
 | ----------------------- | ------------------------------------- | ------------------------------------------- |
-| loop-check              | `/dev-skills:loop-check`              | Assess what's needed for autonomous feedback loops |
 | product-primitives      | `/dev-skills:product-primitives`      | System → fundamental primitives & building blocks |
 | shaping-work            | `/dev-skills:shaping-work`            | Rough idea → structured work definition     |
 | product-thinker         | `/dev-skills:product-thinker`         | Product decisions, UX analysis, build-vs-buy |
@@ -22,16 +21,17 @@ Generic development workflow skills for Claude Code. Break down, shape, plan, im
 | implement-change        | `/dev-skills:implement-change`        | Plan → working code, phase by phase         |
 | qa-test                 | `/dev-skills:qa-test`                 | Browser-based QA verification via sub-agent  |
 
+> Repo feedback-loop assessment (`loop-check`) and session debrief (`tighten-loop`) now live in [`tap-skills`](https://github.com/teambrilliant/tap-skills), invoked as `/tap-skills:loop-check` and `/tap-skills:tighten-loop`.
+
 ## Typical flow
 
 ```
-loop-check → primitives → discovery → shape → plan → implement → QA
-   -1            0            1          2       3       4        5
+primitives → discovery → shape → plan → implement → QA
+   0            1          2       3       4        5
                       product-thinker
                          (0-2)
 ```
 
--1. `/dev-skills:loop-check` — assess what's needed for autonomous feedback loops
 0. `/dev-skills:product-primitives` — break system into deep, composable primitives
 1. `/dev-skills:product-discovery` — validate whether an idea is worth building (4 risks, experiments, evidence gates)
 2. `/dev-skills:shaping-work` — define what to build (features, bugs, improvements)

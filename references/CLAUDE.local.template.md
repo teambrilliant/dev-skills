@@ -4,7 +4,7 @@
 
 When I bring a feature, problem, or idea — before jumping to code:
 
-1. **Loop check** (new repo or unfamiliar area): Run `/dev-skills:loop-check` to see what's missing for autonomous iteration.
+1. **Loop check** (new repo or unfamiliar area): Run `/tap-skills:loop-check` to see what's missing for autonomous iteration.
 2. **Auto-route based on readiness**:
    - Check `thoughts/plans/` and `thoughts/research/` for existing artifacts matching the topic
    - **Plan exists** → skip to implementation, the plan is source of truth

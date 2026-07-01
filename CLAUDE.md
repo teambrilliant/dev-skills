@@ -24,11 +24,11 @@ Body: process steps, patterns, output format, templates.
 ## Workflow stages
 
 ```
-loop-check → primitives → shape → plan → implement → QA
-    -1           0          1       2       3        4
+primitives → shape → plan → implement → QA
+    0          1       2       3        4
 ```
 
-Skills map to stages: `loop-check` (-1), `product-primitives` (0), `shaping-work` (1), `product-thinker` (0-1), `strategic-thinker` (-1 to 2), `implementation-planning` (2), `implement-change` (3), `qa-test` (4).
+Skills map to stages: `product-primitives` (0), `shaping-work` (1), `product-thinker` (0-1), `strategic-thinker` (0 to 2), `implementation-planning` (2), `implement-change` (3), `qa-test` (4). Harness meta-skills `loop-check` and `tighten-loop` now live in `tap-skills`.
 
 ## Conventions
 

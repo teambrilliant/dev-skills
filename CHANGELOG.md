@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.14.0
+
+- **Moved** `loop-check` and `tighten-loop` to `tap-skills` — they are harness meta-skills (assess / improve the agent harness), completing the assess×learn / full×focused quadrant with `tap-audit` and `retrospective`. Invoke as `/tap-skills:loop-check` and `/tap-skills:tighten-loop`.
+- Removes the cross-plugin duplication where `loop-check` mirrored `tap-audit`'s Feedback Loops section.
+
 ## 2.13.0
 
 - `product-discovery`: enriched with growth-engineering practice distilled from Komissarouk's *What is Growth Engineering?* (The Pragmatic Engineer).
