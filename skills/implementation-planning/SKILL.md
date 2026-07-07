@@ -378,4 +378,4 @@ export default defineConfig({
 
 - After plan approval, use `/dev-skills:implement-change` to execute phase by phase
 - The plan in `thoughts/plans/` serves as the source of truth during implementation
-- Offer to publish the plan for team review: `/tap-skills:render-doc` then `/tap-skills:publish` (md stays source of truth; republish after edits)
+- Offer to publish the plan for team review: `/tap-skills:render-doc` then `/tap-skills:dossier-publish` (md stays source of truth; republish after edits)

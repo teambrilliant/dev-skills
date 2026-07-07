@@ -1,7 +1,7 @@
 {
   "name": "dev-skills",
   "description": "Generic development workflow skills for Claude Code. Covers shaping, planning, implementation, and product thinking. Not methodology-specific — works for any dev team.",
-  "version": "2.14.1",
+  "version": "2.14.2",
   "author": {
     "name": "Team Brilliant",
     "url": "https://teambrilliant.ai"

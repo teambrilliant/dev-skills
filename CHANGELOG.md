@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.14.2
+
+- Handoffs updated for tap-skills' skill rename: `/tap-skills:publish` → `/tap-skills:dossier-publish` (bare "publish" was ambiguous at invocation).
+
 ## 2.14.1
 
 - Publishing handoffs: `implementation-planning`, `shaping-work`, and `working-backwards` now end with an offer to publish the produced doc to Dossier (teambrilliant.dev) via `/tap-skills:render-doc` + `/tap-skills:publish` — md stays source of truth, republish after edits.

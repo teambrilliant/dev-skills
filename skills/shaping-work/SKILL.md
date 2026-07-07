@@ -287,4 +287,4 @@ Keep it focused on *what* needs to exist and *why*, not *how* to build it.
 ## Handoffs
 
 - Shaped work feeds into `/dev-skills:implementation-planning` for technical design.
-- Offer to publish the shape doc for team review: `/tap-skills:render-doc` then `/tap-skills:publish` (md stays source of truth; republish after edits).
+- Offer to publish the shape doc for team review: `/tap-skills:render-doc` then `/tap-skills:dossier-publish` (md stays source of truth; republish after edits).
