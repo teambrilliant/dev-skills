@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.14.1
+
+- Publishing handoffs: `implementation-planning`, `shaping-work`, and `working-backwards` now end with an offer to publish the produced doc to Dossier (teambrilliant.dev) via `/tap-skills:render-doc` + `/tap-skills:publish` — md stays source of truth, republish after edits.
+- Sync `package.json` version with the plugin manifest (was lagging at 2.11.0).
+
 ## 2.14.0
 
 - **Moved** `loop-check` and `tighten-loop` to `tap-skills` — they are harness meta-skills (assess / improve the agent harness), completing the assess×learn / full×focused quadrant with `tap-audit` and `retrospective`. Invoke as `/tap-skills:loop-check` and `/tap-skills:tighten-loop`.

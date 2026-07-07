@@ -72,3 +72,4 @@ Close with the signature block:
 - Verdict = build, but a key assumption is unproven → `product-discovery` (test it cheaply first).
 - Verdict = build, and it's clear → `shaping-work` (define the work), then `implementation-planning`.
 - Need to re-litigate *whether* to build at all → `product-thinker`.
+- Offer to publish the PR-FAQ for team review: `/tap-skills:render-doc` then `/tap-skills:publish` (md stays source of truth; republish after edits).
