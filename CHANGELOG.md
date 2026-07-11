@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.16.0
+
+- Dev-harness lens shifted further left, into the thinker skills (completing 2.15.0's shape → plan coverage; the question now travels product → strategy → shape → plan):
+  - `product-thinker`: the **Technical** angle in Multi-Angle Analysis now asks how an implementer (increasingly an agent) will exercise the feature repeatedly while building it — a feature only reachable through its full user flow is more expensive than it looks, and the fix (replayable inputs, secondary entry points) is a product-level decision.
+  - `strategic-thinker`: Enumerate & Evaluate gains an **Iterability** dimension alongside Reversibility — how tight is the build loop each approach affords? Loop speed compounds into quality when agents implement; cheap loops are bought at design time. Both link to `implementation-planning/references/dev-harness.md`.
+
 ## 2.15.0
 
 - Added **Dev Harness** as a first-class, shift-left concern across shape → plan — the question "how does an implementer iterate on this feature a hundred times without walking the full user flow?" is now answered at shaping time, not discovered during implementation. With agents doing the implementing, iteration speed is a design property fixed by shape-level decisions (replayable inputs, entry points, fixtures) — same move as 2.7.0 did for rollout & rollback.

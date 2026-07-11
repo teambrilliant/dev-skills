@@ -66,7 +66,7 @@ Ask up to 3 clarifying questions if context is insufficient, then work with stat
 Every product question deserves multiple lenses:
 - **User**: What do they need? What's their journey? Where's the friction?
 - **Business**: What's the impact? ROI? Does this move a metric that matters?
-- **Technical**: What's feasible given the codebase? What are the constraints?
+- **Technical**: What's feasible given the codebase? What are the constraints? Also iterability: how will an implementer (increasingly an agent) exercise this feature repeatedly while building it? A feature only reachable through its full user flow is more expensive than it looks, and the fix is a product-level decision (replayable inputs, secondary entry points) — flag it here. See [implementation-planning/references/dev-harness.md](../implementation-planning/references/dev-harness.md).
 - **Competitive**: How do others solve this? What's table stakes vs differentiator?
 - **Risk**: What could go wrong? What's reversible vs irreversible?
 
