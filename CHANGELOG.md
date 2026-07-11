@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.15.0
+
+- Added **Dev Harness** as a first-class, shift-left concern across shape → plan — the question "how does an implementer iterate on this feature a hundred times without walking the full user flow?" is now answered at shaping time, not discovered during implementation. With agents doing the implementing, iteration speed is a design property fixed by shape-level decisions (replayable inputs, entry points, fixtures) — same move as 2.7.0 did for rollout & rollback.
+  - New shared reference `implementation-planning/references/dev-harness.md`: the **loop ladder** (L1 fixture-fed logic → L2 direct trigger → L3 seeded/direct UI → L4 full flow; riskiest logic gets the fastest loop, L4 never the only loop), the **four properties that buy it** (replayable inputs at the boundary, fixtures + goldens/evals, reachability without prerequisite funnels, one shared code path), investment scaling (LLM cores/parsers/integrations get the full ladder; CRUD gets "direct route + seeded data"), and the shape-vs-plan split (shape states harness *requirements*, plan ships harness *deliverables*).
+  - `shaping-work`: new **Dev harness rules** block + `### Dev Harness` section in the feature template (1–3 lines; "trivial" is a valid answer); both examples updated; "What NOT to include" clarifies harness implementation stays out of shapes.
+  - `implementation-planning`: new **Dev Harness** doctrine section (harness artifacts are **phase-1 deliverables**, built before the logic they exercise is tuned; L4-only verification is a plan smell) + `## Dev Harness` block in the plan template (fastest loop / fixtures / direct trigger / reachability / shipped-in) + "Iterate via:" line in the ★ Plan View block + **Harness-first** principle.
+  - Distilled from shaping a real LLM-extraction feature (spreadsheet calendar import gated behind onboarding) where naming the harness at shape time surfaced replayability and entry-point requirements that were otherwise implementation afterthoughts.
+
 ## 2.14.2
 
 - Handoffs updated for tap-skills' skill rename: `/tap-skills:publish` → `/tap-skills:dossier-publish` (bare "publish" was ambiguous at invocation).

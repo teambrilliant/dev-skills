@@ -53,6 +53,13 @@ The core structure adapts to the type of work. Always include: title, descriptio
 
 Flags serve two purposes — *launch control* (who/when) and *reversibility* (turn-off). Either justifies a flag. A safe feature with a coordinated launch still gets a flag, for the launch. Default is **no flag, no expand-contract** — pick the lightest mechanism(s) that produce the launch control AND reversibility actually needed. Bug fixes never get flags. One flag per feature, never one per phase. Don't stack ceremonies.
 
+**Dev harness rules** — alongside "how does this ship?", every shaped feature answers: **"how does an implementer iterate on this without walking the full user flow?"** Read [implementation-planning/references/dev-harness.md](../implementation-planning/references/dev-harness.md) and name:
+
+1. The fastest loop the riskiest part can run in — fixture-fed function, direct trigger, seeded UI. If the honest answer is "only the full flow", reshape until it isn't.
+2. The shape-level requirements that buy that loop: raw inputs persisted at the boundary (replayable), secondary entry points (no one-time funnel as the only door), which real-world inputs get captured as fixtures.
+
+These are requirements, not implementation details — "the raw upload is stored and reprocessable" belongs in a shape; the script that does it belongs in the plan. Scale it: LLM cores, parsers of messy input, and integrations get the full treatment; a CRUD screen might need one line ("trivial — direct route + seeded data").
+
 **Acceptance criteria rules** — this section is the contract consumed downstream by planning and QA:
 
 - Each criterion must be **independently testable** in a browser or database — someone can verify it pass/fail without reading the code.
@@ -82,6 +89,10 @@ Flags serve two purposes — *launch control* (who/when) and *reversibility* (tu
 
 [One of: "neither — direct deploy" | "expand-contract on [schema/API/interface]" | "flag at [user-visible boundary]" | "both — expand-contract on [surface] + flag at [boundary]"]
 [One-line reasoning. Reference [implementation-planning/references/rollout-primitives.md](../implementation-planning/references/rollout-primitives.md) decision tree.]
+
+### Dev Harness
+
+[Fastest loop for the riskiest logic + the shape-level requirements that enable it: replayable inputs? fixtures from real data? entry point that skips the funnel? 1–3 lines; "trivial — direct route + seeded data" is a valid answer. See [implementation-planning/references/dev-harness.md](../implementation-planning/references/dev-harness.md).]
 
 ### Risks & Unknowns
 
@@ -174,6 +185,10 @@ N/A — follow existing badge patterns in the UI
 
 Neither — direct deploy. Additive UI badge, no contract changing, no behavior change to existing flows. Rollback: revert.
 
+### Dev Harness
+
+Trivial — badge renders from cart state on every page; seed a cart (or add items in a dev store) and reload. No funnel, no fixtures needed.
+
 ### Risks & Unknowns
 
 - **Should the count persist across sessions for logged-out users?**
@@ -258,6 +273,10 @@ Display a reminder modal when a Partner logs into the Back Office without comple
 
 Flag at the modal entrypoint (`onboarding_reminder_modal_enabled`) — user-visible behavior change some Partners may dislike, and the team wants a fast off-switch if support volume spikes. No contract changing. Discover flag system from `.tap/architecture.md`. Rollback: flag flip.
 
+### Dev Harness
+
+No complex core, so no L1 needed — the requirement is reachability: incomplete-onboarding state must be *seedable* (seed script or fixture Partner), not only producible by abandoning a real signup. Then the modal is one login away on any dev account.
+
 ### Risks & Unknowns
 
 - **Should we limit how often the modal appears?**
@@ -278,6 +297,7 @@ When shaping, consult [references/software-design-philosophy.md](references/soft
 ## What NOT to include
 
 - Technical implementation details (database schemas, API designs, code patterns)
+- Harness implementation (script paths, commands, fixture formats) — the shape states harness *requirements*; the plan delivers the harness
 - Time estimates or sprint planning
 - Assigned developers or teams
 - Detailed test cases (those come later)

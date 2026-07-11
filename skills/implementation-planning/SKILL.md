@@ -38,9 +38,19 @@ Flags serve two purposes — **launch control** (who/when) and **reversibility**
 
 Default is **no flag, no expand-contract**. Pick the lightest mechanism(s) that produce the launch control AND reversibility actually needed. One flag per feature (at the user-visible boundary), never one flag per phase. Bug fixes never get flags. The flag system itself is discovered from `.tap/architecture.md` or by grepping known imports — do not invent one.
 
+## Dev Harness
+
+Every plan states how an implementer iterates on the feature without walking the full user flow. Read [references/dev-harness.md](references/dev-harness.md) and carry the shape's harness requirements into concrete deliverables:
+
+- Name the **loop ladder** for this feature (L1 fixture-fed logic → L2 direct trigger → L3 seeded/direct UI → L4 full flow). The riskiest logic gets the fastest loop.
+- Harness artifacts (fixtures, goldens/evals, seed & reprocess commands, extraction scripts) are **phase-1 deliverables**, built before the logic they exercise is tuned — not cleanup.
+- The harness must exercise the **same code path** production uses (the script calls the production use-case; a harness that exercises a copy proves nothing).
+- A plan whose only verification path is the full flow is a plan smell: phase checks will be slow and the implementer will under-verify.
+
 ## Principles
 
 - **Research first** — understand the codebase before proposing solutions
+- **Harness-first** — the fastest iteration loop is a deliverable, not an afterthought
 - **Be specific** — include file paths, function names, code snippets
 - **Be skeptical** — question assumptions, identify risks early
 - **Decide, don't ask** — every open question gets a recommended resolution with reasoning. Never present a question without proposing what you'd do
@@ -141,6 +151,14 @@ Create a structured plan following the output format below.
 
 **If no flag infra exists and flag is needed:** flag infra is a prerequisite — note this explicitly; do not invent a system mid-plan.
 
+## Dev Harness
+
+**Fastest loop:** [one command, e.g., `pnpm tsx scripts/extract.ts fixtures/a.xlsx` → diff vs `fixtures/goldens/` — or "trivial: direct route + seeded data"]
+**Fixtures:** [which real-world inputs, where they live | "N/A"]
+**Direct trigger:** [command to re-run the workflow/job/endpoint against stored state | "N/A"]
+**Reachability:** [how to open the surface without prerequisites — route + seed command]
+**Shipped in:** [phase that delivers the harness — normally Phase 1]
+
 ## Implementation Approach
 [High-level strategy and reasoning]
 
@@ -226,6 +244,7 @@ The ASCII is a structural **map**, not a re-render of the plan body — show pha
 - Building: [what, one line]
 - Approach: [the strategy, one line]
 - Blast radius: [N files / surfaces]  ·  Rollout: [flag / expand-contract / direct]
+- Iterate via: [fastest loop, one command]
 - Risk: [the thing most likely to bite]
 ──────────────────────────────────────────────────
 
