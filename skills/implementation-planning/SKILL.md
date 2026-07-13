@@ -45,6 +45,7 @@ Every plan states how an implementer iterates on the feature without walking the
 - Name the **loop ladder** for this feature (L1 fixture-fed logic → L2 direct trigger → L3 seeded/direct UI → L4 full flow). The riskiest logic gets the fastest loop.
 - Harness artifacts (fixtures, goldens/evals, seed & reprocess commands, extraction scripts) are **phase-1 deliverables**, built before the logic they exercise is tuned — not cleanup.
 - The harness must exercise the **same code path** production uses (the script calls the production use-case; a harness that exercises a copy proves nothing).
+- When outputs are **judged rather than exact-diffed** (LLM extraction, generated content) or land in data models whose UI ships in a later phase, name an **inspection surface** as a deliverable: a disposable out-of-app viewer (single-file HTML with file-drop, DB-report script, CLI dump) designed so systematic misses pop — see the reference.
 - A plan whose only verification path is the full flow is a plan smell: phase checks will be slow and the implementer will under-verify.
 
 ## Principles
@@ -157,6 +158,7 @@ Create a structured plan following the output format below.
 **Fixtures:** [which real-world inputs, where they live | "N/A"]
 **Direct trigger:** [command to re-run the workflow/job/endpoint against stored state | "N/A"]
 **Reachability:** [how to open the surface without prerequisites — route + seed command]
+**Inspection:** [how judged-not-diffed outputs are reviewed — e.g., single-file `viewer.html` beside the goldens | "N/A — outputs exact-diffable / already rendered by the app"]
 **Shipped in:** [phase that delivers the harness — normally Phase 1]
 
 ## Implementation Approach

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.17.0
+
+- **Inspection surfaces** join the dev-harness vocabulary — the observation half of the loop. The ladder makes *exercising* a feature fast, but a loop only closes when the result can be *observed*; when outputs are **judged rather than exact-diffed** (LLM extractions, generated content) or land in **data models whose UI ships in a later phase**, the harness names a disposable out-of-app viewer (single-file HTML with file-drop, DB-report script, CLI dump) as a phase-1 deliverable.
+  - `implementation-planning/references/dev-harness.md`: new **Inspection surfaces — observing outside the app** section with three rules (**instrument, not UI** — design around "what would a systematic miss look like?": distributions up front, time-series gaps as explicit empty rows, unparseable-value buckets, per-field emptiness rates; **zero infrastructure** — one file/script, no deps, no build, colocated, else it rots; **schema-tolerant** — the artifact's shape is what's being iterated on). The machine-observable rule now routes human-judgment checks to an instrument; scaling, decided-where table, and the worked example updated — including the ceremony guardrail (no viewers for exact-diffable outputs or data the app already renders well).
+  - `implementation-planning`: doctrine bullet + `**Inspection:**` line in the plan template's Dev Harness block.
+  - `shaping-work`: dev-harness rule 2 now names the inspection-surface requirement at shape time.
+  - Distilled from a real golden-review session: a one-turn, single-file `viewer.html` for LLM calendar-extraction goldens surfaced a missing-month gap, a `TBD`-date bucket, and a 100%-empty-field systematic miss that raw JSON hid — and the cost side has collapsed (an agent builds one in minutes), so the discipline is naming it up front, not building it.
+
 ## 2.16.0
 
 - Dev-harness lens shifted further left, into the thinker skills (completing 2.15.0's shape → plan coverage; the question now travels product → strategy → shape → plan):

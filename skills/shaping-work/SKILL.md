@@ -56,7 +56,7 @@ Flags serve two purposes — *launch control* (who/when) and *reversibility* (tu
 **Dev harness rules** — alongside "how does this ship?", every shaped feature answers: **"how does an implementer iterate on this without walking the full user flow?"** Read [implementation-planning/references/dev-harness.md](../implementation-planning/references/dev-harness.md) and name:
 
 1. The fastest loop the riskiest part can run in — fixture-fed function, direct trigger, seeded UI. If the honest answer is "only the full flow", reshape until it isn't.
-2. The shape-level requirements that buy that loop: raw inputs persisted at the boundary (replayable), secondary entry points (no one-time funnel as the only door), which real-world inputs get captured as fixtures.
+2. The shape-level requirements that buy that loop: raw inputs persisted at the boundary (replayable), secondary entry points (no one-time funnel as the only door), which real-world inputs get captured as fixtures — and, when outputs are judged rather than diffed (or their product UI ships later), that an out-of-app inspection surface is required.
 
 These are requirements, not implementation details — "the raw upload is stored and reprocessable" belongs in a shape; the script that does it belongs in the plan. Scale it: LLM cores, parsers of messy input, and integrations get the full treatment; a CRUD screen might need one line ("trivial — direct route + seeded data").
 
