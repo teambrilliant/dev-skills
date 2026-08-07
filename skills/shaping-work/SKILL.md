@@ -17,7 +17,7 @@ Shape ambiguous ideas into clear work definitions. Focus on clarity, not process
 ## Process
 
 1. **Understand the request** — Read the input (could be anything: a Slack thread, a rough idea, a customer complaint, a formal PRD, or a handoff from product-thinker). If intent is unclear, ask up to 3 targeted questions, then shape with stated assumptions.
-2. **Understand the context** — If handed off from product-thinker, use the product context and analysis already gathered (don't re-explore). Otherwise, if working in a codebase, read CLAUDE.md or similar to understand what the application does (the product, not technical details).
+2. **Understand the context** — If handed off from product-thinker, use the product context and analysis already gathered (don't re-explore). Otherwise, if working in a codebase, read `.tap/product.md` if it exists (current focus, bets, non-goals — what this work has to ladder up to), then CLAUDE.md or similar to understand what the application does (the product, not technical details).
 3. **Shape the work** — Write the definition using the output format below. Pick the template variant that fits the type of work.
 4. **Surface unknowns with recommendations** — For every unknown, propose a recommended resolution and list discarded alternatives with reasoning. Never ask "what do you want?" — propose what you'd do and why.
 5. **Save the document** — Save to `thoughts/research/YYYY-MM-DD-descriptive-name.md`.
@@ -43,7 +43,7 @@ Rules for the block:
 
 Then continue with the full shaped document below.
 
-The core structure adapts to the type of work. Always include: title, description, acceptance criteria, rollout & rollback, and risks/unknowns. The middle sections flex based on what you're shaping.
+The core structure adapts to the type of work. Always include: title, description, acceptance criteria, rollout & rollback, and risks/unknowns. Features and improvements also carry strategic fit; bug fixes don't (a broken thing gets fixed regardless of which bet it sits under). The middle sections flex based on what you're shaping.
 
 **Rollout & rollback rules** — every shaped feature/improvement gets a one-line answer to "how does this ship and to whom?" Walk the decision tree in [implementation-planning/references/rollout-primitives.md](../implementation-planning/references/rollout-primitives.md):
 
@@ -60,6 +60,15 @@ Flags serve two purposes — *launch control* (who/when) and *reversibility* (tu
 
 These are requirements, not implementation details — "the raw upload is stored and reprocessable" belongs in a shape; the script that does it belongs in the plan. Scale it: LLM cores, parsers of messy input, and integrations get the full treatment; a CRUD screen might need one line ("trivial — direct route + seeded data").
 
+**Strategic fit rules** — every shaped feature/improvement names the bet it serves, in one line. Read `.tap/product.md`:
+
+1. **Serves a bet** → name it and say how. One line, not a pitch.
+2. **Serves no current bet** → say that explicitly, with why it's worth doing anyway (table stakes, support cost, unblocks a bet). A legitimate answer — but a stated one.
+3. **Contradicts a non-goal** → stop and surface it before shaping further. A non-goal is a decision already made; reversing it is the user's call, not a detail to shape around.
+4. **No `.tap/product.md`** → write "no durable product context in repo" and shape anyway. Don't block. Mention `/tap-skills:curate-product-context` once, in the handoff, not in the document.
+
+The point is traceability: work whose connection upward can't be stated is work nobody can prioritize against anything.
+
 **Acceptance criteria rules** — this section is the contract consumed downstream by planning and QA:
 
 - Each criterion must be **independently testable** in a browser or database — someone can verify it pass/fail without reading the code.
@@ -73,6 +82,10 @@ These are requirements, not implementation details — "the raw upload is stored
 ## [Clear, descriptive title]
 
 [1-2 sentence description of what this feature does, who it's for, and why it matters]
+
+### Strategic Fit
+
+[One line: "Serves bet: [name] — [how]" | "No current bet — [why it's worth doing anyway]" | "No durable product context in repo"]
 
 ### Acceptance Criteria
 
@@ -138,6 +151,10 @@ Direct deploy — bug fixes ship to everyone. Rollback: revert if it introduces 
 **Current state**: [what exists today and what's wrong with it]
 **Desired state**: [what it should look like after]
 
+### Strategic Fit
+
+[One line: "Serves bet: [name] — [how]" | "No current bet — [why it's worth doing anyway]" | "No durable product context in repo"]
+
 ### Acceptance Criteria
 
 - [Measurable outcomes — what changes for the user or the system]
@@ -168,6 +185,10 @@ Use the variant that fits best. For work that doesn't fit neatly, adapt — the 
 ## Cart item count in header
 
 Display a badge on the cart icon so shoppers can see how many items are in their cart without opening it.
+
+### Strategic Fit
+
+No current bet — table-stakes e-commerce affordance. Worth doing because its absence generates "did my item get added?" support contacts.
 
 ### Acceptance Criteria
 
@@ -245,6 +266,10 @@ Direct deploy — bug fix, ships to everyone. If the index needs a new field, th
 
 Display a reminder modal when a Partner logs into the Back Office without completing all onboarding steps. Partners who don't complete onboarding can't start earning — the modal lists what's missing and guides them to finish.
 
+### Strategic Fit
+
+Serves bet: "activate signed-up Partners" — incomplete onboarding is the single largest drop-off between signup and first earning.
+
 ### Acceptance Criteria
 
 **When it appears:**
@@ -307,4 +332,5 @@ Keep it focused on *what* needs to exist and *why*, not *how* to build it.
 ## Handoffs
 
 - Shaped work feeds into `/dev-skills:implementation-planning` for technical design.
+- If the repo had no `.tap/product.md`, mention `/tap-skills:curate-product-context` once — every shape after it can state strategic fit against something real.
 - Offer to publish the shape doc for team review: `/tap-skills:render-doc` then `/tap-skills:dossier-publish` (md stays source of truth; republish after edits).

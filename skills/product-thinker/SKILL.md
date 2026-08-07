@@ -20,7 +20,7 @@ Think like a senior product manager. Analyze problems from multiple angles — u
 
 Before doing anything, determine whether this question is **about a specific product** or **general product thinking**.
 
-**Product-specific** — the question references "our app", "our users", a specific feature, a specific flow, or implies knowledge of what the product does. Also: you're in a codebase with a CLAUDE.md that describes a product.
+**Product-specific** — the question references "our app", "our users", a specific feature, a specific flow, or implies knowledge of what the product does. Also: you're in a codebase with a `.tap/product.md` or a CLAUDE.md that describes a product.
 → Run **product context exploration** (see below), then proceed to analysis.
 
 **Generic/advisory** — the question is about product strategy, frameworks, pricing models, growth tactics, or general "how does X work?" without referencing a specific product.
@@ -36,15 +36,16 @@ When routed as product-specific, dispatch a sub-agent to build product understan
 ```
 Explore this codebase to understand the PRODUCT (not the technical implementation). Return a concise product context summary:
 
-1. Read CLAUDE.md / README — what does this product do? Who is it for?
-2. Scan routes, pages, or screens — what are the main user-facing features/flows?
-3. Look at data models at a high level — what are the key domain concepts?
-4. Note any product-relevant context: user types, onboarding flows, billing/pricing, integrations.
+1. Read `.tap/product.md` if it exists — durable product context (vision, what we build, audience & pain, current focus, bets, non-goals). Quote the vision, bets and non-goals verbatim; those are decisions already made and they change recommendations.
+2. Read CLAUDE.md / README — what does this product do? Who is it for?
+3. Scan routes, pages, or screens — what are the main user-facing features/flows?
+4. Look at data models at a high level — what are the key domain concepts?
+5. Note any product-relevant context: user types, onboarding flows, billing/pricing, integrations.
 
 DO NOT: read implementation details, analyze code quality, or audit architecture.
 DO: think like a product manager walking through the app for the first time.
 
-Return: A structured summary (under 300 words) covering: what the product is, who uses it, key features/flows, and anything relevant to the question: "[insert user's question here]"
+Return: A structured summary (under 300 words) covering: what the product is, who uses it, key features/flows, the current bets and non-goals verbatim if `.tap/product.md` exists (say "no .tap/product.md" if it doesn't), and anything relevant to the question: "[insert user's question here]"
 ```
 
 Use the sub-agent's product context to ground all subsequent analysis. Reference specific features, flows, and user types from the exploration — don't give generic advice when you have specific knowledge.
@@ -69,6 +70,7 @@ Every product question deserves multiple lenses:
 - **Technical**: What's feasible given the codebase? What are the constraints? Also iterability: how will an implementer (increasingly an agent) exercise this feature repeatedly while building it? A feature only reachable through its full user flow is more expensive than it looks, and the fix is a product-level decision (replayable inputs, secondary entry points) — flag it here. See [implementation-planning/references/dev-harness.md](../implementation-planning/references/dev-harness.md).
 - **Competitive**: How do others solve this? What's table stakes vs differentiator?
 - **Risk**: What could go wrong? What's reversible vs irreversible?
+- **Strategic fit**: which current bet in `.tap/product.md` does this serve? If it serves none, say so plainly — that's a legitimate answer for table-stakes work, but it should be a stated choice, not an omission. If it contradicts a non-goal, lead with that: a non-goal is a decision already made, not an oversight to route around. No `.tap/product.md` in the repo → say the repo has no durable product context and offer `/tap-skills:curate-product-context`.
 
 ### Use Available Tools Proactively
 
@@ -125,10 +127,15 @@ Return: Condensed summary of findings with key observations only.
 4. Propose improvements with before/after
 
 ### Product Strategy
-1. Understand current position
-2. Identify opportunities and threats
-3. Recommend focus areas with reasoning
-4. Tie to measurable outcomes
+
+Strategy is a set of decisions, not a set of aspirations. Produce four things in order — each constrains the next:
+
+1. **Diagnosis** — what is actually in the way? Not "we want more growth" but the specific obstacle: the step that leaks, the segment that never activates, the capability a competitor has and we don't. Ground it in evidence (data, a live walkthrough, support volume) or label it a hypothesis. A diagnosis everyone already agrees with is usually a symptom.
+2. **How we win** — the claim that makes this hard to copy. Not a feature; a structural advantage — proprietary data, a workflow already embedded in the customer's day, switching cost, distribution someone else can't buy. If a competitor could ship your answer next quarter, you've named a roadmap item, not an advantage. Say that plainly when it's true.
+3. **Bets** — 2-4 coherent actions that follow from 1 and 2. Each: what we're trying + why we think it'll work. Bets that don't trace to the diagnosis are a wishlist; bets that don't exploit the advantage are generic.
+4. **What this refuses** — a strategy that forbids nothing isn't one. Name what you're declining and what declining it costs.
+
+Check the result against `.tap/product.md`. If the existing focus, bets or non-goals contradict what you just produced, surface the contradiction — don't quietly supersede it. Offer `/tap-skills:curate-product-context` to persist the new version.
 
 ### Prioritization / Roadmap
 1. List candidates with clear criteria

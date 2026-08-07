@@ -71,5 +71,6 @@ Close with the signature block:
 
 - Verdict = build, but a key assumption is unproven → `product-discovery` (test it cheaply first).
 - Verdict = build, and it's clear → `shaping-work` (define the work), then `implementation-planning`.
+- Verdict = build, and this is a direction rather than a one-off → offer to record it as a bet in `.tap/product.md` via `/tap-skills:curate-product-context`. The press release already states the customer end-state; the FAQ's most dangerous question is usually the kill condition.
 - Need to re-litigate *whether* to build at all → `product-thinker`.
 - Offer to publish the PR-FAQ for team review: `/tap-skills:render-doc` then `/tap-skills:dossier-publish` (md stays source of truth; republish after edits).
