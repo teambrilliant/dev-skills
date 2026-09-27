@@ -4,6 +4,24 @@
 
 > **How does an implementer exercise this feature a hundred times without going through the app?**
 
+## Layers: build along I/O · Function · State
+
+Before choosing loops, decompose the feature by *which layer* each part lives in (lens: [io-function-state.md](../../product-primitives/references/io-function-state.md)). Each layer has its own boundary:
+
+```
+outbound I/O    3rd-party clients, outbound calls       (what you don't control)
+State           schema, migrations, queries
+Function        use-cases, domain logic, orchestration
+inbound I/O     endpoint, job, webhook, CLI command
+UI              I/O to a human
+```
+
+**Prove each layer at its boundary before composing on it.** Build in dependency order, starting from what you don't control: the 3rd-party client first (against the sandbox or recorded responses — which then become fixtures), then state, then the use-case, then the endpoint (curl / integration test), then the UI (browser). A phase's check exercises its own layer plus layers already proven — never an unproven one. A UI bug is never debugged while the API beneath it is unproven; an endpoint is never debugged while the client it calls is unproven.
+
+The layers map onto the ladder below: Function ≈ L1, inbound I/O and State ≈ L2, UI ≈ L3.
+
+**Every harness step is agent-callable.** Each check is something the implementing agent can invoke itself — a command, script, test, curl, or MCP tool call — with machine-observable output. Steps that need a human (login, OAuth consent, 2FA, sandbox signup, API keys, test cards) get a designed bypass — seeded session or token, test-mode keys in env, a dev-only auth route — or are listed in the plan as **pre-flight blockers**, cleared before implementation starts rather than discovered mid-run. An agent that has to stop and ask a human to click something is a harness gap, not an implementation problem.
+
 ## The loop ladder
 
 Name the loops a feature can run in, fastest first. Every feature gets a ladder; most of the tuning happens on the bottom rung.
@@ -65,8 +83,8 @@ Like all harness artifacts it's a **plan deliverable named up front** (normally 
 | Stage | Decides | Example |
 |---|---|---|
 | **Shape** | harness *requirements* | "raw upload is stored and reprocessable"; "feature reachable outside onboarding"; "these 4 real customer files become fixtures" |
-| **Plan** | harness *deliverables* | script paths, fixture/golden locations, seed & reprocess commands, inspection-surface path (e.g. `viewer.html` beside the goldens) — shipped in **phase 1**, before the logic they exercise is tuned, not as cleanup |
-| **Implement** | lives in the loops | tune at L1, verify at L2/L3, touch L4 once |
+| **Plan** | layer map + harness *deliverables* | layer order with an agent-runnable check per layer; pre-flight blockers; script paths, fixture/golden locations, seed & reprocess commands, inspection-surface path (e.g. `viewer.html` beside the goldens) — shipped in **phase 1**, before the logic they exercise is tuned, not as cleanup |
+| **Implement** | lives in the loops | prove each layer before building on it; tune at L1, verify at L2/L3, touch L4 once |
 
 ## Worked example
 

@@ -1,6 +1,6 @@
 ---
 name: qa-test
-description: Browser-based QA verification after any implementation. Use when someone says "QA this", "test this in browser", "verify the feature", "qa test", "browser test", or after completing an /implement-change to verify acceptance criteria in a real browser. Opens Chrome via MCP, exercises each acceptance criterion, verifies via DOM snapshots, and reports pass/fail. The "closer" for every implementation — proof it works, not just that tests pass.
+description: Browser-based QA verification after any implementation. Use when someone says "QA this", "test this in browser", "verify the feature", "qa test", "browser test", or after /dev-skills:execute-plan to verify acceptance criteria in a real browser. Opens Chrome via MCP, exercises each acceptance criterion, verifies via DOM snapshots, and reports pass/fail. The "closer" for every implementation — proof it works, not just that tests pass.
 ---
 
 # QA Test
@@ -11,13 +11,18 @@ Verify implemented features in a real browser. Exercise each acceptance criterio
 
 **Sub-agent rule:** Always use sub-agents for browser interaction and pre-flight exploration — these are broad, multi-step tasks that generate significant context. Fan out pre-flight and browser testing as separate sub-agents when they're independent. Handle directly only when verifying a single, specific element or reading one file for criteria.
 
+## Modes
+
+- **Agent mode** — invoked by `/dev-skills:execute-plan` or any unattended run. No questions to the user. Login and other setup go through the harness bypass the plan names (seeded session, test token, dev auth route). If there is none and the criterion can't be reached, return `BLOCKED: <what's needed>` for that criterion to the caller instead of waiting.
+- **Human mode** — invoked directly by a user who's at the keyboard. Interactive setup and "fix or expected?" questions are fine.
+
 ## Process
 
 1. Pre-flight (sub-agent) — gather criteria, resolve URL, check environment
-2. Interactive setup — human steers browser for hard-to-automate steps (login, drag, etc.)
+2. Interactive setup (human mode) — human steers browser for hard-to-automate steps (login, drag, etc.); agent mode uses the harness bypass
 3. Browser testing (sub-agent) — exercises all criteria in isolated context
 4. Report results — main thread receives compact summary only
-5. Handle failures — retry failed criteria after manual intervention if needed
+5. Handle failures — fix-and-retest; manual intervention only in human mode
 
 ### 1. Pre-flight Sub-agent
 
@@ -32,7 +37,7 @@ Gather QA pre-flight context for testing. Return a structured JSON block with:
    stop at the first that has criteria:
    - **The shape doc referenced by the implementation plan** (canonical source):
      look for `## Acceptance Criteria` section in `thoughts/plans/*.md` — it should
-     link to a `thoughts/research/*.md` shape doc. Read that shape doc's
+     link to a `thoughts/shapes/*.md` shape doc. Read that shape doc's
      `### Acceptance Criteria` section and use those criteria verbatim.
    - The user's prompt (if criteria were given explicitly)
    - Current plan file (if it lists criteria directly — unshaped work path)
@@ -74,7 +79,7 @@ Return results as a structured summary, not raw tool output.
 - Use `test_pages` to know where to navigate first
 - If `db_available`, include database verification steps
 - If `has_async_flows`, use the async testing pattern
-- If `needs_login`, prompt user for interactive setup before launching browser sub-agent
+- If `needs_login`: human mode → prompt user for interactive setup; agent mode → log in via the plan's harness bypass (seeded session, test token, dev auth route); none exists → that criterion is `BLOCKED: needs login bypass`
 
 **Fallback (no sub-agent):** If sub-agents are unavailable, gather criteria and resolve URL sequentially.
 
@@ -82,7 +87,7 @@ Return results as a structured summary, not raw tool output.
 <summary>Manual fallback: Gather criteria and resolve URL</summary>
 
 **Gather acceptance criteria** from (in priority order):
-- Shape doc referenced by the implementation plan (`thoughts/research/*.md` via
+- Shape doc referenced by the implementation plan (`thoughts/shapes/*.md` via
   `thoughts/plans/*.md`) — canonical source when it exists
 - Explicit criteria provided in the prompt
 - Current plan file if it lists criteria directly (unshaped path)
@@ -106,7 +111,9 @@ Verify the app is running before proceeding.
 
 Before launching the browser testing sub-agent, handle anything that's hard to automate in the main thread. The browser state persists since the sub-agent connects to the same Chrome instance.
 
-**When to prompt for interactive setup:**
+**Agent mode:** skip this step. Use the plan's harness bypass for login; anything that still needs a human is a `BLOCKED` criterion in the report.
+
+**When to prompt for interactive setup (human mode):**
 - `needs_login` is true → ask user: "App requires login. Want me to navigate to login page so you can sign in, or should I attempt automated login?"
 - Complex drag-and-drop or gesture-based preconditions
 - Multi-factor auth, CAPTCHAs, OAuth popups
@@ -219,11 +226,15 @@ The sub-agent returns a compact summary. Present it to the user.
 
 **Human mode**: Show the summary. If any failures, ask: "Want me to fix this and re-test, or is this expected?"
 
-**Agent mode**: If all pass, proceed (e.g., open PR). If any fail, attempt fix-and-retest.
+**Agent mode**: If all pass, return the PASS summary to the caller. If any fail, attempt fix-and-retest.
 
 ### 5. Failure Handling
 
 **Automation failures (NEEDS_MANUAL):**
+
+*Agent mode:* return each NEEDS_MANUAL criterion as `BLOCKED: <manual step needed>` — never wait for a human.
+
+*Human mode:*
 1. The user performs the manual action in the browser (main thread)
 2. Launch a new sub-agent to verify only the remaining criteria
 3. The new sub-agent picks up the browser state left by the user
@@ -238,11 +249,11 @@ The sub-agent returns a compact summary. Present it to the user.
 **After 2 failed cycles, escalate — do NOT keep iterating.** Branch by failure shape:
 
 - **Same criterion failing the same way both cycles** → the plan is likely wrong,
-  not the code. Re-enter `/dev-skills:implementation-planning` with the failing
-  criterion and the observed behavior; do not attempt a third code fix.
-- **Different criteria failing each cycle / shifting failures** → hand to human
-  with a consolidated diff: for each failing criterion, `expected: …` vs
-  `observed: …` plus the specific bug finding from the evaluator. Stop.
+  not the code. Return BLOCKED with the failing criterion and the observed behavior
+  (the fix is a plan revision via `/dev-skills:write-plan`); do not attempt a third code fix.
+- **Different criteria failing each cycle / shifting failures** → return BLOCKED to
+  the caller (or the user) with a consolidated diff: for each failing criterion,
+  `expected: …` vs `observed: …` plus the specific bug finding from the evaluator. Stop.
 
 *Human mode:*
 - Present failures

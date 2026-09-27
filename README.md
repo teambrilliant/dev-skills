@@ -11,39 +11,53 @@ Generic development workflow skills for Claude Code. Break down, shape, plan, im
 
 ## Skills
 
-| Skill                   | Invoke                                | What it does                                |
-| ----------------------- | ------------------------------------- | ------------------------------------------- |
-| product-primitives      | `/dev-skills:product-primitives`      | System → fundamental primitives & building blocks |
-| shaping-work            | `/dev-skills:shaping-work`            | Rough idea → structured work definition     |
-| product-thinker         | `/dev-skills:product-thinker`         | Product decisions, UX analysis, build-vs-buy |
-| product-discovery       | `/dev-skills:product-discovery`       | Validate ideas before committing to build    |
-| implementation-planning | `/dev-skills:implementation-planning` | Ticket → technical implementation plan      |
-| implement-change        | `/dev-skills:implement-change`        | Plan → working code, phase by phase         |
-| qa-test                 | `/dev-skills:qa-test`                 | Browser-based QA verification via sub-agent  |
+| Skill              | Invoke                           | What it does                                                   |
+| ------------------ | -------------------------------- | -------------------------------------------------------------- |
+| product-primitives | `/dev-skills:product-primitives` | System → fundamental primitives & building blocks              |
+| product-thinker    | `/dev-skills:product-thinker`    | Product decisions, UX analysis, build-vs-buy                   |
+| product-discovery  | `/dev-skills:product-discovery`  | Validate ideas before committing to build                      |
+| working-backwards  | `/dev-skills:working-backwards`  | PR-FAQ to pressure-test an idea customer-first                 |
+| strategic-thinker  | `/dev-skills:strategic-thinker`  | Approach selection, tradeoffs, sanity checks                   |
+| shaping-work       | `/dev-skills:shaping-work`       | Rough idea → shape in `thoughts/shapes/`                       |
+| write-plan         | `/dev-skills:write-plan`         | Shape/ticket → plan in `thoughts/plans/` (layers, checks)       |
+| execute-plan       | `/dev-skills:execute-plan`       | Plan → verified code; ends DONE or BLOCKED, no check-ins       |
+| qa-test            | `/dev-skills:qa-test`            | Browser-based acceptance-criteria verification via sub-agent   |
+| explain            | `/dev-skills:explain`            | ASCII + plain words: understand and defend a plan or change    |
 
 > Repo feedback-loop assessment (`loop-check`) and session debrief (`tighten-loop`) now live in [`tap-skills`](https://github.com/teambrilliant/tap-skills), invoked as `/tap-skills:loop-check` and `/tap-skills:tighten-loop`.
 
 ## Typical flow
 
 ```
-primitives → discovery → shape → plan → implement → QA
-   0            1          2       3       4        5
-                      product-thinker
+primitives → discovery → shape → plan → execute → QA
+   0            1          2       3       4       5
+                      product-thinker        explain (any time)
                          (0-2)
 ```
 
 0. `/dev-skills:product-primitives` — break system into deep, composable primitives
 1. `/dev-skills:product-discovery` — validate whether an idea is worth building (4 risks, experiments, evidence gates)
-2. `/dev-skills:shaping-work` — define what to build (features, bugs, improvements)
-3. `/dev-skills:implementation-planning` — design how to build it
-4. `/dev-skills:implement-change` — build it phase by phase
-5. `/dev-skills:qa-test` — verify in browser
+2. `/dev-skills:shaping-work` — define what to build → `thoughts/shapes/`
+3. `/dev-skills:write-plan` — design how to build it, layer by layer → `thoughts/plans/`
+4. `/dev-skills:execute-plan` — build it to the contract: DONE or BLOCKED, verification included
+5. `/dev-skills:qa-test` — verify in browser (execute-plan runs it for UI criteria)
 
-`/dev-skills:product-thinker` pairs with stages 0-2 — product decisions, UX analysis, build-vs-buy evaluation.
+`/dev-skills:product-thinker` pairs with stages 0-2. `/dev-skills:explain` works at any point — on the last message, a shape, a plan, or a shipped diff — and for customer-facing work answers the questions a lead will ask (why this, abuse, data shape, failure).
+
+### Working docs
+
+```
+thoughts/
+  shapes/    shaping-work output
+  plans/     write-plan output
+  research/  discovery and investigations
+```
+
+Branch-local working context — not committed by default.
 
 ## Rollout & Rollback (continuous delivery primitives)
 
-Cross-cutting across `shaping-work`, `implementation-planning`, `strategic-thinker`, and `implement-change`. The reference doc at [`skills/implementation-planning/references/rollout-primitives.md`](skills/implementation-planning/references/rollout-primitives.md) defines two mechanisms and three decisions.
+Cross-cutting across `shaping-work`, `write-plan`, `strategic-thinker`, and `execute-plan`. The reference doc at [`skills/write-plan/references/rollout-primitives.md`](skills/write-plan/references/rollout-primitives.md) defines two mechanisms and three decisions.
 
 **Two mechanisms:**
 

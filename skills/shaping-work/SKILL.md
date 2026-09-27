@@ -17,10 +17,10 @@ Shape ambiguous ideas into clear work definitions. Focus on clarity, not process
 ## Process
 
 1. **Understand the request** — Read the input (could be anything: a Slack thread, a rough idea, a customer complaint, a formal PRD, or a handoff from product-thinker). If intent is unclear, ask up to 3 targeted questions, then shape with stated assumptions.
-2. **Understand the context** — If handed off from product-thinker, use the product context and analysis already gathered (don't re-explore). Otherwise, if working in a codebase, read `.tap/product.md` if it exists (current focus, bets, non-goals — what this work has to ladder up to), then CLAUDE.md or similar to understand what the application does (the product, not technical details).
+2. **Understand the context** — If handed off from product-thinker, use the product context and analysis already gathered (don't re-explore). Otherwise, if working in a codebase, read `.tap/product.md` if it exists (current focus, bets, non-goals — what this work has to ladder up to), then CLAUDE.md or similar to understand what the application does (the product, not technical details). Also look for related context the request didn't mention: existing docs on the topic in `thoughts/shapes/`, `thoughts/plans/`, `thoughts/research/`, and open issues or PRs.
 3. **Shape the work** — Write the definition using the output format below. Pick the template variant that fits the type of work.
 4. **Surface unknowns with recommendations** — For every unknown, propose a recommended resolution and list discarded alternatives with reasoning. Never ask "what do you want?" — propose what you'd do and why.
-5. **Save the document** — Save to `thoughts/research/YYYY-MM-DD-descriptive-name.md`.
+5. **Save the document** — Save to `thoughts/shapes/YYYY-MM-DD-descriptive-name.md`.
 
 ## Output Format
 
@@ -45,7 +45,7 @@ Then continue with the full shaped document below.
 
 The core structure adapts to the type of work. Always include: title, description, acceptance criteria, rollout & rollback, and risks/unknowns. Features and improvements also carry strategic fit; bug fixes don't (a broken thing gets fixed regardless of which bet it sits under). The middle sections flex based on what you're shaping.
 
-**Rollout & rollback rules** — every shaped feature/improvement gets a one-line answer to "how does this ship and to whom?" Walk the decision tree in [implementation-planning/references/rollout-primitives.md](../implementation-planning/references/rollout-primitives.md):
+**Rollout & rollback rules** — every shaped feature/improvement gets a one-line answer to "how does this ship and to whom?" Walk the decision tree in [write-plan/references/rollout-primitives.md](../write-plan/references/rollout-primitives.md):
 
 1. **Contract test:** is a shared contract changing? (schema, public API, multi-consumer interface) → plan expand-contract.
 2. **Launch-strategy test:** who should see this, and when? Cohort, tier, geo, timing, %-rollout, A/B, dogfooding → flag (launch flag).
@@ -53,10 +53,11 @@ The core structure adapts to the type of work. Always include: title, descriptio
 
 Flags serve two purposes — *launch control* (who/when) and *reversibility* (turn-off). Either justifies a flag. A safe feature with a coordinated launch still gets a flag, for the launch. Default is **no flag, no expand-contract** — pick the lightest mechanism(s) that produce the launch control AND reversibility actually needed. Bug fixes never get flags. One flag per feature, never one per phase. Don't stack ceremonies.
 
-**Dev harness rules** — alongside "how does this ship?", every shaped feature answers: **"how does an implementer iterate on this without walking the full user flow?"** Read [implementation-planning/references/dev-harness.md](../implementation-planning/references/dev-harness.md) and name:
+**Dev harness rules** — alongside "how does this ship?", every shaped feature answers: **"how does an implementer iterate on this without walking the full user flow?"** Read [write-plan/references/dev-harness.md](../write-plan/references/dev-harness.md) and name:
 
 1. The fastest loop the riskiest part can run in — fixture-fed function, direct trigger, seeded UI. If the honest answer is "only the full flow", reshape until it isn't.
 2. The shape-level requirements that buy that loop: raw inputs persisted at the boundary (replayable), secondary entry points (no one-time funnel as the only door), which real-world inputs get captured as fixtures — and, when outputs are judged rather than diffed (or their product UI ships later), that an out-of-app inspection surface is required.
+3. External dependencies that need a human step before an agent can exercise them — OAuth app registration, sandbox accounts, API keys, test cards. Name them so the plan can clear them up front; an implementing agent can't click through a consent screen.
 
 These are requirements, not implementation details — "the raw upload is stored and reprocessable" belongs in a shape; the script that does it belongs in the plan. Scale it: LLM cores, parsers of messy input, and integrations get the full treatment; a CRUD screen might need one line ("trivial — direct route + seeded data").
 
@@ -68,6 +69,12 @@ These are requirements, not implementation details — "the raw upload is stored
 4. **No `.tap/product.md`** → write "no durable product context in repo" and shape anyway. Don't block. Mention `/tap-skills:curate-product-context` once, in the handoff, not in the document.
 
 The point is traceability: work whose connection upward can't be stated is work nobody can prioritize against anything.
+
+**Stakes rules** — every shaped feature/improvement declares one line: `customer-facing`, `internal`, or `PoC`. It sets how much defense the work needs downstream:
+
+- **customer-facing** — Risks & Unknowns must include at least one abuse case (what a malicious or misbehaving actor does) and one failure mode (where it breaks, what the user sees). The plan will carry a Whiteboard Defense section; the developer has to be able to explain and defend what ships.
+- **internal** — normal rigor, no defense section.
+- **PoC** — speed over rigor. No defense material; the harness can be as thin as it needs to be.
 
 **Acceptance criteria rules** — this section is the contract consumed downstream by planning and QA:
 
@@ -82,6 +89,8 @@ The point is traceability: work whose connection upward can't be stated is work 
 ## [Clear, descriptive title]
 
 [1-2 sentence description of what this feature does, who it's for, and why it matters]
+
+**Stakes:** [customer-facing | internal | PoC]
 
 ### Strategic Fit
 
@@ -101,11 +110,11 @@ The point is traceability: work whose connection upward can't be stated is work 
 ### Rollout & Rollback
 
 [One of: "neither — direct deploy" | "expand-contract on [schema/API/interface]" | "flag at [user-visible boundary]" | "both — expand-contract on [surface] + flag at [boundary]"]
-[One-line reasoning. Reference [implementation-planning/references/rollout-primitives.md](../implementation-planning/references/rollout-primitives.md) decision tree.]
+[One-line reasoning. Reference [write-plan/references/rollout-primitives.md](../write-plan/references/rollout-primitives.md) decision tree.]
 
 ### Dev Harness
 
-[Fastest loop for the riskiest logic + the shape-level requirements that enable it: replayable inputs? fixtures from real data? entry point that skips the funnel? 1–3 lines; "trivial — direct route + seeded data" is a valid answer. See [implementation-planning/references/dev-harness.md](../implementation-planning/references/dev-harness.md).]
+[Fastest loop for the riskiest logic + the shape-level requirements that enable it: replayable inputs? fixtures from real data? entry point that skips the funnel? 1–3 lines; "trivial — direct route + seeded data" is a valid answer. See [write-plan/references/dev-harness.md](../write-plan/references/dev-harness.md).]
 
 ### Risks & Unknowns
 
@@ -151,6 +160,8 @@ Direct deploy — bug fixes ship to everyone. Rollback: revert if it introduces 
 **Current state**: [what exists today and what's wrong with it]
 **Desired state**: [what it should look like after]
 
+**Stakes:** [customer-facing | internal | PoC]
+
 ### Strategic Fit
 
 [One line: "Serves bet: [name] — [how]" | "No current bet — [why it's worth doing anyway]" | "No durable product context in repo"]
@@ -186,6 +197,8 @@ Use the variant that fits best. For work that doesn't fit neatly, adapt — the 
 
 Display a badge on the cart icon so shoppers can see how many items are in their cart without opening it.
 
+**Stakes:** customer-facing
+
 ### Strategic Fit
 
 No current bet — table-stakes e-commerce affordance. Worth doing because its absence generates "did my item get added?" support contacts.
@@ -218,6 +231,12 @@ Trivial — badge renders from cart state on every page; seed a cart (or add ite
 - **Max display value for large carts?**
   Recommend: Show "99+" — standard e-commerce pattern, avoids layout overflow.
   Discarded: Unlimited display (breaks layout at 4+ digits)
+- **Failure: cart service slow or down — what does the badge show?**
+  Recommend: Hide the badge until the count loads; never show a stale or "0" count that contradicts the cart.
+  Discarded: Show last-known count (misleads after a checkout in another tab)
+- **Abuse: can a shopper influence the count shown to others?**
+  Recommend: No surface for it — the count is read per session from the server cart, never from client input or shared caches.
+  Discarded: CDN-cached header fragment (would leak one shopper's count to another)
 ```
 
 ### Bug fix
@@ -266,6 +285,8 @@ Direct deploy — bug fix, ships to everyone. If the index needs a new field, th
 
 Display a reminder modal when a Partner logs into the Back Office without completing all onboarding steps. Partners who don't complete onboarding can't start earning — the modal lists what's missing and guides them to finish.
 
+**Stakes:** customer-facing
+
 ### Strategic Fit
 
 Serves bet: "activate signed-up Partners" — incomplete onboarding is the single largest drop-off between signup and first earning.
@@ -310,6 +331,12 @@ No complex core, so no L1 needed — the requirement is reachability: incomplete
 - **What happens if a Partner dismisses repeatedly?**
   Recommend: No escalation — the modal is already the nudge. If they dismiss 10 times, they have a reason. Don't punish.
   Discarded: Escalating banner (adds annoyance without addressing root cause of non-completion)
+- **Failure: onboarding status lookup errors at login?**
+  Recommend: Skip the modal and let the Partner in — a reminder is never worth blocking access.
+  Discarded: Show the modal with every step listed (tells complete Partners they're incomplete)
+- **Abuse: does the modal expose sensitive data?**
+  Recommend: It lists which fields are missing, never their values, and only to the Partner who owns them.
+  Discarded: Pre-filling partial SSN/bank values in the modal (PII on a dismissable overlay)
 - **Are there any steps that should block Back Office access entirely?**
   Recommend: No blocking — partial access is better than no access. Partners who can see their dashboard are more motivated to complete onboarding.
   Discarded: Hard block after SSN/bank (creates support burden, Partners call asking why they're locked out)
@@ -331,6 +358,6 @@ Keep it focused on *what* needs to exist and *why*, not *how* to build it.
 
 ## Handoffs
 
-- Shaped work feeds into `/dev-skills:implementation-planning` for technical design.
+- Shaped work feeds into `/dev-skills:write-plan` for technical design.
 - If the repo had no `.tap/product.md`, mention `/tap-skills:curate-product-context` once — every shape after it can state strategic fit against something real.
 - Offer to publish the shape doc for team review: `/tap-skills:render-doc` then `/tap-skills:dossier-publish` (md stays source of truth; republish after edits).
