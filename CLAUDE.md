@@ -24,16 +24,16 @@ Body: process steps, patterns, output format, templates.
 ## Workflow stages
 
 ```
-primitives → shape → plan → implement → QA
-    0          1       2       3        4
+primitives → shape → plan → execute → QA
+    0          1       2       3       4
 ```
 
-Skills map to stages: `product-primitives` (0), `shaping-work` (1), `product-thinker` (0-1), `strategic-thinker` (0 to 2), `implementation-planning` (2), `implement-change` (3), `qa-test` (4). Harness meta-skills `loop-check` and `tighten-loop` now live in `tap-skills`.
+Skills map to stages: `product-primitives` (0), `shaping-work` (1), `product-thinker` (0-1), `strategic-thinker` (0 to 2), `write-plan` (2), `execute-plan` (3), `qa-test` (4), `explain` (any stage). Harness meta-skills `loop-check` and `tighten-loop` now live in `tap-skills`.
 
 ## Conventions
 
 - Plugin manifest: `.claude-plugin/plugin.json` — bump version on behavioral changes
-- Persistent docs go in `thoughts/research/` or `thoughts/plans/` with `YYYY-MM-DD` prefix, hyphens in filenames
+- Persistent docs go in `thoughts/shapes/` (shaping-work), `thoughts/plans/` (write-plan), or `thoughts/research/` (discovery, investigations) with `YYYY-MM-DD` prefix, hyphens in filenames
 - QA evidence (failure screenshots only) goes in `./qa-evidence/`
 - Skills use sub-agents for context-heavy work (browser testing, codebase research) to keep main thread lean
 

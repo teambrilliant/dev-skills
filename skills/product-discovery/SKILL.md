@@ -1,15 +1,12 @@
 ---
 name: product-discovery
 description: >-
-  Validate whether a product idea is worth building before committing engineering investment. Use when
-  someone says "should we build this", "validate this idea", "discovery", "run an experiment", "test
-  this hypothesis", "what are the risks", "is this worth building", "feasibility check", "prototype
-  plan", or when a team has a shaped feature or product idea and needs to assess risks and design
-  experiments before building. Sits between product-thinker (should we?) and shaping-work (what
-  exactly?) — this skill answers "will this actually work?" by identifying what you don't know,
-  designing the cheapest way to find out, and defining evidence gates that justify (or kill) the
-  investment. Also trigger when someone has a feature request and you sense high uncertainty — if
-  the team is about to spend weeks building something nobody tested, this skill should intervene.
+  Validate whether a product idea will actually work before committing engineering — find what you
+  don't know, design the cheapest test, set evidence gates that justify or kill the investment. Use
+  when someone says "validate this idea", "discovery", "run an experiment", "test this hypothesis",
+  "what are the risks", "is this worth building", "feasibility check", "prototype plan", or a team is
+  about to spend weeks on something nobody has tested. Sits between product-thinker (should we?) and
+  shaping-work (what exactly?).
 ---
 
 # Product Discovery
@@ -185,7 +182,7 @@ Output a structured plan. Save to `thoughts/research/YYYY-MM-DD-discovery-[descr
 ## Relationship to Other Skills
 
 ```
-product-thinker  →  product-discovery  →  shaping-work  →  implementation-planning
+product-thinker  →  product-discovery  →  shaping-work  →  write-plan
 "should we?"         "will it work?"       "what exactly?"   "how technically?"
 ```
 
@@ -198,7 +195,7 @@ If someone brings a raw idea, suggest starting with product-thinker. If they hav
 ## What This Skill Does NOT Do
 
 - Does NOT make the build/kill decision — presents evidence, team decides
-- Does NOT produce implementation plans — that's implementation-planning
+- Does NOT produce implementation plans — that's write-plan
 - Does NOT design the full solution — that's shaping-work
 - Does NOT run the experiments — plans them for the team to execute
 - Does NOT replace talking to customers — strongly recommends it

@@ -4,7 +4,7 @@ description: >-
   Use for cross-domain strategic reasoning, approach selection, and systems-level analysis. Trigger when the user wants to: think through how to approach a problem, evaluate tradeoffs between architectural or technical approaches, sanity-check a plan or direction, understand second-order effects of a decision, get a holistic view across code/org/time dimensions, or pressure-test assumptions. The core signal is the user asking "what's the right approach?", "think about this", "what am I not seeing?", "sanity check", "tradeoffs", "how should we tackle this?", or any request for multi-level reasoning that spans product, architecture, and organization.
   Also use when the user needs help deciding which workflow skill to invoke next.
   NOT for: product/user/business decisions (→ product-thinker), work definition (→ shaping-work),
-  file-level technical planning (→ implementation-planning), writing code, test authoring, or PR review.
+  file-level technical planning (→ write-plan), writing code, test authoring, or PR review.
 ---
 
 # Strategic Thinker
@@ -74,8 +74,8 @@ Apply the lens determined in Step 0. All lenses share the same systems-thinking 
 1. List viable approaches (typically 2-4, not exhaustive)
 2. For each approach, evaluate across dimensions:
    - **Feasibility** — can we actually do this given current system/team/time?
-   - **Reversibility & launch control** — two related questions, often answered by the same mechanism. Reversibility: *if we're wrong, how hard is it to undo, and what produces the undo?* Two mechanisms exist — **flags** (atomic, sub-second, behavior-level) and **expand-contract** (gradual, per-consumer, contract-level); they're not always additive, because expand-contract done well often makes a flag redundant (migration cadence is the rollout). Launch control: *who should see this, and when?* Cohort, tier, geo, timing, %-rollout, A/B, dogfooding all use flags as launch strategy independent of risk. A well-tested change with a coordinated launch is a flag use, not overkill — don't conflate "is it safe?" with "does it need a flag?" "Easy to undo" or "ships to everyone" without naming the mechanism is a vibe, not a plan. See [implementation-planning/references/rollout-primitives.md](../implementation-planning/references/rollout-primitives.md) for the three-question decision tree.
-   - **Iterability** — how tight is the build loop each approach affords? An approach whose behavior can only be observed through the full system (or full user flow) gets tuned less than one with a fixture-fed core — and with agents doing the implementing, loop speed compounds into quality. Cheap loops are bought at design time: replayable inputs at the boundary, direct triggers, reachability without prerequisite funnels. See [implementation-planning/references/dev-harness.md](../implementation-planning/references/dev-harness.md) for the loop ladder.
+   - **Reversibility & launch control** — two related questions, often answered by the same mechanism. Reversibility: *if we're wrong, how hard is it to undo, and what produces the undo?* Two mechanisms exist — **flags** (atomic, sub-second, behavior-level) and **expand-contract** (gradual, per-consumer, contract-level); they're not always additive, because expand-contract done well often makes a flag redundant (migration cadence is the rollout). Launch control: *who should see this, and when?* Cohort, tier, geo, timing, %-rollout, A/B, dogfooding all use flags as launch strategy independent of risk. A well-tested change with a coordinated launch is a flag use, not overkill — don't conflate "is it safe?" with "does it need a flag?" "Easy to undo" or "ships to everyone" without naming the mechanism is a vibe, not a plan. See [write-plan/references/rollout-primitives.md](../write-plan/references/rollout-primitives.md) for the three-question decision tree.
+   - **Iterability** — how tight is the build loop each approach affords? An approach whose behavior can only be observed through the full system (or full user flow) gets tuned less than one with a fixture-fed core — and with agents doing the implementing, loop speed compounds into quality. Cheap loops are bought at design time: replayable inputs at the boundary, direct triggers, reachability without prerequisite funnels. See [write-plan/references/dev-harness.md](../write-plan/references/dev-harness.md) for the loop ladder.
    - **Second-order effects** — what does this change about the system's behavior over time? What feedback loops does it create or break?
    - **Org fit** — does this match how the team works, or does it require changing that too?
    - **Time horizon** — good for now vs good for 6 months vs good for 2 years?
@@ -167,7 +167,7 @@ When analysis reaches a clear next step, offer the appropriate handoff:
 
 - Analysis reveals a product question → "Want to dig into the product angle?" → `/dev-skills:product-thinker`
 - Analysis concludes something should be built → "Want me to shape this?" → `/dev-skills:shaping-work`
-- Approach is chosen and needs technical planning → "Ready to plan the implementation?" → `/dev-skills:implementation-planning`
+- Approach is chosen and needs technical planning → "Ready to plan the implementation?" → `/dev-skills:write-plan`
 - User needs to validate before committing → "Want to run a discovery on this?" → `/dev-skills:product-discovery`
 
 Pass forward: the Strategic View conclusions, explored context, key constraints, and the recommended direction — so the next skill doesn't start from scratch.

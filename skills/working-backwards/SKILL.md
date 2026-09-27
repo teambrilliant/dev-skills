@@ -1,17 +1,12 @@
 ---
 name: working-backwards
 description: >-
-  Write a PR-FAQ to pressure-test a product idea customer-first — before committing engineering. Use
-  when someone says "write a PR-FAQ", "press release", "working backwards", "PRFAQ", "start from the
-  customer", "what's the press release for this", "before we build this", "is this idea clear enough
-  to build", "draft the launch announcement", or has a fuzzy product idea and wants to force clarity
-  on what to build and why. Amazon's Working Backwards method: define the desired customer experience
-  as a mock press release + FAQ, iterate on the document until the thinking is clear, and kill weak
-  ideas cheaply on paper. Sits between product-thinker (should we?) and shaping-work (what exactly?),
-  alongside product-discovery (will it work?) — this skill answers "what is the customer-facing
-  end-state, stated so plainly that the holes show?" NOT for validating risky assumptions with
-  experiments (use product-discovery), NOT for breaking shaped work into a build plan (use
-  shaping-work / implementation-planning).
+  Write an Amazon-style PR-FAQ (mock press release + FAQ) to pressure-test a product idea
+  customer-first and kill weak ideas on paper. Use when someone says "write a PR-FAQ", "PRFAQ",
+  "press release", "working backwards", "start from the customer", "draft the launch announcement",
+  "is this idea clear enough to build", or has a fuzzy idea and wants clarity on what and why.
+  NOT for testing risky assumptions with experiments (product-discovery) or build plans
+  (shaping-work / write-plan).
 ---
 
 # Working Backwards
@@ -70,7 +65,7 @@ Close with the signature block:
 ## Handoffs
 
 - Verdict = build, but a key assumption is unproven → `product-discovery` (test it cheaply first).
-- Verdict = build, and it's clear → `shaping-work` (define the work), then `implementation-planning`.
+- Verdict = build, and it's clear → `shaping-work` (define the work), then `write-plan`.
 - Verdict = build, and this is a direction rather than a one-off → offer to record it as a bet in `.tap/product.md` via `/tap-skills:curate-product-context`. The press release already states the customer end-state; the FAQ's most dangerous question is usually the kill condition.
 - Need to re-litigate *whether* to build at all → `product-thinker`.
 - Offer to publish the PR-FAQ for team review: `/tap-skills:render-doc` then `/tap-skills:dossier-publish` (md stays source of truth; republish after edits).
