@@ -55,12 +55,14 @@ A **PR-FAQ** (press release + FAQ, from the template) and a clear **verdict**.
 Close with the signature block:
 
 ```
-`★ Working Backwards View ────────────────────────`
+`★ Working Backwards View ─────`
 - Customer + benefit: [who, and the one-line win]
 - Verdict: [build / kill / iterate] — [why in one line]
 - Biggest hole: [the FAQ question most likely to kill it]
-`─────────────────────────────────────────────────`
+`───── ★`
 ```
+
+Close with the `─── ★` line exactly as shown — tools read it.
 
 ## Handoffs
 

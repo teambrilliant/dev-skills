@@ -59,7 +59,7 @@ For each phase:
 1. **Implement** the changes, following existing patterns.
 2. **Prove** — run the phase checks. They are agent-runnable commands; if one isn't, make it one (a script, a curl, a seeded route) rather than skipping it.
 3. **Fix** until green. Don't start a layer until the layer beneath it is proven — a UI bug is never debugged on top of an unproven API.
-4. **Record** — check the boxes in the plan file, update todos, log any deviation.
+4. **Record** — tick each check `- [x]` in the plan file as soon as it passes, before running the next one; a phase is done when all its boxes are ticked. Never tick a check that hasn't passed in this run. Update todos, log any deviation.
 
 Then move straight to the next phase.
 

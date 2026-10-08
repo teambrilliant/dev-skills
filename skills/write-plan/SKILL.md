@@ -207,14 +207,14 @@ After writing the plan to file, close your response with a **★ Plan View** blo
 The ASCII is a structural **map**, not a re-render of the plan body — show phases in sequence, the layer each proves, the files each touches, dependencies between phases, and the verification gate per phase. Nothing else.
 
 ```
-★ Plan View ─────────────────────────────────────
+★ Plan View ─────
 - Building: [what, one line]
 - Approach: [the strategy, one line]
 - Blast radius: [N files / surfaces]  ·  Rollout: [flag / expand-contract / direct]
 - Iterate via: [fastest loop, one command]
 - Pre-flight: [human-only steps to clear before execute-plan | none]
 - Risk: [the thing most likely to bite]
-──────────────────────────────────────────────────
+─────
 
 Plan: [title]
 │
@@ -228,9 +228,11 @@ Plan: [title]
      └─ ✓ [check]
 
 Full plan → thoughts/plans/YYYY-MM-DD-name.md
+───── ★
 ```
 
 Rules:
+- Close with the `─── ★` line after the `Full plan →` line, exactly as shown — tools read it. The rule after the bullets stays plain.
 - Block leads the closing response — consistent with `product-thinker` (★ Product View), `shaping-work` (★ Shaped View), `strategic-thinker` (★ Strategic View)
 - Summary bullets are assertions, not hedges
 - ASCII shows structure only — never duplicate the markdown body
@@ -240,6 +242,7 @@ Rules:
 - **One layer (or one thin slice across layers) per phase**, in dependency order — a phase's checks only touch layers already proven.
 - Earlier phases don't break existing functionality.
 - Each phase ends in green, agent-runnable checks — `execute-plan` moves straight on to the next phase.
+- Every Phase Check item starts with its command in backticks (`` - [ ] `cmd` → expected ``) — tools read it to match checks to runs.
 - Typically 1–3 files per phase; large enough to be meaningful, small enough to prove quickly.
 
 ## What Makes a Good Plan

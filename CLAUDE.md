@@ -34,6 +34,8 @@ Skills map to stages: `product-primitives` (0), `shaping-work` (1), `product-thi
 
 - Plugin manifest: `.claude-plugin/plugin.json` — bump version on behavioral changes
 - Persistent docs go in `thoughts/shapes/` (shaping-work), `thoughts/plans/` (write-plan), or `thoughts/research/` (discovery, investigations) with `YYYY-MM-DD` prefix, hyphens in filenames
+- Persist only what the harness executes against (shapes, plans, research). Views (★ blocks) and explanations are session-scoped — re-derived when their source changes, never written to `thoughts/`
+- Mods read skill output — keep the contracts in [teambrilliant/claude-code-mods `CONTRACTS.md`](https://github.com/teambrilliant/claude-code-mods/blob/main/CONTRACTS.md) when editing skills: every ★ block opens `★ <Kind> ─────` and closes `───── ★` (short bars); every plan Phase Check item starts with its command in backticks; execute-plan ticks `- [x]` right after each check passes
 - QA evidence (failure screenshots only) goes in `./qa-evidence/`
 - Skills use sub-agents for context-heavy work (browser testing, codebase research) to keep main thread lean
 
@@ -43,3 +45,4 @@ Skills map to stages: `product-primitives` (0), `shaping-work` (1), `product-thi
 - Trigger phrases in `description` field drive auto-detection; be specific
 - Reference files are for templates/examples too large for the main SKILL.md
 - Test skill changes by invoking them (`/dev-skills:skill-name`) in a real project
+

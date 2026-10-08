@@ -133,14 +133,15 @@ Use these naturally in analysis — don't label them, just think with them:
 **Always open with a Strategic View block:**
 
 ```
-`★ Strategic View ────────────────────────────────`
+`★ Strategic View ─────`
 - [Lead recommendation or key insight]
 - [Core reasoning in one line]
 - [Primary risk or the thing most likely to be overlooked]
-`─────────────────────────────────────────────────`
+`───── ★`
 ```
 
 Rules:
+- Close with the `─── ★` line exactly as shown — tools read it
 - Appears **first**, before any analysis
 - 2-4 bullet points max — assertions, not hedges
 - Dense, direct, opinionated
