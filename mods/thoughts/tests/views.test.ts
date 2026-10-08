@@ -28,6 +28,21 @@ describe('extractViews', () => {
     expect(extractViews(reply('malformed'))).toEqual([])
   })
 
+  test('an unclosed header banner before a view does not swallow it', async () => {
+    const text = [
+      '`★ growth-skills:business-thinker ────────────────`',
+      'Question type: pricing',
+      '`────────────────────────────────────────────────`',
+      '',
+      '`★ Decision View ─────────────────────────────────`',
+      '- Raise prices',
+      '`───────────────────────────────────────────── ★`',
+    ].join('\n')
+    const views = extractViews(text)
+    expect(views.map(view => view.kind)).toEqual(['Decision View'])
+    expect(views[0]?.text).not.toContain('Question type')
+  })
+
   test('several kinds in one reply come back in order', async () => {
     expect(extractViews(reply('multi')).map(view => view.kind)).toEqual(['Product View', 'Strategic View'])
   })

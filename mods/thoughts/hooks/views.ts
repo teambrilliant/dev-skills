@@ -21,8 +21,9 @@ function findSpans(lines: readonly string[]): Span[] {
   for (let open = 0; open < lines.length; open++) {
     const heading = OPENER.exec(lines[open] ?? '')?.[1]
     if (heading === undefined) continue
+    const nextOpen = lines.findIndex((line, at) => at > open && OPENER.test(line))
     const close = lines.findIndex((line, at) => at > open && CLOSER.test(line))
-    if (close === -1) continue
+    if (close === -1 || (nextOpen !== -1 && nextOpen < close)) continue
     const isFenced = FENCE.test(lines[open - 1] ?? '') && FENCE.test(lines[close + 1] ?? '')
     spans.push({
       ...labelOf(heading),
