@@ -32,10 +32,11 @@ Shape ambiguous ideas into clear work definitions. Focus on clarity, not process
   ├─ [key flow or behavior 1]
   ├─ [key flow or behavior 2]
   └─ [key constraint or open question]
-`─────────────────────────────────────────────────`
+`───────────────────────────────────────────── ★`
 ```
 
 Rules for the block:
+- Close with the `─── ★` line exactly as shown — tools read it
 - Appears **first**, before the full shaped document
 - One `[problem] → [solution]` line, then 2-4 tree branches max
 - The entire block should fit in one screen — if you need to scroll, it's too long
