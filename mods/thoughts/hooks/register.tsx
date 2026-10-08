@@ -198,15 +198,16 @@ export const register: Register = on => {
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
     const kit = $.ui.resolve(e)
-    const { Box, Text } = kit
+    const { Box } = kit
     const path = await read($, activePlan)
+    const root = `${await $.session.root()}/`
+    const shownPath = path !== null && path.startsWith(root) ? path.slice(root.length) : path
     const text = await read($, planText)
     const plan = text === null ? undefined : parsePlan(text)
     const columns = e.props.bodyColumns
     return (
-      <Box flexDirection="column">
-        {path !== null && plan !== undefined && PlanPane({ kit, plan, path, columns, evidence: await evidenceOf($) })}
-        {path !== null && plan !== undefined && <Text dimColor>{'─'.repeat(Math.max(1, columns))}</Text>}
+      <Box flexDirection="column" gap={1}>
+        {shownPath !== null && plan !== undefined && PlanPane({ kit, plan, path: shownPath, columns, evidence: await evidenceOf($) })}
         {PinnedPane({
           kit,
           pins: await read($, pins),

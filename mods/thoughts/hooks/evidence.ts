@@ -31,6 +31,24 @@ export function glyphFor(item: PlanItem, ledger: readonly ThoughtsRun[], editSeq
   return last.editSeq === editSeq ? '●' : '◌'
 }
 
+export type EvidenceSummary = { verified: number; earlier: number; selfReported: number; stale: number; failing: number }
+
+/** What backs the ticks: runs seen this session, ticks from before it, prose ticks with nothing to run, stale or failing runs. */
+export function evidenceSummary(items: readonly PlanItem[], ledger: readonly ThoughtsRun[], editSeq: number, baselineTicks: readonly string[]): EvidenceSummary {
+  const summary: EvidenceSummary = { verified: 0, earlier: 0, selfReported: 0, stale: 0, failing: 0 }
+  for (const item of items) {
+    const glyph = glyphFor(item, ledger, editSeq, baselineTicks)
+    if (glyph === '●') summary.verified += 1
+    if (glyph === '◌') summary.stale += 1
+    if (glyph === '✗') summary.failing += 1
+    if (glyph === '✓') {
+      if (baselineTicks.includes(item.text)) summary.earlier += 1
+      else summary.selfReported += 1
+    }
+  }
+  return summary
+}
+
 export function progressGlyph(done: number, total: number): '○' | '◔' | '◑' | '◕' | '●' {
   const ratio = total === 0 ? 0 : done / total
   if (ratio === 0) return '○'

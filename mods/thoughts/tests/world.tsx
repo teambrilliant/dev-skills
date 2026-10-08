@@ -9,6 +9,7 @@ export function world(on: On, files: Map<string, string> = new Map(), messages: 
   const filled: string[] = []
   on('session.start', ($, e) => ({ cwd: e.cwd }))
   on('command.register', ($, e) => ({ value: { command: e.name } }))
+  on('session.root', () => ({ value: '/work' }))
   on('session.messages', () => ({ value: messages.map(message => ({ ...message, toolUses: [] })) }))
   on('ui.open', ($, e) => {
     placed.add(e.id)

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'claude-code/testing'
 
-import { glyphFor, progressGlyph, recordRun } from '../hooks/evidence'
+import { evidenceSummary, glyphFor, progressGlyph, recordRun } from '../hooks/evidence'
 import type { PlanItem } from '../hooks/plan'
 import type { ThoughtsRun } from '../types'
 
@@ -37,5 +37,14 @@ describe('glyphFor', () => {
 describe('progressGlyph', () => {
   test('quarters of the pie', async () => {
     expect([0, 1, 2, 3, 4].map(done => progressGlyph(done, 4))).toEqual(['○', '◔', '◑', '◕', '●'])
+  })
+})
+
+describe('evidenceSummary', () => {
+  test('counts what backs each tick', async () => {
+    const items = [check(true), { ...check(true), text: 'b', command: 'pnpm lint' }, prose, check(false)]
+    const ledger = recordRun(recordRun([], run(true, 2)), { command: 'pnpm lint', isOk: false, at: 1, editSeq: 2 })
+    expect(evidenceSummary(items, ledger, 2, [])).toEqual({ verified: 1, earlier: 0, selfReported: 1, stale: 0, failing: 1 })
+    expect(evidenceSummary([check(true)], [], 0, [check(true).text])).toEqual({ verified: 0, earlier: 1, selfReported: 0, stale: 0, failing: 0 })
   })
 })

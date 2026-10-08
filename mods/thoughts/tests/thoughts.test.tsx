@@ -24,7 +24,7 @@ const textOf = async (ui: { findAll: (q: { type: 'Text' }) => Promise<{ text?: s
   (await ui.findAll({ type: 'Text' })).map(found => found.text ?? '').join('\n')
 
 describe('pinned views', () => {
-  test('views in the transcript are pinned at session start; same kind replaces, kinds stack', async ($, on) => {
+  test('views in the transcript are pinned at session start; same kind replaces; newest shows first', async ($, on) => {
     mock.clock(on)
     world(on, new Map(), [
       { role: 'assistant', text: reply('multi') },
@@ -34,7 +34,7 @@ describe('pinned views', () => {
     await start($)
     const pane = await mountPane($)
     const shown = await textOf(pane)
-    expect(shown.indexOf('★ Strategic View')).toBeLessThan(shown.indexOf('★ Product View'))
+    expect(shown.indexOf('★ Product View')).toBeLessThan(shown.indexOf('★ Strategic View'))
     expect(shown.match(/★ Product View/g)).toHaveLength(1)
   })
 
@@ -66,7 +66,7 @@ describe('pinned views', () => {
     on('session.end', () => ({ sessionId: 's' }))
     await start($)
     await $.session.end({ reason: 'clear', sessionId: 's', resume: { id: 's' } })
-    expect(await textOf(await mountPane($))).toContain('Nothing pinned')
+    expect(await textOf(await mountPane($))).toContain('★ views pin here as they appear')
   })
 
   test('an explain pin goes stale when its file changes; [r] fills the prompt', async ($, on) => {
@@ -118,9 +118,31 @@ describe('plan view', () => {
     await $.tool.call({ tool: 'Read', file_path: 'thoughts/plans/billing.md' })
     expect(await textOf(await mountBand($))).toMatch(/^◑ Billing invoices · P2 Function · 3\/7/)
     const pane = await textOf(await mountPane($))
-    expect(pane).toContain('✓ P1 · Stripe client + table · 2 checks')
+    expect(pane).toContain('✓ Stripe client + table')
+    expect(pane).toContain('▾ syncInvoices')
+    expect(pane).toContain('○ Billing page')
+    expect(pane).toContain('thoughts/plans/billing.md')
+    expect(pane).toContain('3 earlier')
     expect(pane).toContain('✓  pnpm vitest sync-invoices.test.ts')
     expect(pane).toContain('○  pnpm vitest sync-replay.test.ts   ← now')
+  })
+
+  test('a plan finished while watched reads Complete · 4 of 4 verified, with a ● per check', async ($, on) => {
+    mock.clock(on)
+    const files = new Map([['thoughts/plans/tick-plan.md', PLANS.tick]])
+    world(on, files)
+    on('tool.call', () => ({ result: { type: 'text' }, text: 'ok' }))
+    await start($)
+    await $.tool.call({ tool: 'Read', file_path: 'thoughts/plans/tick-plan.md' })
+    for (const command of ['test -f notes.txt', 'grep -q one notes.txt', 'grep -q two notes.txt', `test "$(wc -l < notes.txt | tr -d ' ')" = 2`]) {
+      await $.tool.call({ tool: 'Bash', command })
+    }
+    files.set('thoughts/plans/tick-plan.md', PLANS.tick.replaceAll('- [ ]', '- [x]'))
+    await $.tool.call({ tool: 'Edit', file_path: 'thoughts/plans/tick-plan.md', old_string: '- [ ]', new_string: '- [x]' })
+    const pane = await textOf(await mountPane($))
+    expect(pane).toContain('Complete · ')
+    expect(pane).toContain('4 of 4 verified')
+    expect(pane.match(/●/g)?.length).toBeGreaterThanOrEqual(5)
   })
 
   test('a passing run → ●, an edit after it → ◌, a failing run → ✗', async ($, on) => {
