@@ -1,0 +1,7 @@
+{
+  "name": "thoughts",
+  "version": "0.1.0",
+  "description": "A pane into the work: plan progress from thoughts/ and the session's pinned ★ views",
+  "author": { "name": "Team Brilliant", "url": "https://teambrilliant.ai" },
+  "types": "./types/index.d.ts"
+}
