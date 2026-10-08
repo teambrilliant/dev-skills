@@ -27,12 +27,12 @@ Shape ambiguous ideas into clear work definitions. Focus on clarity, not process
 **Always open with a Shaped View block** — a compact ASCII overview of what was shaped. This signals shaping was applied and gives an instant high-level picture without scrolling through the full document:
 
 ```
-`★ Shaped View ───────────────────────────────────`
+`★ Shaped View ─────`
 [problem] → [solution]
   ├─ [key flow or behavior 1]
   ├─ [key flow or behavior 2]
   └─ [key constraint or open question]
-`───────────────────────────────────────────── ★`
+`───── ★`
 ```
 
 Rules for the block:

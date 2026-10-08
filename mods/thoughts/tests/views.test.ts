@@ -43,6 +43,11 @@ describe('extractViews', () => {
     expect(views[0]?.text).not.toContain('Question type')
   })
 
+  test('short bars still open and close a view', async () => {
+    const views = extractViews('`★ Product View ─────`\n- Build it\n`───── ★`')
+    expect(views.map(view => view.kind)).toEqual(['Product View'])
+  })
+
   test('several kinds in one reply come back in order', async () => {
     expect(extractViews(reply('multi')).map(view => view.kind)).toEqual(['Product View', 'Strategic View'])
   })

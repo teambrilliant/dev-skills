@@ -50,13 +50,13 @@ Answer from the artifact and the code. If the answer isn't there, say so plainly
 ## Output
 
 ```
-★ Explain · [target] ─────────────────────────
+★ Explain · [target] ─────
 [ASCII drawing]
 
 [plain-words explanation]
 
 [customer-facing only: the four questions, answered or flagged as gaps]
-───────────────────────────────────────────── ★
+───── ★
 ```
 
 `[target]` is what was explained, verbatim: the file path (`thoughts/plans/…`), the branch or PR, or `last message`. Wrap the whole explanation in the opener and the `─── ★` closer exactly as shown — tools read it. No summary bullets, no summary of the summary.

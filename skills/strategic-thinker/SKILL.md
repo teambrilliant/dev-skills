@@ -133,11 +133,11 @@ Use these naturally in analysis — don't label them, just think with them:
 **Always open with a Strategic View block:**
 
 ```
-`★ Strategic View ────────────────────────────────`
+`★ Strategic View ─────`
 - [Lead recommendation or key insight]
 - [Core reasoning in one line]
 - [Primary risk or the thing most likely to be overlooked]
-`───────────────────────────────────────────── ★`
+`───── ★`
 ```
 
 Rules:

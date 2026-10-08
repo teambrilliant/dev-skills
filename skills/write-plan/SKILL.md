@@ -207,14 +207,14 @@ After writing the plan to file, close your response with a **★ Plan View** blo
 The ASCII is a structural **map**, not a re-render of the plan body — show phases in sequence, the layer each proves, the files each touches, dependencies between phases, and the verification gate per phase. Nothing else.
 
 ```
-★ Plan View ─────────────────────────────────────
+★ Plan View ─────
 - Building: [what, one line]
 - Approach: [the strategy, one line]
 - Blast radius: [N files / surfaces]  ·  Rollout: [flag / expand-contract / direct]
 - Iterate via: [fastest loop, one command]
 - Pre-flight: [human-only steps to clear before execute-plan | none]
 - Risk: [the thing most likely to bite]
-──────────────────────────────────────────────────
+─────
 
 Plan: [title]
 │
@@ -228,7 +228,7 @@ Plan: [title]
      └─ ✓ [check]
 
 Full plan → thoughts/plans/YYYY-MM-DD-name.md
-───────────────────────────────────────────── ★
+───── ★
 ```
 
 Rules:
