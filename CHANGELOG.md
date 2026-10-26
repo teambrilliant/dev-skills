@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0
+
+- **`execute-plan` keeps a Decisions log.** `## Deviations` and the report's Defense deltas merge into one `## Decisions` section in the plan file: every call the plan didn't make — departure or gap — one plain-words line each (scenario → what the plan said → alternative not taken → sure/unsure), trivia skipped, least sure first. The DONE report leads with it, ahead of acceptance criteria. New handoff: `/tap-skills:blast-radius` for an independent check of the log against the diff. `explain` is seeded from Decisions.
+
 ## 3.0.0
 
 - **Breaking — skills renamed around the plan.** `implementation-planning` → `write-plan`, `implement-change` → `execute-plan`. `/impl` no longer matches two skills, nothing sits next to the harness's plan mode, and `execute-plan` says what it is: it runs a plan, not any change. No stub skills at the old names (a stub would keep showing in autocomplete). `write-plan` no longer defers to the harness plan mode — the gate is approval of the `thoughts/plans/` file. `write-plan` runs at `effort: high`.
