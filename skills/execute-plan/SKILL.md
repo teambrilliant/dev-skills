@@ -30,7 +30,21 @@ Approval of the plan is the only gate. From then on you own delivering it, and a
 
 Before stopping BLOCKED, finish every item that doesn't depend on the blocker.
 
-**Everything else is yours to resolve.** Renamed symbols, moved files, different signatures, a missing import, a choice between two reasonable implementations, a scope-adjacent decision where one option clearly fits the plan's intent — decide, record it under `## Deviations` in the plan file (what the plan said, what you did, why), and keep going.
+**Everything else is yours to resolve.** Renamed symbols, moved files, different signatures, a missing import, a choice between two reasonable implementations, a scope-adjacent decision where one option clearly fits the plan's intent — decide and keep going.
+
+### The Decisions log
+
+Every call the plan didn't make — a departure from it, or a gap it left open — goes under `## Decisions` at the end of the plan file, as you make it. This is what the reviewer reads instead of the diff, so write it for someone who wasn't in the session:
+
+```
+## Decisions
+1. When a Stripe sync fails, the job retries 3× and then gives up silently — you'd only notice from missing invoices. Plan didn't say. Alt: alert after 3 fails. (unsure)
+2. Invoices are keyed by Stripe's id, so re-syncing updates rows instead of duplicating them. Plan said `uuid` pk. (sure)
+```
+
+- One line each, plain words: what happens as a concrete scenario → what the plan said (or "didn't say") → the alternative not taken → `(sure)` / `(unsure)`.
+- Log what a reviewer would want to know: behavior, data shapes and storage, contracts and error behavior, dependencies, retries/timeouts, scope. Skip trivia — names, imports, file moves.
+- At final verification, reorder least sure first.
 
 ### How turns end
 
@@ -38,7 +52,7 @@ A message without a tool call ends your turn, and the work stops there. While th
 
 1. A summary of what's done that announces the next step instead of taking it.
 2. An offer to continue "unless you'd prefer otherwise".
-3. A list of decisions for the user when none of them blocks the remaining work — decide, log under Deviations, continue.
+3. A list of decisions for the user when none of them blocks the remaining work — decide, log under Decisions, continue.
 4. Reporting because a phase finished, a milestone landed, or the turn got long.
 
 Status notes are welcome — put them in the same message as your next tool call. Before any message without a tool call, read the plan's checkboxes and your todo list: open items and no stated blocker means keep working. Background work whose result you depend on (test runs, sub-agents) has to finish and be read before you can call the work DONE. Long-running servers are fine — note them or stop them.
@@ -59,7 +73,7 @@ For each phase:
 1. **Implement** the changes, following existing patterns.
 2. **Prove** — run the phase checks. They are agent-runnable commands; if one isn't, make it one (a script, a curl, a seeded route) rather than skipping it.
 3. **Fix** until green. Don't start a layer until the layer beneath it is proven — a UI bug is never debugged on top of an unproven API.
-4. **Record** — tick each check `- [x]` in the plan file as soon as it passes, before running the next one; a phase is done when all its boxes are ticked. Never tick a check that hasn't passed in this run. Update todos, log any deviation.
+4. **Record** — tick each check `- [x]` in the plan file as soon as it passes, before running the next one; a phase is done when all its boxes are ticked. Never tick a check that hasn't passed in this run. Update todos, log any decision.
 
 Then move straight to the next phase.
 
@@ -71,19 +85,18 @@ Then move straight to the next phase.
 
 ### 4. Report
 
+Decisions lead — they're what the developer hasn't seen yet.
+
 ```
 Contract: DONE | BLOCKED
+
+Decisions (least sure first — full list in the plan's ## Decisions)
+1. [what happens, as a scenario] — [plan said X / didn't say]. Alt: [not taken]. (unsure)
+2. ...
 
 Acceptance criteria
 1. [criterion] — ✓ [evidence: command/output, qa-test result, row]
 2. ...
-
-Deviations
-- [plan said X → did Y — why]
-
-Defense deltas
-- [decisions made during implementation the developer hasn't seen: a new table, a changed
-   failure mode, a different library — in plain words]
 
 (BLOCKED only)
 Blocker: [what, with evidence]
@@ -112,5 +125,6 @@ See [write-plan/references/rollout-primitives.md](../write-plan/references/rollo
 
 ## Handoffs
 
-- DONE on customer-facing work → offer `/dev-skills:explain` on the shipped diff, seeded with the Defense deltas, so the developer can explain and defend what shipped.
+- DONE → offer `/tap-skills:blast-radius` for an independent review before merge: it checks the Decisions log against the diff and finds the calls it missed.
+- DONE on customer-facing work → offer `/dev-skills:explain` on the shipped diff, seeded with the Decisions, so the developer can explain and defend what shipped.
 - BLOCKED because the plan itself is wrong → `/dev-skills:write-plan` with the evidence.
