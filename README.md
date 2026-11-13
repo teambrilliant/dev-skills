@@ -1,5 +1,7 @@
 # dev-skills
 
+> **Deprecated.** These skills moved to [teambrilliant/tap](https://github.com/teambrilliant/tap) as the `tap` plugin (`/dev-skills:name` is now `/tap:name`). This repo is archived and no longer updated. Install: `/plugin install tap@teambrilliant-marketplace`.
+
 Generic development workflow skills for Claude Code. Break down, shape, plan, implement, verify.
 
 ## Install
